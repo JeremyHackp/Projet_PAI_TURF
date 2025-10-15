@@ -10,7 +10,7 @@ import sys
 import numpy as np
 from PySide6.QtWidgets import QApplication, QWidget
 
-from supop_pai_cookiecutter.my_module import typed_function
+from projet_pai_turff.my_module import typed_function
 
 
 def run():

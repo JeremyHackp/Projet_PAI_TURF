@@ -8,4 +8,4 @@ Functional API
    :recursive:
    :caption: API
 
-   supop_pai_cookiecutter
+   projet_pai_turff

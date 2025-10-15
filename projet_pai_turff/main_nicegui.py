@@ -7,7 +7,7 @@ The project assumes that your "main_ng" entrypoint is the function run() of this
 import numpy as np
 from nicegui import ui
 
-from supop_pai_cookiecutter.my_module import typed_function
+from projet_pai_turff.my_module import typed_function
 
 
 def run(reload: bool = False):

@@ -1,2 +1,66 @@
-# Projet_PAI_TURF
-Ce dépôt distant correspond au projet TURF du cours PAI. Il est consacré à l’étude statistique d’une base de données de turfisme, ainsi qu’à la création de cette base à partir de requêtes effectuées sur des API liées au turfisme.
+## projet_PAI_TURFF
+
+This project was started with [supopo-pai-cookiecutter-template](https://github.com/ClementPinard/supop-pai-cookiecuttter-template/tree/main)
+
+## How to run
+
+⚠️ Chose one of the two method below, and remove the other one.
+
+### How to run with NiceGUI
+
+```bash
+uv run main_ng
+```
+
+You can also run in development mode, which will reload the interface when it see code
+changes.
+
+```bash
+uv run python projet_pai_turff/main_nicegui.py
+```
+
+### How to run with PySide
+
+```bash
+uv run main_qt
+```
+
+## Development
+
+### How to run pre-commit
+
+```bash
+uvx pre-commit run -a
+```
+
+Alternatively, you can install it so that it runs before every commit :
+
+```bash
+uvx pre-commit install
+```
+
+### How to run tests
+
+```bash
+uv sync --group test
+uv run pytest
+```
+
+### How to run type checking
+
+```bash
+uvx pyright projet_pai_turff --pythonpath .venv/bin/python
+```
+
+### How to build docs
+
+```bash
+uv sync --group docs
+cd docs && uv run make html
+```
+
+#### How to run autobuild for docs
+
+```bash
+uv sync --group docs
+cd docs && make livehtml

@@ -13,8 +13,8 @@ dependencies = [
 
 
 [project.scripts]
-main_ng = "supop_pai_cookiecutter.main_nicegui:run"
-main_qt = "supop_pai_cookiecutter.main_qt:run"
+main_ng = "projet_pai_turff.main_nicegui:run"
+main_qt = "projet_pai_turff.main_qt:run"
 
 [dependency-groups]
 test = [
@@ -45,10 +45,10 @@ default-groups = [
 ]
 
 [tool.hatch.build.targets.sdist]
-include = ["supop_pai_cookiecutter"]
+include = ["projet_pai_turff"]
 
 [tool.hatch.build.targets.wheel]
-include = ["supop_pai_cookiecutter"]
+include = ["projet_pai_turff"]
 
 [build-system]
 requires = ["hatchling"]
@@ -65,7 +65,7 @@ check-yield-types = false
 [tool.pytest.ini_options]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
 addopts = "--import-mode=importlib --doctest-modules"
-testpaths = ["test_supop_pai_cookiecutter", "supop_pai_cookiecutter"]
+testpaths = ["test_projet_pai_turff", "projet_pai_turff"]
 
 [tool.coverage.run]
-source = ["supop_pai_cookiecutter"]
+source = ["projet_pai_turff"]

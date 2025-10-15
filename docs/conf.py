@@ -16,7 +16,7 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
-project = "Projet_PAI_TURFF"
+project = "projet_PAI_TURFF"
 author = "Oriane Koellsch , Jeremy Hackpil , Mael Lecoeuche"
 copyright = "2025, Oriane Koellsch , Jeremy Hackpil , Mael Lecoeuche"
 
@@ -31,7 +31,7 @@ html_logo = "_static/logo_supop.jpg"
 html_theme_options = {
     "navbar_align": "left",
     "logo": {
-        "text": "Projet_PAI_TURFF documentation",
+        "text": "projet_PAI_TURFF documentation",
     },
     "external_links": [
         {

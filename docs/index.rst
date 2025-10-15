@@ -1,4 +1,4 @@
-Welcome to Projet_PAI_TURFF documentation!
+Welcome to projet_PAI_TURFF documentation!
 ============================================================
 
 
@@ -6,7 +6,7 @@ Welcome to Projet_PAI_TURFF documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   supop_pai_cookiecutter
+   projet_pai_turff
    notebooks
    readme
 
