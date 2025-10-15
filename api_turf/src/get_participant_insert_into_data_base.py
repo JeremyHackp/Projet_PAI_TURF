@@ -22,14 +22,17 @@ import sys
 from typing import Optional, Dict, Any, List
 
 
+import sqlite3
+import requests
+from typing import Dict, Any, List
+
+
 def fetch_and_insert_participants(
-    date_reunion: str,
-    num_reunion: int,
-    num_course: int,
-    db_path: str = "courses.db"
+    date_reunion: str, num_reunion: int, num_course: int, db_path: str = "courses.db"
 ) -> None:
     """
-    Récupère les participants d'une course via l'API PMU et les insère dans la base SQLite.
+    Récupère les participants d'une course via l'API PMU et les insère dans
+    les tables Participants et Cheval de la base SQLite.
 
     Paramètres :
         date_reunion (str) : date au format 'DDMMYYYY'
@@ -37,7 +40,9 @@ def fetch_and_insert_participants(
         num_course (int) : numéro de la course (ex. 1 pour C1)
         db_path (str) : chemin vers la base SQLite (par défaut 'courses.db')
     """
-    print(f"Récupération des participants pour la réunion {num_reunion}, course {num_course}, date {date_reunion}...")
+    print(
+        f"Récupération des participants pour R{num_reunion}C{num_course} ({date_reunion})..."
+    )
 
     url = f"https://offline.turfinfo.api.pmu.fr/rest/client/7/programme/{date_reunion}/R{num_reunion}/C{num_course}/participants"
 
@@ -60,49 +65,73 @@ def fetch_and_insert_participants(
     cursor = conn.cursor()
 
     for p in participants:
-        cursor.execute("""
+        nom_cheval = p.get("nom")
+        if not nom_cheval:
+            continue  # Ignore les entrées sans nom
+
+        # ✅ 1. Insérer ou mettre à jour le cheval dans la table Cheval
+        cursor.execute(
+            """
+            INSERT OR REPLACE INTO Cheval (
+                Nom, NomDuPere, NomDeLaMere, Race, RobeCode, RobeLibelle
+            ) VALUES (?, ?, ?, ?, ?, ?)
+        """,
+            (
+                nom_cheval,
+                p.get("nomPere"),
+                p.get("nomMere"),
+                p.get("race"),
+                p.get("robe", {}).get("code"),
+                p.get("robe", {}).get("libelleLong"),
+            ),
+        )
+
+        # ✅ 2. Insérer ou mettre à jour le participant dans la table Participants
+        cursor.execute(
+            """
             INSERT OR REPLACE INTO Participants (
                 NumParticipant, NumReunion, NumCourse, DateReunion,
-                Nom, Age, Race, Proprietaire, Entraineur, Driver, Oeilleres,
+                Nom, Age, Sexe, Proprietaire, Entraineur, Driver, Oeilleres,
                 NbrCourse, NbrVictoires, NbrPlaces, NbrSecond, NbrTroisieme,
                 GainsCarriere, GainsVictoires, GainsAnneeEnCours, GainsAnneePrecedente,
-                PositionArrivee, HandicapDistance, HandicapPoids, TempsObtenu, Cote,
-                NomDuPere, NomDeLaMere, Incident
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            p.get("numPmu"),
-            num_reunion,
-            num_course,
-            date_reunion,
-            p.get("nom"),
-            p.get("age"),  # <-- ajout de l'age
-            p.get("race"),
-            p.get("proprietaire"),
-            p.get("entraineur"),
-            p.get("driver"),
-            p.get("oeilleres"),
-            p.get("nombreCourses"),
-            p.get("nombreVictoires"),
-            p.get("nombrePlaces"),
-            p.get("nombrePlacesSecond"),
-            p.get("nombrePlacesTroisieme"),
-            p.get("gainsParticipant", {}).get("gainsCarriere", 0),
-            p.get("gainsParticipant", {}).get("gainsVictoires", 0),
-            p.get("gainsParticipant", {}).get("gainsAnneeEnCours", 0),
-            p.get("gainsParticipant", {}).get("gainsAnneePrecedente", 0),
-            p.get("ordreArrivee"),
-            p.get("handicapDistance"),
-            p.get("handicapPoids"),
-            p.get("tempsObtenu"),
-            p.get("dernierRapportDirect", {}).get("rapport"),
-            p.get("nomPere"),
-            p.get("nomMere"),
-            p.get("incident")
-        ))
+                PositionArrivee, HandicapDistance, HandicapPoids, TempsObtenu, Cote, Incident
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+            (
+                p.get("numPmu"),
+                num_reunion,
+                num_course,
+                date_reunion,
+                nom_cheval,
+                p.get("age"),
+                p.get("sexe"),
+                p.get("proprietaire"),
+                p.get("entraineur"),
+                p.get("driver"),
+                p.get("oeilleres"),
+                p.get("nombreCourses"),
+                p.get("nombreVictoires"),
+                p.get("nombrePlaces"),
+                p.get("nombrePlacesSecond"),
+                p.get("nombrePlacesTroisieme"),
+                p.get("gainsParticipant", {}).get("gainsCarriere", 0),
+                p.get("gainsParticipant", {}).get("gainsVictoires", 0),
+                p.get("gainsParticipant", {}).get("gainsAnneeEnCours", 0),
+                p.get("gainsParticipant", {}).get("gainsAnneePrecedente", 0),
+                p.get("ordreArrivee"),
+                p.get("handicapDistance"),
+                p.get("handicapPoids"),
+                p.get("tempsObtenu"),
+                p.get("dernierRapportDirect", {}).get("rapport"),
+                p.get("incident"),
+            ),
+        )
 
     conn.commit()
     conn.close()
-    print(f"{len(participants)} participants insérés ou mis à jour dans la base '{db_path}'.")
+    print(
+        f"{len(participants)} participants insérés ou mis à jour dans la base '{db_path}'."
+    )
 
 
 def main(args: Optional[List[str]] = None) -> None:
@@ -116,9 +145,13 @@ def main(args: Optional[List[str]] = None) -> None:
         args = sys.argv[1:]
 
     if len(args) == 1 and args[0] in ("-h", "--help"):
-        print("Usage : python get_participant_insert_into_data_base.py <date_reunion> <num_reunion> <num_course>")
+        print(
+            "Usage : python get_participant_insert_into_data_base.py <date_reunion> <num_reunion> <num_course>"
+        )
         print("Exemple : python get_participant_insert_into_data_base.py 16022020 1 1")
-        print("Récupère les participants d'une course spécifique et les insère dans la base SQLite 'courses.db'.")
+        print(
+            "Récupère les participants d'une course spécifique et les insère dans la base SQLite 'courses.db'."
+        )
         return
 
     if len(args) != 3:

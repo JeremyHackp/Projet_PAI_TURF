@@ -3,23 +3,17 @@
 Module d'initialisation de la base de données SQLite pour les courses hippiques.
 
 Ce module crée les tables principales nécessaires pour stocker les informations
-des réunions, courses et participants, si elles n'existent pas déjà.
+des réunions, courses, participants et chevaux, si elles n'existent pas déjà.
 
 Tables créées :
-- Reunions : informations générales sur chaque réunion (NumReunion, DateReunion, Hippodrome, météo, etc.)
-- Courses : informations sur chaque course (NumCourse, Distance, Discipline, Nombre de participants, etc.)
-- Participants : informations sur chaque cheval participant (Nom, Age, Gains, Positions, etc.)
+- Reunions : informations générales sur chaque réunion
+- Courses : informations sur chaque course
+- Participants : informations sur chaque cheval dans une course
+- Cheval : informations stables sur chaque cheval (filiation, race, robe)
 
 Fonction principale :
 - create_database(db_path: str = "courses.db") -> None
     Crée la base SQLite et les tables si elles n'existent pas. Affiche un message de confirmation.
-
-Usage depuis le terminal :
-    python create_database.py
-
-Exemple pour l’importation dans une bibliothèque Python :
-    from create_database import create_database
-    create_database("chemin/vers/ma_base.db")
 """
 
 import sqlite3
@@ -30,7 +24,7 @@ def create_database(db_path: str = "courses.db"):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Création de la table Reunions
+    # Table Reunions
     cursor.execute(
         """
     CREATE TABLE IF NOT EXISTS Reunions (
@@ -49,7 +43,7 @@ def create_database(db_path: str = "courses.db"):
     """
     )
 
-    # Création de la table Courses
+    # Table Courses avec pénétromètre
     cursor.execute(
         """
     CREATE TABLE IF NOT EXISTS Courses (
@@ -66,13 +60,31 @@ def create_database(db_path: str = "courses.db"):
         NbrParticipants INTEGER,
         DureeCourse INTEGER,
         OrdreArrivee TEXT,
-        PRIMARY KEY (NumReunion, NumCourse, DateReunion),
-        FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion)
+        TypePiste TEXT,
+        CategorieParticularite TEXT,
+        ConditionAge TEXT,
+        PenetrometreValeur TEXT,
+        PenetrometreIntitule TEXT,
+        PRIMARY KEY (NumCourse, NumReunion, DateReunion)
     )
     """
     )
 
-    # Création de la table Participants
+    # ✅ Nouvelle table Cheval
+    cursor.execute(
+        """
+    CREATE TABLE IF NOT EXISTS Cheval (
+        Nom TEXT PRIMARY KEY,
+        NomDuPere TEXT,
+        NomDeLaMere TEXT,
+        Race TEXT,
+        RobeCode TEXT,
+        RobeLibelle TEXT
+    )
+    """
+    )
+
+    # Table Participants (modifiée)
     cursor.execute(
         """
     CREATE TABLE IF NOT EXISTS Participants (
@@ -82,7 +94,6 @@ def create_database(db_path: str = "courses.db"):
         DateReunion TEXT,
         Nom TEXT,
         Age INTEGER,
-        Race TEXT,
         Proprietaire TEXT,
         Entraineur TEXT,
         Driver TEXT,
@@ -101,16 +112,14 @@ def create_database(db_path: str = "courses.db"):
         HandicapPoids REAL,
         TempsObtenu TEXT,
         Cote TEXT,
-        NomDuPere TEXT,
-        NomDeLaMere TEXT,
         Incident TEXT,
         PRIMARY KEY (Nom, NumReunion, NumCourse, DateReunion),
-        FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion)
+        FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion),
+        FOREIGN KEY (Nom) REFERENCES Cheval(Nom)
     )
     """
     )
 
-    # Valider les changements et fermer la connexion
     conn.commit()
     conn.close()
     print(f"Base de données '{db_path}' initialisée avec succès.")

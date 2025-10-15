@@ -66,8 +66,9 @@ def execute_command(command: List[str]) -> None:
         print(e)
 
 
-
-def count_reunions_and_courses(date_reunion: str, db_path: str) -> Tuple[int, Dict[int, int]]:
+def count_reunions_and_courses(
+    date_reunion: str, db_path: str
+) -> Tuple[int, Dict[int, int]]:
     """
     Compte le nombre de réunions et de courses pour une date donnée.
 
@@ -110,13 +111,16 @@ def process_date(date_reunion: str, db_path: str) -> None:
 
     # Vérifie que GR.py existe
     import os
+
     if not os.path.isfile("get_reunion_insert_into_data_base.py"):
         print("❌ Erreur : 'get_reunion_insert_into_data_base.py' introuvable !")
         return
 
     # Appel du script GR.py
     print("→ Récupération des réunions et courses...")
-    execute_command([sys.executable, "get_reunion_insert_into_data_base.py", date_reunion])
+    execute_command(
+        [sys.executable, "get_reunion_insert_into_data_base.py", date_reunion]
+    )
 
     # Comptage des réunions et courses
     nb_reunions, course_counts = count_reunions_and_courses(date_reunion, db_path)
@@ -126,21 +130,29 @@ def process_date(date_reunion: str, db_path: str) -> None:
 
         # Vérifie que GP.py existe
         if not os.path.isfile("get_participant_insert_into_data_base.py"):
-            print("❌ Erreur : 'get_participant_insert_into_data_base.py' introuvable !")
+            print(
+                "❌ Erreur : 'get_participant_insert_into_data_base.py' introuvable !"
+            )
             continue
 
         for course_num in range(1, nb_c + 1):
-            print(f"    → Traitement de la course {course_num} de la réunion {num_r}...")
-            execute_command([
-                sys.executable,
-                "get_participant_insert_into_data_base.py",
-                date_reunion,
-                str(num_r),
-                str(course_num)
-            ])
+            print(
+                f"    → Traitement de la course {course_num} de la réunion {num_r}..."
+            )
+            execute_command(
+                [
+                    sys.executable,
+                    "get_participant_insert_into_data_base.py",
+                    date_reunion,
+                    str(num_r),
+                    str(course_num),
+                ]
+            )
 
 
-def complete_data_base_between_two_dates(start_str: str, end_str: str, db_path: str = "courses.db") -> None:
+def complete_data_base_between_two_dates(
+    start_str: str, end_str: str, db_path: str = "courses.db"
+) -> None:
     """
     Traite toutes les dates entre start_str et end_str incluses et remplit la base spécifiée.
 
@@ -153,7 +165,9 @@ def complete_data_base_between_two_dates(start_str: str, end_str: str, db_path: 
         ValueError : si le format des dates est invalide ou si end < start
     """
     try:
-        start_date: datetime.date = datetime.datetime.strptime(start_str, "%d%m%Y").date()
+        start_date: datetime.date = datetime.datetime.strptime(
+            start_str, "%d%m%Y"
+        ).date()
         end_date: datetime.date = datetime.datetime.strptime(end_str, "%d%m%Y").date()
     except ValueError:
         raise ValueError("Format de date invalide. Utilisez JJMMAAAA (ex : 01012024)")
@@ -173,9 +187,13 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) not in (3, 4):
-        print("Usage : python complete_data_base_between_two_dates.py <start_date> <end_date> [db_path]")
+        print(
+            "Usage : python complete_data_base_between_two_dates.py <start_date> <end_date> [db_path]"
+        )
         print("Format des dates : JJMMAAAA (ex : 01012024)")
-        print("db_path : optionnel, chemin vers la base SQLite (par défaut 'courses.db')")
+        print(
+            "db_path : optionnel, chemin vers la base SQLite (par défaut 'courses.db')"
+        )
         sys.exit(1)
 
     start_str: str = sys.argv[1]

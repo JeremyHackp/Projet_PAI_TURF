@@ -97,15 +97,25 @@ def fetch_and_insert_reunion(date_reunion: str, db_path: str = "courses.db") -> 
             nbr_participants: Optional[int] = course.get("nombreDeclaresPartants")
             duree_course: Optional[int] = course.get("dureeCourse")
             ordre_arrivee: List[List[Any]] = course.get("ordreArrivee", [])
-            ordre_arrivee_str: str = ";".join(
-                [",".join(map(str, o)) for o in ordre_arrivee]
-            )
-
+            ordre_arrivee_str: str = ";".join([",".join(map(str, o)) for o in ordre_arrivee])
+        
+            # Nouveaux attributs
+            type_piste: str = course.get("typePiste", "")
+            categorie_particularite: str = course.get("categorieParticularite", "")
+            condition_age: str = course.get("conditionAge", "")
+        
+            # Valeurs du pénétromètre
+            penetrometre: dict = course.get("penetrometre", {})
+            penetrometre_valeur: str = penetrometre.get("valeurMesure", "")
+            penetrometre_intitule: str = penetrometre.get("intitule", "")
+        
             cursor.execute(
                 """
                 INSERT OR IGNORE INTO Courses 
-                (NumCourse, NumReunion, DateReunion, LabelCourse, Distance, Unite, Corde, Discipline, Specialite, CondSexe, NbrParticipants, DureeCourse, OrdreArrivee)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (NumCourse, NumReunion, DateReunion, LabelCourse, Distance, Unite, Corde,
+                 Discipline, Specialite, CondSexe, NbrParticipants, DureeCourse, OrdreArrivee,
+                 TypePiste, CategorieParticularite, ConditionAge, PenetrometreValeur, PenetrometreIntitule)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     num_course,
@@ -121,11 +131,16 @@ def fetch_and_insert_reunion(date_reunion: str, db_path: str = "courses.db") -> 
                     nbr_participants,
                     duree_course,
                     ordre_arrivee_str,
+                    type_piste,
+                    categorie_particularite,
+                    condition_age,
+                    penetrometre_valeur,
+                    penetrometre_intitule,
                 ),
             )
-
+        
             print(
-                f"  Course {num_course} ({label_course}) ajoutée avec {nbr_participants} participants."
+                f"  Course {num_course} ({label_course}) ajoutée avec {nbr_participants} participants, type piste '{type_piste}', catégorie '{categorie_particularite}', condition âge '{condition_age}'."
             )
 
     conn.commit()

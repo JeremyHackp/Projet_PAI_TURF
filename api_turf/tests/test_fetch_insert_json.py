@@ -1,17 +1,17 @@
 # tests/test_fetch_insert_json.py
-
-import sys
+import unittest
 import os
+import sys
 import json
 import tempfile
-import unittest
 import sqlite3
 import subprocess
-from typing import Any, Dict
+from typing import Dict, Any
 
-# Ajouter le dossier parent pour que Python trouve le module principal
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Ajouter src/ au path pour que Python trouve le module principal
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
+# Import corrigé : enlever le préfixe src
 from get_reunion_insert_into_data_base import fetch_and_insert_reunion
 
 
@@ -27,41 +27,47 @@ class TestFetchAndInsertFromJSON(unittest.TestCase):
         # Création des tables avec clés primaires composées
         self.cursor.execute(
             """
-        CREATE TABLE IF NOT EXISTS Reunions (
-            NumReunion INTEGER,
-            DateReunion TEXT,
-            Nature TEXT,
-            NomHippodrome TEXT,
-            NomPays TEXT,
-            CodeNebulosite TEXT,
-            LibelleNebulosite TEXT,
-            Temperature REAL,
-            ForceVent REAL,
-            DirectionVent TEXT,
-            PRIMARY KEY (NumReunion, DateReunion)
+            CREATE TABLE IF NOT EXISTS Reunions (
+                NumReunion INTEGER,
+                DateReunion TEXT,
+                Nature TEXT,
+                NomHippodrome TEXT,
+                NomPays TEXT,
+                CodeNebulosite TEXT,
+                LibelleNebulosite TEXT,
+                Temperature REAL,
+                ForceVent REAL,
+                DirectionVent TEXT,
+                PRIMARY KEY (NumReunion, DateReunion)
+            )
+            """
         )
-        """
-        )
+
         self.cursor.execute(
             """
-        CREATE TABLE IF NOT EXISTS Courses (
-            NumCourse INTEGER,
-            NumReunion INTEGER,
-            DateReunion TEXT,
-            LabelCourse TEXT,
-            Distance REAL,
-            Unite TEXT,
-            Corde TEXT,
-            Discipline TEXT,
-            Specialite TEXT,
-            CondSexe TEXT,
-            NbrParticipants INTEGER,
-            DureeCourse INTEGER,
-            OrdreArrivee TEXT,
-            PRIMARY KEY (NumReunion, NumCourse, DateReunion),
-            FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion)
-        )
-        """
+            CREATE TABLE IF NOT EXISTS Courses (
+                NumCourse INTEGER,
+                NumReunion INTEGER,
+                DateReunion TEXT,
+                LabelCourse TEXT,
+                Distance REAL,
+                Unite TEXT,
+                Corde TEXT,
+                Discipline TEXT,
+                Specialite TEXT,
+                CondSexe TEXT,
+                NbrParticipants INTEGER,
+                DureeCourse INTEGER,
+                OrdreArrivee TEXT,
+                TypePiste TEXT,
+                CategorieParticularite TEXT,
+                ConditionAge TEXT,
+                PenetrometreValeur TEXT,
+                PenetrometreIntitule TEXT,
+                PRIMARY KEY (NumReunion, NumCourse, DateReunion),
+                FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion)
+            )
+            """
         )
         self.conn.commit()
 
@@ -100,17 +106,31 @@ class TestFetchAndInsertFromJSON(unittest.TestCase):
         total_courses = sum(len(r.get("courses", [])) for r in json_reunions)
         self.assertEqual(len(rows_courses), total_courses)
 
-        for db_row in rows_courses:
+        for db_row, course in zip(
+            rows_courses, sum([r.get("courses", []) for r in json_reunions], [])
+        ):
             self.assertIsInstance(db_row[4], (int, float, type(None)))  # distance
             self.assertIsInstance(db_row[10], (int, type(None)))  # nbr_participants
+
+            # Vérification des nouveaux attributs
+            self.assertEqual(db_row[13], course.get("typePiste", ""))
+            self.assertEqual(db_row[14], course.get("categorieParticularite", ""))
+            self.assertEqual(db_row[15], course.get("conditionAge", ""))
+
+            # ✅ Vérification pénétromètre
+            penetrometre = course.get("penetrometre", {})
+            self.assertEqual(db_row[16], penetrometre.get("valeurMesure", ""))
+            self.assertEqual(db_row[17], penetrometre.get("intitule", ""))
+
 
 
 class TestMainBlock(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # Corrigé : ajout de 'src' dans le chemin
         cls.script_path = os.path.abspath(
             os.path.join(
-                os.path.dirname(__file__), "..", "get_reunion_insert_into_data_base.py"
+                os.path.dirname(__file__), "..", "src", "get_reunion_insert_into_data_base.py"
             )
         )
 
