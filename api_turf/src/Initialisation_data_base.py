@@ -94,6 +94,7 @@ def create_database(db_path: str = "courses.db"):
         DateReunion TEXT,
         Nom TEXT,
         Age INTEGER,
+        Sexe TEXT,
         Proprietaire TEXT,
         Entraineur TEXT,
         Driver TEXT,
