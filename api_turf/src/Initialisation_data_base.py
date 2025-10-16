@@ -46,28 +46,34 @@ def create_database(db_path: str = "courses.db"):
     # Table Courses avec pénétromètre
     cursor.execute(
         """
-    CREATE TABLE IF NOT EXISTS Courses (
-        NumCourse INTEGER,
-        NumReunion INTEGER,
-        DateReunion TEXT,
-        LabelCourse TEXT,
-        Distance REAL,
-        Unite TEXT,
-        Corde TEXT,
-        Discipline TEXT,
-        Specialite TEXT,
-        CondSexe TEXT,
-        NbrParticipants INTEGER,
-        DureeCourse INTEGER,
-        OrdreArrivee TEXT,
-        TypePiste TEXT,
-        CategorieParticularite TEXT,
-        ConditionAge TEXT,
-        PenetrometreValeur TEXT,
-        PenetrometreIntitule TEXT,
-        PRIMARY KEY (NumCourse, NumReunion, DateReunion)
-    )
-    """
+        CREATE TABLE IF NOT EXISTS Courses (
+            NumCourse INTEGER,
+            NumReunion INTEGER,
+            DateReunion TEXT,
+            LabelCourse TEXT,
+            Distance REAL,
+            Unite TEXT,
+            Corde TEXT,
+            Discipline TEXT,
+            Specialite TEXT,
+            CondSexe TEXT,
+            NbrParticipants INTEGER,
+            DureeCourse INTEGER,
+            OrdreArrivee TEXT,
+            TypePiste TEXT,
+            CategorieParticularite TEXT,
+            ConditionAge TEXT,
+            PenetrometreValeur TEXT,
+            PenetrometreIntitule TEXT,
+            MontantOffert1er REAL,
+            MontantOffert2eme REAL,
+            MontantOffert3eme REAL,
+            MontantOffert4eme REAL,
+            MontantOffert5eme REAL,
+            Conditions TEXT,
+            PRIMARY KEY (NumCourse, NumReunion, DateReunion)
+        )
+        """
     )
 
     # ✅ Nouvelle table Cheval
@@ -87,38 +93,41 @@ def create_database(db_path: str = "courses.db"):
     # Table Participants (modifiée)
     cursor.execute(
         """
-    CREATE TABLE IF NOT EXISTS Participants (
-        NumParticipant INTEGER,
-        NumReunion INTEGER,
-        NumCourse INTEGER,
-        DateReunion TEXT,
-        Nom TEXT,
-        Age INTEGER,
-        Sexe TEXT,
-        Proprietaire TEXT,
-        Entraineur TEXT,
-        Driver TEXT,
-        Oeilleres TEXT,
-        NbrCourse INTEGER,
-        NbrVictoires INTEGER,
-        NbrPlaces INTEGER,
-        NbrSecond INTEGER,
-        NbrTroisieme INTEGER,
-        GainsCarriere REAL,
-        GainsVictoires REAL,
-        GainsAnneeEnCours REAL,
-        GainsAnneePrecedente REAL,
-        PositionArrivee TEXT,
-        HandicapDistance REAL,
-        HandicapPoids REAL,
-        TempsObtenu TEXT,
-        Cote TEXT,
-        Incident TEXT,
-        PRIMARY KEY (Nom, NumReunion, NumCourse, DateReunion),
-        FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion),
-        FOREIGN KEY (Nom) REFERENCES Cheval(Nom)
-    )
-    """
+        CREATE TABLE IF NOT EXISTS Participants (
+            NumParticipant INTEGER,
+            NumReunion INTEGER,
+            NumCourse INTEGER,
+            DateReunion TEXT,
+            Nom TEXT,
+            Age INTEGER,
+            Sexe TEXT,
+            Proprietaire TEXT,
+            Entraineur TEXT,
+            Driver TEXT,
+            Oeilleres TEXT,
+            NbrCourse INTEGER,
+            NbrVictoires INTEGER,
+            NbrPlaces INTEGER,
+            NbrSecond INTEGER,
+            NbrTroisieme INTEGER,
+            GainsCarriere REAL,
+            GainsVictoires REAL,
+            GainsAnneeEnCours REAL,
+            GainsAnneePrecedente REAL,
+            PositionArrivee TEXT,
+            HandicapDistance REAL,
+            HandicapPoids REAL,
+            TempsObtenu TEXT,
+            Cote TEXT,
+            Incident TEXT,
+            Eleveur TEXT,
+            Musique TEXT,
+            ReductionKilometrique REAL,
+            PRIMARY KEY (Nom, NumReunion, NumCourse, DateReunion),
+            FOREIGN KEY (NumReunion, DateReunion) REFERENCES Reunions(NumReunion, DateReunion),
+            FOREIGN KEY (Nom) REFERENCES Cheval(Nom)
+        )
+        """
     )
 
     conn.commit()

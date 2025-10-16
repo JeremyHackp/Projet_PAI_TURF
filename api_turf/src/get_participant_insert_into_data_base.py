@@ -21,12 +21,6 @@ import sqlite3
 import sys
 from typing import Optional, Dict, Any, List
 
-
-import sqlite3
-import requests
-from typing import Dict, Any, List
-
-
 def fetch_and_insert_participants(
     date_reunion: str, num_reunion: int, num_course: int, db_path: str = "courses.db"
 ) -> None:
@@ -94,8 +88,9 @@ def fetch_and_insert_participants(
                 Nom, Age, Sexe, Proprietaire, Entraineur, Driver, Oeilleres,
                 NbrCourse, NbrVictoires, NbrPlaces, NbrSecond, NbrTroisieme,
                 GainsCarriere, GainsVictoires, GainsAnneeEnCours, GainsAnneePrecedente,
-                PositionArrivee, HandicapDistance, HandicapPoids, TempsObtenu, Cote, Incident
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                PositionArrivee, HandicapDistance, HandicapPoids, TempsObtenu, Cote, Incident,
+                Eleveur, Musique, ReductionKilometrique
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
             (
                 p.get("numPmu"),
@@ -124,6 +119,9 @@ def fetch_and_insert_participants(
                 p.get("tempsObtenu"),
                 p.get("dernierRapportDirect", {}).get("rapport"),
                 p.get("incident"),
+                p.get("eleveur"),
+                p.get("musique"),
+                p.get("reductionKilometrique"),
             ),
         )
 

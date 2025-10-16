@@ -98,24 +98,33 @@ def fetch_and_insert_reunion(date_reunion: str, db_path: str = "courses.db") -> 
             duree_course: Optional[int] = course.get("dureeCourse")
             ordre_arrivee: List[List[Any]] = course.get("ordreArrivee", [])
             ordre_arrivee_str: str = ";".join([",".join(map(str, o)) for o in ordre_arrivee])
-        
+
             # Nouveaux attributs
             type_piste: str = course.get("typePiste", "")
             categorie_particularite: str = course.get("categorieParticularite", "")
             condition_age: str = course.get("conditionAge", "")
-        
+
             # Valeurs du pénétromètre
             penetrometre: dict = course.get("penetrometre", {})
             penetrometre_valeur: str = penetrometre.get("valeurMesure", "")
             penetrometre_intitule: str = penetrometre.get("intitule", "")
-        
+
+            # 🆕 Montants des allocations et conditions
+            montant_1er = course.get("montantOffert1er")
+            montant_2eme = course.get("montantOffert2eme")
+            montant_3eme = course.get("montantOffert3eme")
+            montant_4eme = course.get("montantOffert4eme")
+            montant_5eme = course.get("montantOffert5eme")
+            conditions = course.get("conditions", "")
+
             cursor.execute(
                 """
                 INSERT OR IGNORE INTO Courses 
                 (NumCourse, NumReunion, DateReunion, LabelCourse, Distance, Unite, Corde,
                  Discipline, Specialite, CondSexe, NbrParticipants, DureeCourse, OrdreArrivee,
-                 TypePiste, CategorieParticularite, ConditionAge, PenetrometreValeur, PenetrometreIntitule)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 TypePiste, CategorieParticularite, ConditionAge, PenetrometreValeur, PenetrometreIntitule,
+                 MontantOffert1er, MontantOffert2eme, MontantOffert3eme, MontantOffert4eme, MontantOffert5eme, Conditions)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     num_course,
@@ -136,18 +145,23 @@ def fetch_and_insert_reunion(date_reunion: str, db_path: str = "courses.db") -> 
                     condition_age,
                     penetrometre_valeur,
                     penetrometre_intitule,
+                    montant_1er,
+                    montant_2eme,
+                    montant_3eme,
+                    montant_4eme,
+                    montant_5eme,
+                    conditions,
                 ),
             )
-        
+
             print(
-                f"  Course {num_course} ({label_course}) ajoutée avec {nbr_participants} participants, type piste '{type_piste}', catégorie '{categorie_particularite}', condition âge '{condition_age}'."
+                f"  Course {num_course} ({label_course}) ajoutée avec {nbr_participants} participants, "
             )
 
     conn.commit()
     conn.close()
-    print(
-        f"Toutes les données pour la date {date_reunion} ont été insérées dans la base '{db_path}'."
-    )
+    print(f"Toutes les données pour la date {date_reunion} ont été insérées dans la base '{db_path}'.")
+
 
 
 def main():
