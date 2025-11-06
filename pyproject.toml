@@ -2,12 +2,11 @@
 name = "projet_pai_turff_repo"
 version = "0.1.0"
 description = ""
-authors = [Oriane Koellsch , Jeremy Hackpil , Mael Lecoeuche]
+authors = [{name="Oriane Koellsch"}, {name="Jeremy Hackpil"}, {name="Mael Lecoeuche"}]
 requires-python = ">=3.10, <3.14"
 readme = "README.md"
 dependencies = [
     "pandas[parquet]>=2,<3",
-    "nicegui[native]>=2,<3",
     "pyside6"
 ]
 
