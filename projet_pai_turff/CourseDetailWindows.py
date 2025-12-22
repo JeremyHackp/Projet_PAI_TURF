@@ -1,0 +1,104 @@
+from typing import Any, Dict, Optional
+from PySide6.QtWidgets import (
+    QDialog,
+    QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QScrollArea,
+    QWidget,
+)
+from PySide6.QtGui import QFont
+from PySide6.QtCore import Qt
+from .data_access import get_course_data
+from .data_access import get_course_participants_id
+from .data_access import get_participants_data
+from .List_container import List_container
+from .ParticipantDetailWindow import ParticipantDetailWindow
+
+from .data_access import donnees_a_afficher_bouton_particpant
+from .data_access import donnees_a_afficher_detail_course
+
+
+class CourseDetailWindow(QDialog):
+
+    def __init__(self, id: Any, parent=None):
+        super().__init__(parent)
+
+        self.course_id = id
+
+        self.donnees_a_afficher = donnees_a_afficher_detail_course
+        self.get_course_data = get_course_data
+        self.course_data = self.get_course_data(self.course_id)
+        self.participants_ids = get_course_participants_id(self.course_id)
+        self.setWindowTitle(f"Détails - {self.course_data.get('name', 'Course')}")
+        self.setMinimumSize(600, 500)
+
+        self._setup_ui()
+
+    def _setup_ui(self):
+        main_layout = QVBoxLayout(self)
+
+        # ===== Titre =====
+        title = QLabel(self.course_data.get("name", "Course sans nom"))
+        font = QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        title.setFont(font)
+        main_layout.addWidget(title)
+
+        # ===== Détails course =====
+        scroll_detail = QScrollArea()
+        scroll_detail.setWidgetResizable(True)
+
+        content = QWidget()
+        layout_detail = QVBoxLayout(content)
+
+        if self.donnees_a_afficher:
+            fields = self.donnees_a_afficher
+        else:
+            fields = {
+                k: k.replace("_", " ").title()
+                for k in self.course_data.keys()
+                if k != "error"
+            }
+
+        for key, label in fields.items():
+            if key in self.course_data:
+                row = QHBoxLayout()
+
+                key_label = QLabel(f"<b>{label}:</b>")
+                key_label.setMinimumWidth(150)
+                row.addWidget(key_label)
+
+                value_label = QLabel(str(self.course_data[key]))
+                value_label.setWordWrap(True)
+                row.addWidget(value_label, 1)
+
+                layout_detail.addLayout(row)
+
+        layout_detail.addStretch()
+        scroll_detail.setWidget(content)
+        main_layout.addWidget(scroll_detail)
+
+        # ===== Participants =====
+
+        donnees_a_afficher_participant = donnees_a_afficher_bouton_particpant
+
+        layout_participant = QVBoxLayout(content)
+        layout_participant.addWidget(QLabel("Participants dans l'ordre d'arrivée"))
+        list_container_participants = List_container(
+            None,
+            id_a_afficher=self.participants_ids,
+            donnees_a_afficher=donnees_a_afficher_participant,
+            get_data=get_participants_data,
+            main_layout=layout_participant,
+            CourseDetailWindow=ParticipantDetailWindow,
+        )
+        layout_participant.addStretch()
+        main_layout.addLayout(layout_participant)
+
+        # ===== Bouton fermer =====
+        close_btn = QPushButton("Fermer")
+        close_btn.clicked.connect(self.close)
+        main_layout.addWidget(close_btn, alignment=Qt.AlignRight)
