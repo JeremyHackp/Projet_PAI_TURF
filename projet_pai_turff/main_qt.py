@@ -1,47 +1,42 @@
 import sys
-
-import numpy as np
 from pathlib import Path
+
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QApplication,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QStackedWidget,
-    QLabel,
-    QToolTip,
-    QScrollArea,
     QComboBox,
+    QHBoxLayout,
+    QLabel,
+    QStackedWidget,
+    QToolTip,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtGui import QIcon, QPixmap, QPainter, QColor, QPalette
-from PySide6.QtCore import QSize, Qt, QTimer
-from .OngletButton import OngletButton
 
-from .OverviewButton import OverviewButton
+from .CourseDetailWindows import CourseDetailWindow
+from .data_access import (
+    colonnes_filtrage_courses,
+    colonnes_filtrage_groupes,
+    colonnes_filtrage_participants,
+    colonnes_tri_courses,
+    colonnes_tri_participants,
+    donnees_a_afficher_bouton_particpant,
+    donnees_a_afficher_boutons_course,
+    get_course_data,
+    get_course_recentes_id,
+    get_meilleurs_cheveaux_ids,
+    get_participants_data,
+    type_graphiques_groupes,
+    update_graphe_data,
+)
 from .Filtre import Filtre
 from .Graphe import Graphe
 
 # from projet_pai_turff.my_module import typed_function
-
 from .List_container import List_container
-from .CourseDetailWindows import CourseDetailWindow
-from .data_access import get_participants_data
-from .data_access import get_course_data
-from .data_access import get_meilleurs_cheveaux_ids
-from .data_access import get_course_recentes_id
+from .OngletButton import OngletButton
 from .ParticipantDetailWindow import ParticipantDetailWindow
-
-from .data_access import donnees_a_afficher_boutons_course
-from .data_access import donnees_a_afficher_bouton_particpant
-
-from .data_access import colonnes_filtrage_courses
-from .data_access import colonnes_tri_courses
-from .data_access import colonnes_filtrage_participants
-from .data_access import colonnes_tri_participants
-from .data_access import type_graphiques_groupes
-from .data_access import update_graphe_data
-from .data_access import colonnes_filtrage_groupes
 
 
 def run():
@@ -256,5 +251,5 @@ def run():
     # typed_function(np.zeros(10), "")
     """This is the main function that gets run"""
 
-
-run()
+if __name__ == "__main__":
+    run()

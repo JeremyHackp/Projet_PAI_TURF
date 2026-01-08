@@ -1,18 +1,15 @@
-from typing import Any, Callable, Optional, Dict
+from collections.abc import Callable
+from typing import Any
 
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QColor, QFont, QTextDocument
 from PySide6.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QLabel,
-    QDialog,
-    QScrollArea,
     QGraphicsDropShadowEffect,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
     QSizePolicy,
 )
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QTextDocument, QColor
 
 
 class OverviewButton(QPushButton):

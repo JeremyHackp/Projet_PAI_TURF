@@ -1,21 +1,14 @@
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import (
-    QApplication,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QStackedWidget,
-    QLabel,
-    QToolTip,
     QScrollArea,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtGui import QIcon, QPixmap, QPainter, QColor, QPalette
-from PySide6.QtCore import QSize, Qt, QTimer
+
 from .OverviewButton import OverviewButton
 
 
 class List_container(QWidget):
-
     def __init__(
         self,
         parent=None,
@@ -47,7 +40,6 @@ class List_container(QWidget):
         self.CourseDetailWindow = CourseDetailWindow
 
         for i in id_a_afficher:
-
             # Create course overview buttons (enable auto_scale for responsive text)
             self.list_layout.addWidget(
                 OverviewButton(
@@ -89,7 +81,6 @@ class List_container(QWidget):
         self.clear_layout(self.list_layout)
         # 2. Recréer les boutons
         for i in id_a_afficher:
-
             # Create course overview buttons (enable auto_scale for responsive text)
             self.list_layout.addWidget(
                 OverviewButton(

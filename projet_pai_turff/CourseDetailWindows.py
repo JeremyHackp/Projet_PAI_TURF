@@ -1,27 +1,29 @@
-from typing import Any, Dict, Optional
+from typing import Any
+
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
     QDialog,
-    QVBoxLayout,
     QHBoxLayout,
     QLabel,
     QPushButton,
     QScrollArea,
+    QVBoxLayout,
     QWidget,
 )
-from PySide6.QtGui import QFont
-from PySide6.QtCore import Qt
-from .data_access import get_course_data
-from .data_access import get_course_participants_id
-from .data_access import get_participants_data
+
+from .data_access import (
+    donnees_a_afficher_bouton_particpant,
+    donnees_a_afficher_detail_course,
+    get_course_data,
+    get_course_participants_id,
+    get_participants_data,
+)
 from .List_container import List_container
 from .ParticipantDetailWindow import ParticipantDetailWindow
 
-from .data_access import donnees_a_afficher_bouton_particpant
-from .data_access import donnees_a_afficher_detail_course
-
 
 class CourseDetailWindow(QDialog):
-
     def __init__(self, id: Any, parent=None):
         super().__init__(parent)
 

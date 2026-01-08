@@ -7,24 +7,23 @@ Les dictionnaires colonnes_filtrage: Dict[str, type], colonnes_tri: Dict[str, st
 
 """
 
-from typing import Any, Dict, List, Optional
 from enum import Enum
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QGroupBox,
     QComboBox,
+    QDialog,
+    QGroupBox,
+    QHBoxLayout,
     QLabel,
+    QLineEdit,
+    QMessageBox,
     QPushButton,
     QScrollArea,
-    QDialog,
-    QMessageBox,
     QSpinBox,
-    QLineEdit,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtCore import Qt, Signal
 
 
 class OperateurComparaison(Enum):
@@ -39,7 +38,7 @@ class OperateurComparaison(Enum):
 
 
 class DialogAjouterFiltre(QDialog):
-    def __init__(self, colonnes_filtrage: Dict[str, type], parent=None):
+    def __init__(self, colonnes_filtrage: dict[str, type], parent=None):
         super().__init__(parent)
         self.setWindowTitle("Ajouter un filtre")
         self.setMinimumWidth(400)
@@ -132,10 +131,10 @@ class Filtre(QWidget):
 
     def __init__(
         self,
-        colonnes_filtrage: Dict[str, type],
-        colonnes_tri: Dict[str, str] = None,
+        colonnes_filtrage: dict[str, type],
+        colonnes_tri: dict[str, str] = None,
         parent=None,
-        tri_initial: Optional[str] = None,  # clé de colonne
+        tri_initial: str | None = None,  # clé de colonne
         ordre_croissant_initial: bool = True,
     ):
         super().__init__(parent)
@@ -264,10 +263,10 @@ class Filtre(QWidget):
         self.ordre_croissant = text == "Croissant"
         self.filtres_changes.emit()
 
-    def get_filtres(self) -> List[tuple]:
+    def get_filtres(self) -> list[tuple]:
         return self.filtres_actifs.copy()
 
-    def get_tri(self) -> Optional[tuple]:
+    def get_tri(self) -> tuple | None:
         if self.colonne_tri and self.tri:
             return (self.colonne_tri, self.ordre_croissant)
         return None
