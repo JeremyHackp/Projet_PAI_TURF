@@ -1,7 +1,7 @@
-import random
-
 from .Filtre import Filtre
 from .Graphe import Graphe
+import random
+
 
 """donnees_a_afficher_boutons_course: dictionnaire définissant quelles données afficher sur les boutons de course.
    donnees_a_afficher_bouton_particpant: dictionnaire définissant quelles données afficher sur les boutons de participants.
@@ -121,8 +121,13 @@ def get_course_participants_id(course_id):
     return participants
 
 
+
+
+
 def get_participants_data(participant_id):
     """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
+    cheval_selectionne[key=participant_id]
+    
     participants_info = {
         1: {
             "name": "Cheval A",
@@ -185,35 +190,38 @@ def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
         Liste des IDs de course correspondant aux critères, ordonnée selon le tri.
     """
 
-    filtre = filtre_widget.get_state()
+    filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée),
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
-        Any(valeure a comparer)]],
+        Tuple[str(valeure filtrée), 
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
+        Any(valeure a comparer)]], 
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri),
+        Tuple[str(valeure sur laquelle on tri), 
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 
     # Pour l'instant, retourne une liste aleatoire pour la démonstration
     i = random.randint(1, 3)
+
+    
+    course_info={id:{donnée}}
     return [1, 2, i]
 
 
 def get_meilleurs_cheveaux_ids(filtre_widget):
     """Simule la récupération des IDs des meilleurs chevaux selon certains filtres (quipeuvent designer type de course, type de cheveaux, ect) et tri (dans quel type de courses ils exèlent)."""
 
-    filtre = filtre_widget.get_state()
+    filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée),
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
-        Any(valeure a comparer)]],
+        Tuple[str(valeure filtrée), 
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
+        Any(valeure a comparer)]], 
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri),
+        Tuple[str(valeure sur laquelle on tri), 
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 
@@ -254,7 +262,7 @@ def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe):
         graphe: Instance du graphe à mettre à jour.
     """
     # Simuler la récupération des données filtrées
-    filtres = filtre_widget.get_filtres()
+    filtres = filtre_widget.get_filtres()  # noqa: F841
 
     # Pour l'instant, utilise des données aléatoires pour la démonstration
     if graph_type == "Performance au cours des courses":
