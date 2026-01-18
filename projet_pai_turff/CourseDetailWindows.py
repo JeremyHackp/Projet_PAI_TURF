@@ -103,4 +103,4 @@ class CourseDetailWindow(QDialog):
         # ===== Bouton fermer =====
         close_btn = QPushButton("Fermer")
         close_btn.clicked.connect(self.close)
-        main_layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        main_layout.addWidget(close_btn)
