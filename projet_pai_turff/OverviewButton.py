@@ -132,7 +132,9 @@ class OverviewButton(QPushButton):
                 self._content_label.setFont(label_font)
             except Exception:
                 pass
-            self._content_label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
+            self._content_label.setAttribute(
+                Qt.WidgetAttribute.WA_TransparentForMouseEvents, True
+            )
             try:
                 # Certains styles remplissent le background; désactiver le auto-fill
                 self._content_label.setAutoFillBackground(False)
