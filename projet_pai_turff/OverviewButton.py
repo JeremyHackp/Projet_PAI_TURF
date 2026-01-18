@@ -221,11 +221,17 @@ class OverviewButton(QPushButton):
 
         # Auto-scale: try sizes from max down to min and pick first that fits
         # We'll use QTextDocument to measure rendered HTML height at a given width
-        available_width = max(10, self.width() - 24)  # consider margins
+        widget_width = self.width()
+        if widget_width <= 0:
+            # Widget not yet laid out, defer the calculation
+            QTimer.singleShot(100, self._update_font_size)
+            return
+
+        available_width = max(10, widget_width - 24)  # consider margins
         # account for layout margins if present
         try:
             lm = self.layout().contentsMargins()
-            available_width = max(10, self.width() - (lm.left() + lm.right() + 24))
+            available_width = max(10, widget_width - (lm.left() + lm.right() + 24))
         except Exception:
             pass
 
