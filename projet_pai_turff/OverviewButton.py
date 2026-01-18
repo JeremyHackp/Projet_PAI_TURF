@@ -118,7 +118,7 @@ class OverviewButton(QPushButton):
         else:
             self._content_label = QLabel(self)
             self._content_label.setObjectName("overview_label")
-            self._content_label.setTextFormat(Qt.RichText)
+            self._content_label.setTextFormat(Qt.TextFormat.RichText)
             self._content_label.setText(display_html)
             self._content_label.setWordWrap(True)
             # Rendre le label transparent pour éviter le carré blanc
@@ -132,7 +132,7 @@ class OverviewButton(QPushButton):
                 self._content_label.setFont(label_font)
             except Exception:
                 pass
-            self._content_label.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+            self._content_label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
             try:
                 # Certains styles remplissent le background; désactiver le auto-fill
                 self._content_label.setAutoFillBackground(False)

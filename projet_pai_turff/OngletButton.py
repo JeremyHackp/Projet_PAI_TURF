@@ -25,7 +25,7 @@ def load_icon_pair(icon_path: Path) -> tuple[QIcon | None, QIcon | None]:
 
     # Create a darkened version (semi-transparent black overlay)
     dark_pix = QPixmap(pix.size())
-    dark_pix.fill(Qt.transparent)
+    dark_pix.fill(Qt.GlobalColor.transparent)
     painter = QPainter(dark_pix)
     painter.drawPixmap(0, 0, pix)
     painter.fillRect(dark_pix.rect(), QColor(0, 0, 0, 140))

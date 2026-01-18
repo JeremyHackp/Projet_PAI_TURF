@@ -1,3 +1,5 @@
+from typing import Callable
+
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import (
     QScrollArea,
@@ -14,7 +16,7 @@ class List_container(QWidget):
         parent=None,
         id_a_afficher=[],
         donnees_a_afficher=None,
-        get_data=None,
+        get_data: Callable | None = None,
         main_layout=None,
         CourseDetailWindow=None,
     ):
@@ -56,8 +58,8 @@ class List_container(QWidget):
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(self)
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         if main_layout is not None:
             main_layout.addWidget(scroll_area)

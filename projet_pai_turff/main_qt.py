@@ -60,8 +60,8 @@ def run():
     # Ajuster le style global des tooltips pour qu'ils soient lisibles
     QToolTip.setFont(QToolTip.font())
     palette = QPalette()
-    palette.setColor(QPalette.ToolTipBase, QColor(255, 255, 255))
-    palette.setColor(QPalette.ToolTipText, QColor(0, 0, 0))
+    palette.setColor(QPalette.ColorRole.ToolTipBase, QColor(255, 255, 255))
+    palette.setColor(QPalette.ColorRole.ToolTipText, QColor(0, 0, 0))
     QToolTip.setPalette(palette)
 
     # Trouver le dossier assets par rapport à ce fichier (OngletButton peut aussi gérer les chemins)

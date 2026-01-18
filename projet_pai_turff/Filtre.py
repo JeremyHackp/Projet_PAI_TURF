@@ -55,7 +55,7 @@ class DialogAjouterFiltre(QDialog):
         row_col = QHBoxLayout()
         row_col.addWidget(QLabel("Colonne:"))
         self.combo_colonne = QComboBox()
-        self.combo_colonne.addItems(self.colonnes_filtrage.keys())
+        self.combo_colonne.addItems(list(self.colonnes_filtrage.keys()))
         self.combo_colonne.currentTextChanged.connect(self._on_colonne_changed)
         row_col.addWidget(self.combo_colonne)
         layout.addLayout(row_col)
@@ -132,7 +132,7 @@ class Filtre(QWidget):
     def __init__(
         self,
         colonnes_filtrage: dict[str, type],
-        colonnes_tri: dict[str, str] = None,
+        colonnes_tri: dict[str, str] | None = None,
         parent=None,
         tri_initial: str | None = None,  # clé de colonne
         ordre_croissant_initial: bool = True,
@@ -197,7 +197,7 @@ class Filtre(QWidget):
             tri_layout.addWidget(QLabel("Trier par:"))
             self.combo_tri = QComboBox()
             self.combo_tri.addItem("Aucun")
-            self.combo_tri.addItems(self.colonnes_tri.values())
+            self.combo_tri.addItems(list(self.colonnes_tri.values()))
             self.combo_tri.currentTextChanged.connect(self._on_tri_changed)
             tri_layout.addWidget(self.combo_tri)
 
@@ -219,7 +219,7 @@ class Filtre(QWidget):
 
     def _ouvrir_dialog_filtre(self):
         dialog = DialogAjouterFiltre(self.colonnes_filtrage, self)
-        if dialog.exec() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             filtre = dialog.get_filtre()
             if filtre:
                 self._ajouter_filtre(filtre)
@@ -245,7 +245,7 @@ class Filtre(QWidget):
 
         while row.count():
             item = row.takeAt(0)
-            if item.widget():
+            if item and item.widget():
                 item.widget().deleteLater()
 
         self.filtres_layout.removeItem(row)
