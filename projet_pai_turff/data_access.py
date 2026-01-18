@@ -126,7 +126,7 @@ def get_course_participants_id(course_id):
 
 def get_participants_data(participant_id):
     """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
-    cheval_selectionne[key=participant_id]
+    cheval_selectionne[participant_id]
     
     participants_info = {
         1: {
