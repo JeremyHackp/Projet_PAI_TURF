@@ -1,7 +1,7 @@
-from .Filtre import Filtre
-from .Graphe import Graphe
 import random
 
+from .Filtre import Filtre
+from .Graphe import Graphe
 
 """donnees_a_afficher_boutons_course: dictionnaire définissant quelles données afficher sur les boutons de course.
    donnees_a_afficher_bouton_particpant: dictionnaire définissant quelles données afficher sur les boutons de participants.
@@ -121,9 +121,6 @@ def get_course_participants_id(course_id):
     return participants
 
 
-
-
-
 def get_participants_data(participant_id):
     """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
     participants_info = {
@@ -191,12 +188,12 @@ def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
     filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée), 
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
-        Any(valeure a comparer)]], 
+        Tuple[str(valeure filtrée),
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
+        Any(valeure a comparer)]],
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri), 
+        Tuple[str(valeure sur laquelle on tri),
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 
@@ -213,12 +210,12 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
     filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée), 
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
-        Any(valeure a comparer)]], 
+        Tuple[str(valeure filtrée),
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
+        Any(valeure a comparer)]],
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri), 
+        Tuple[str(valeure sur laquelle on tri),
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 

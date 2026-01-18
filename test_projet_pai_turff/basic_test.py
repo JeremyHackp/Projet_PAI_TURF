@@ -1,7 +1,6 @@
 import numpy as np
+
 from projet_pai_turff.my_module import other_function, typed_function
-
-
 
 # -------------------------
 # Tests non graphiques
