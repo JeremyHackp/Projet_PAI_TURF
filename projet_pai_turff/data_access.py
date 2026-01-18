@@ -126,8 +126,6 @@ def get_course_participants_id(course_id):
 
 def get_participants_data(participant_id):
     """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
-    cheval_selectionne[participant_id]
-    
     participants_info = {
         1: {
             "name": "Cheval A",
@@ -205,8 +203,7 @@ def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
     # Pour l'instant, retourne une liste aleatoire pour la démonstration
     i = random.randint(1, 3)
 
-    
-    course_info={id:{donnée}}
+    # course_info={id:{donnée}}
     return [1, 2, i]
 
 
