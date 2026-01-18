@@ -163,6 +163,7 @@ def run():
 
     # --------Page 3 - Statistiques générales -------
     def _on_graph_type_changed3(graph_type: str):
+        nonlocal current_graph_type3
         current_graph_type3 = graph_type
         update_graphe3()
 

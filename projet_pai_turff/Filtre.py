@@ -88,7 +88,7 @@ class DialogAjouterFiltre(QDialog):
     def _create_value_widget(self):
         type_colonne = self.colonnes_filtrage.get(self.combo_colonne.currentText(), str)
 
-        if type_colonne == int:
+        if type_colonne is int:
             self.widget_valeur = QSpinBox()
             self.widget_valeur.setRange(-999999, 999999)
         else:

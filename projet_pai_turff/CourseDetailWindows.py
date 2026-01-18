@@ -89,7 +89,7 @@ class CourseDetailWindow(QDialog):
 
         layout_participant = QVBoxLayout(content)
         layout_participant.addWidget(QLabel("Participants dans l'ordre d'arrivée"))
-        list_container_participants = List_container(
+        List_container(
             None,
             id_a_afficher=self.participants_ids,
             donnees_a_afficher=donnees_a_afficher_participant,
