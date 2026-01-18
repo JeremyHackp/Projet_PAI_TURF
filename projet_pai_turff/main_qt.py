@@ -156,7 +156,7 @@ def run():
         CourseDetailWindow=ParticipantDetailWindow,
     )
     filtre_widget2.filtres_changes.connect(
-        lambda: list_container2.update(meilleurs_cheveaux_ids(filtre_widget2))
+        lambda: list_container2.update(get_meilleurs_cheveaux_ids(filtre_widget2))
     )
 
     page2.setLayout(layout2)

@@ -86,7 +86,8 @@ class CourseDetailWindow(QDialog):
 
         donnees_a_afficher_participant = donnees_a_afficher_bouton_particpant
 
-        layout_participant = QVBoxLayout(content)
+        participants_widget = QWidget()
+        layout_participant = QVBoxLayout(participants_widget)
         layout_participant.addWidget(QLabel("Participants dans l'ordre d'arrivée"))
         List_container(
             None,
@@ -97,7 +98,7 @@ class CourseDetailWindow(QDialog):
             CourseDetailWindow=ParticipantDetailWindow,
         )
         layout_participant.addStretch()
-        main_layout.addLayout(layout_participant)
+        main_layout.addWidget(participants_widget)
 
         # ===== Bouton fermer =====
         close_btn = QPushButton("Fermer")
