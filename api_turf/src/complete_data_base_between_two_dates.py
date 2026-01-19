@@ -36,6 +36,7 @@ Exemple :
 import subprocess
 import sqlite3
 import datetime
+import os
 from typing import Tuple, Dict, List
 
 
@@ -103,39 +104,69 @@ def count_reunions_and_courses(
     return nb_reunions, course_counts
 
 
+def get_courses_for_reunion(
+    date_reunion: str, num_reunion: int, db_path: str
+) -> List[int]:
+    """
+    Récupère les vrais numéros de course pour une réunion donnée depuis la base SQLite.
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT NumCourse
+        FROM Courses
+        WHERE DateReunion = ?
+          AND NumReunion = ?
+        ORDER BY NumCourse
+        """,
+        (date_reunion, num_reunion),
+    )
+
+    courses = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return courses
+
+
 def process_date(date_reunion: str, db_path: str) -> None:
     """
-    Traite toutes les réunions et courses pour une date donnée.
+    Traite toutes les réunions et courses pour une date donnée,
+    en utilisant les vrais numéros de course stockés en base.
     """
     print(f"===== {date_reunion} =====")
 
     # Vérifie que GR.py existe
-    import os
-
     if not os.path.isfile("get_reunion_insert_into_data_base.py"):
         print("❌ Erreur : 'get_reunion_insert_into_data_base.py' introuvable !")
         return
 
-    # Appel du script GR.py
+    # Appel du script de récupération des réunions et courses
     print("→ Récupération des réunions et courses...")
     execute_command(
         [sys.executable, "get_reunion_insert_into_data_base.py", date_reunion]
     )
 
-    # Comptage des réunions et courses
-    nb_reunions, course_counts = count_reunions_and_courses(date_reunion, db_path)
-    print(f"{nb_reunions} réunions trouvées pour le {date_reunion} :")
-    for num_r, nb_c in course_counts.items():
-        print(f"  Réunion {num_r} → {nb_c} courses")
+    # Comptage des réunions
+    nb_reunions, _ = count_reunions_and_courses(date_reunion, db_path)
+    print(f"{nb_reunions} réunions trouvées pour le {date_reunion}")
 
-        # Vérifie que GP.py existe
-        if not os.path.isfile("get_participant_insert_into_data_base.py"):
-            print(
-                "❌ Erreur : 'get_participant_insert_into_data_base.py' introuvable !"
-            )
+    # Vérifie que GP.py existe
+    if not os.path.isfile("get_participant_insert_into_data_base.py"):
+        print("❌ Erreur : 'get_participant_insert_into_data_base.py' introuvable !")
+        return
+
+    # Traitement réunion par réunion
+    for num_r in range(1, nb_reunions + 1):
+        print(f"  Réunion {num_r}")
+
+        courses = get_courses_for_reunion(date_reunion, num_r, db_path)
+
+        if not courses:
+            print("    ⚠️ Aucune course trouvée en base")
             continue
 
-        for course_num in range(1, nb_c + 1):
+        for course_num in courses:
             print(
                 f"    → Traitement de la course {course_num} de la réunion {num_r}..."
             )
