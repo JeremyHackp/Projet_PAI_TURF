@@ -121,7 +121,6 @@ def get_course_participants_id(course_ui_id):
     et remplit le cache participants.
     Retourne les IDs UI (1..N)
     """
-
     course = course_cache.courses.get(course_ui_id)
     if not course:
         return []
@@ -236,9 +235,11 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
 
     ui_id = 1
     for row in rows:
+        d = row["DateReunion"]
+
         course_cache.courses[ui_id] = {
             "name": row["LabelCourse"],
-            "date": row["DateReunion"],
+            "date": f"{d[:2]}/{d[2:4]}/{d[4:]}" if d and len(d) == 8 else d,
             "place": row["NomHippodrome"],
             "distance": f"{row['Distance']}{row['Unite']}",
             "horse_count": row["NbrParticipants"],
@@ -277,19 +278,16 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
                 p.Cote,
                 p.GainsCarriere,
                 p.Sexe
-            FROM Participants p
-            JOIN (
-                SELECT
-                    Nom,
-                    MAX(GainsCarriere) AS max_gains
+                FROM Participants p
+                WHERE p.ROWID IN (
+                SELECT ROWID
                 FROM Participants
                 WHERE GainsCarriere IS NOT NULL
                 GROUP BY Nom
-            ) best
-              ON best.Nom = p.Nom
-             AND best.max_gains = p.GainsCarriere
-            ORDER BY p.GainsCarriere DESC
-            LIMIT 20
+                HAVING GainsCarriere = MAX(GainsCarriere)
+                )
+                ORDER BY p.GainsCarriere DESC
+            LIMIT 20;
         """)
 
         rows = cur.fetchall()
@@ -410,6 +408,8 @@ def update_graphe_data(
                     marker="o",
                     linestyle="-",
                 )
+                graphe.ax.tick_params(axis="x", labelrotation=90)
+                graphe.figure.tight_layout()
 
             elif graph_type == "Cotes au cours des courses":
                 cur.execute(
@@ -451,6 +451,8 @@ def update_graphe_data(
                     marker="o",
                     linestyle="-",
                 )
+                graphe.ax.tick_params(axis="x", labelrotation=90)
+                graphe.figure.tight_layout()
 
     except Exception as e:
         print(f"Erreur update_graphe_data: {e}")
