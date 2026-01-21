@@ -32,7 +32,7 @@ class CourseDetailWindow(QDialog):
         self.donnees_a_afficher = donnees_a_afficher_detail_course
         self.get_course_data = get_course_data
         self.course_data = self.get_course_data(self.course_id)
-        self.participants_ids = get_course_participants_id(self.course_id)
+        self.participants_id = get_course_participants_id(self.course_id)
         self.setWindowTitle(f"Détails - {self.course_data.get('name', 'Course')}")
         self.setMinimumSize(600, 500)
 
@@ -92,7 +92,7 @@ class CourseDetailWindow(QDialog):
         layout_participant.addWidget(QLabel("Participants dans l'ordre d'arrivée"))
         List_container(
             None,
-            id_a_afficher=self.participants_ids,
+            id_a_afficher=self.participants_id,
             donnees_a_afficher=donnees_a_afficher_participant,
             get_data=get_participants_data,
             main_layout=layout_participant,
