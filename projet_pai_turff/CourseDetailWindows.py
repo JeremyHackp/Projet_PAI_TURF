@@ -23,6 +23,7 @@ from .ParticipantDetailWindow import ParticipantDetailWindow
 
 
 class CourseDetailWindow(QDialog):
+    """Fenetre de détail permettant d'afficher les données d'une course spécifique et contenant la liste des participants, clicables vers une fenêtre ParticipantDetailWindow."""
     def __init__(self, id: Any, parent=None, get_data=None):
         super().__init__(parent)
 
@@ -55,9 +56,9 @@ class CourseDetailWindow(QDialog):
         content = QWidget()
         layout_detail = QVBoxLayout(content)
 
-        if self.donnees_a_afficher:
+        if self.donnees_a_afficher: #afficher toutes les données spécifiées dans le dictionnaire donnees_a_afficher
             fields = self.donnees_a_afficher
-        else:
+        else: #si aucune donnée spécifiée, afficher toutes les données disponibles
             fields = {
                 k: k.replace("_", " ").title()
                 for k in self.course_data.keys()
@@ -68,12 +69,12 @@ class CourseDetailWindow(QDialog):
             if key in self.course_data:
                 row = QHBoxLayout()
 
-                key_label = QLabel(f"<b>{label}:</b>")
+                key_label = QLabel(f"<b>{label}:</b>") #L'utilisation de <b> permet de mettre le texte en gras
                 key_label.setMinimumWidth(150)
                 row.addWidget(key_label)
 
                 value_label = QLabel(str(self.course_data[key]))
-                value_label.setWordWrap(True)
+                value_label.setWordWrap(True) #Permet de gérer le retour à la ligne automatique si le texte est trop long
                 row.addWidget(value_label, 1)
 
                 layout_detail.addLayout(row)
@@ -84,7 +85,7 @@ class CourseDetailWindow(QDialog):
 
         # ===== Participants =====
 
-        donnees_a_afficher_participant = donnees_a_afficher_bouton_particpant
+        donnees_a_afficher_participant = donnees_a_afficher_bouton_particpant 
 
         participants_widget = QWidget()
         layout_participant = QVBoxLayout(participants_widget)

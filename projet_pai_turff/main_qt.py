@@ -29,6 +29,8 @@ from .data_access import (
     get_participants_data,
     type_graphiques_groupes,
     update_graphe_data,
+    get_course_prediction_id,
+    get_course_prediction_data
 )
 from .Filtre import Filtre
 from .Graphe import Graphe
@@ -38,7 +40,7 @@ from .List_container import List_container
 from .OngletButton import OngletButton
 from .ParticipantDetailWindow import ParticipantDetailWindow
 from . data_access import get_cheveaux_data
-
+from . PredictionDetailWindows import PredictionDetailWindow
 def run():
     app = QApplication(sys.argv)
     style = """
@@ -211,8 +213,52 @@ def run():
     page4 = QWidget()
     layout4 = QVBoxLayout()
     layout4.addWidget(QLabel("Prédictions"))
-    layout4.addStretch()
+
+    
+    # Ajouter le widget Filtre
+    colonnes_filtrage = colonnes_filtrage_courses
+    colonnes_tri = colonnes_tri_courses
+    filtre_widget4 = Filtre(
+        colonnes_filtrage,
+        colonnes_tri,
+        tri_initial="date",
+        ordre_croissant_initial=False,
+    )
+    layout4.addWidget(filtre_widget4)
+
+    # Définir les données à afficher sur les boutons (même que pour les courses)
+    donnees_a_afficher = donnees_a_afficher_boutons_course
+    courses_prediction_ids = get_course_prediction_id(filtre_widget4)
+
+    # Put course cards inside a scrollable area
+
+
+    
+    list_container4 = List_container(
+        None,
+        id_a_afficher=courses_prediction_ids,
+        donnees_a_afficher=donnees_a_afficher,
+        get_data=get_course_prediction_data,
+        main_layout=layout4,
+        detailWindow=PredictionDetailWindow,
+    )
+    filtre_widget4.filtres_changes.connect(
+        lambda: list_container4.update(get_course_prediction_id(filtre_widget4))
+    )
+
+
+
     page4.setLayout(layout4)
+
+
+
+
+
+
+
+
+
+
 
     # --------Principal ---------
 

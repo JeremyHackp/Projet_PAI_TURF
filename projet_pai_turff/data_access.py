@@ -67,8 +67,12 @@ colonnes_tri_participants = {
    Les fonctions ci-dessous simulent l'accès à une base de données.
 """
 
-
 # Fonctions de recupération de données
+
+def get_course_prediction_data(course_id):  
+    return get_course_data(course_id)
+
+
 def get_course_data(course_id):
     """Simule la récupération des données d'une course depuis la base de données."""
     courses = {
@@ -115,6 +119,16 @@ def get_course_data(course_id):
     return courses.get(course_id, {"error": f"Course {course_id} not found"})
 
 
+def prediction_ordre_participants(course_id):
+    """Simule la prédiction de l'ordre des ids des participants d'une course."""
+    participants = [3, 6, 2, 1, 4, 5]
+    return participants
+def prediction_ordre_participants_verification(course_id):
+    """Simule la récupération des ids des participants d'une course depuis la base de données."""
+    participants = [3, 4, 2, 1, 6, 5]
+    return participants
+
+
 def get_course_participants_id(course_id):
     """Simule la récupération des ids des participants d'une course depuis la base de données."""
     participants = [3, 4, 2, 1, 6, 5]
@@ -124,6 +138,9 @@ def get_cheveaux_data(cheval_id):
     """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
     return get_participants_data(cheval_id)
 
+def get_participant_predits_data(participant_id):
+    """Simule la récupération des données d'un participant prédit depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course dans la fenetre de prédiction."""
+    return get_participants_data(participant_id)
 
 def get_participants_data(participant_id):
     """Simule la récupération des données d'un participant depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course."""
@@ -177,6 +194,10 @@ def get_participants_data(participant_id):
 
 
 # Fonction de récupération des IDs filtrés et triés
+
+def get_course_prediction_id(filtre_widget: Filtre) -> list[int]:
+    return get_course_recentes_id(filtre_widget)
+
 
 
 def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
@@ -251,7 +272,7 @@ colonnes_filtrage_groupes = {
 }
 
 
-def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe, id=None, env=None):
+def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe, id=None, get_data=None):
     """Met à jour les données du graphe en fonction du type de graphe sélectionné et des filtres appliqués.
 
     Args:
@@ -259,7 +280,8 @@ def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe, i
         filtre_widget: Widget Filtre contenant les critères de filtrage.
         graphe: Instance du graphe à mettre à jour.
         id : ID du participant ou du sujet du graphe.
-        env : environnement d'appel ('topCourses' ou 'generalStats' ou 'podiumCheval').
+        get_data : Fonction de récupération des données du milieu dans lequel on a le graphe : get_cheveaux_data pour la fenetre podium des cheveaux, 
+                get_participant_data pour la fenetre des participants de courses et None pour les stats générales.
     """
     # Simuler la récupération des données filtrées
     filtres = filtre_widget.get_filtres()  # noqa: F841
