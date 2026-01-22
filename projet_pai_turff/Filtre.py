@@ -189,6 +189,25 @@ class Filtre(QWidget):
         filtres_group.setLayout(filtres_layout)
         main_layout.addWidget(filtres_group)
 
+        # --- nb ---
+        nb_group = QGroupBox("Nombre de données")
+        nb_layout = QHBoxLayout()
+
+        nb_layout.addWidget(QLabel("Nombre de données:"))
+        
+        self.widget_nb = QSpinBox()
+        self.widget_nb = QSpinBox()
+        self.widget_nb.setRange(5, 999999)
+        self.widget_nb.setValue(10)
+        btn_valider_nb=QPushButton("Valider")
+        btn_valider_nb.clicked.connect(self._on_nb_valided)
+        nb_layout.addWidget(self.widget_nb)
+        nb_layout.addWidget(btn_valider_nb)
+
+
+        nb_group.setLayout(nb_layout)
+        main_layout.addWidget(nb_group)
+
         # --- Tri ---
         if self.tri:
             tri_group = QGroupBox("Tri")
@@ -263,6 +282,9 @@ class Filtre(QWidget):
         self.ordre_croissant = text == "Croissant"
         self.filtres_changes.emit()
 
+    def _on_nb_valided(self):
+        self.filtres_changes.emit()
+
     def get_filtres(self) -> list[tuple]:
         return self.filtres_actifs.copy()
 
@@ -270,6 +292,8 @@ class Filtre(QWidget):
         if self.colonne_tri and self.tri:
             return (self.colonne_tri, self.ordre_croissant)
         return None
+    def get_nb(self) -> int:
+        return self.widget_nb.value()
 
     def get_state(self) -> dict:
         """renvoie un dictionnaire de la forme {
@@ -285,7 +309,9 @@ class Filtre(QWidget):
         return {"filtres": self.get_filtres(), "tri": self.get_tri()}
 
     def reinitialiser(self):
+        self.widget_nb.setValue(10)
         self.filtres_actifs.clear()
+        
 
         while self.filtres_layout.count():
             item = self.filtres_layout.takeAt(0)
