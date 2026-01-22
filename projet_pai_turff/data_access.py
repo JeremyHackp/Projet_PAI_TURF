@@ -120,9 +120,13 @@ def get_course_participants_id(course_id):
     participants = [3, 4, 2, 1, 6, 5]
     return participants
 
+def get_cheveaux_data(cheval_id):
+    """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
+    return get_participants_data(cheval_id)
+
 
 def get_participants_data(participant_id):
-    """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
+    """Simule la récupération des données d'un participant depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course."""
     participants_info = {
         1: {
             "name": "Cheval A",
@@ -247,13 +251,15 @@ colonnes_filtrage_groupes = {
 }
 
 
-def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe):
+def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe, id=None, env=None):
     """Met à jour les données du graphe en fonction du type de graphe sélectionné et des filtres appliqués.
 
     Args:
         graph_type: Type de graphe sélectionné.
         filtre_widget: Widget Filtre contenant les critères de filtrage.
         graphe: Instance du graphe à mettre à jour.
+        id : ID du participant ou du sujet du graphe.
+        env : environnement d'appel ('topCourses' ou 'generalStats' ou 'podiumCheval').
     """
     # Simuler la récupération des données filtrées
     filtres = filtre_widget.get_filtres()  # noqa: F841

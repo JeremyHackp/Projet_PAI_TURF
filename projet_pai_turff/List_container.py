@@ -18,7 +18,7 @@ class List_container(QWidget):
         donnees_a_afficher=None,
         get_data: Callable | None = None,
         main_layout=None,
-        CourseDetailWindow=None,
+        detailWindow=None,
     ):
         """
 
@@ -39,7 +39,7 @@ class List_container(QWidget):
         self.list_layout.setContentsMargins(6, 6, 6, 6)
         self.get_data = get_data
         self.donnees_a_afficher = donnees_a_afficher
-        self.CourseDetailWindow = CourseDetailWindow
+        self.detailWindow = detailWindow
 
         for i in id_a_afficher:
             # Create course overview buttons (enable auto_scale for responsive text)
@@ -48,7 +48,7 @@ class List_container(QWidget):
                     i,
                     self.get_data,
                     self.donnees_a_afficher,
-                    self.CourseDetailWindow,
+                    self.detailWindow,
                     auto_scale=True,
                 )
             )
@@ -89,7 +89,7 @@ class List_container(QWidget):
                     i,
                     self.get_data,
                     self.donnees_a_afficher,
-                    self.CourseDetailWindow,
+                    self.detailWindow,
                     auto_scale=True,
                 )
             )

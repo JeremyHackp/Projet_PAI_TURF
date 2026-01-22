@@ -37,7 +37,7 @@ from .Graphe import Graphe
 from .List_container import List_container
 from .OngletButton import OngletButton
 from .ParticipantDetailWindow import ParticipantDetailWindow
-
+from . data_access import get_cheveaux_data
 
 def run():
     app = QApplication(sys.argv)
@@ -118,7 +118,7 @@ def run():
         donnees_a_afficher=donnees_a_afficher,
         get_data=get_course_data,
         main_layout=layout1,
-        CourseDetailWindow=CourseDetailWindow,
+        detailWindow=CourseDetailWindow,
     )
     filtre_widget1.filtres_changes.connect(
         lambda: list_container1.update(get_course_recentes_id(filtre_widget1))
@@ -151,10 +151,10 @@ def run():
         None,
         id_a_afficher=meilleurs_cheveaux_ids,
         donnees_a_afficher=donnees_a_afficher_participant,
-        get_data=get_participants_data,
+        get_data=get_cheveaux_data,
         main_layout=layout2,
-        CourseDetailWindow=ParticipantDetailWindow,
-    )
+        detailWindow=ParticipantDetailWindow,
+            )
     filtre_widget2.filtres_changes.connect(
         lambda: list_container2.update(get_meilleurs_cheveaux_ids(filtre_widget2))
     )
@@ -168,7 +168,7 @@ def run():
         update_graphe3()
 
     def update_graphe3():
-        update_graphe_data(current_graph_type3, filtre_widget3, graphe3)
+        update_graphe_data(current_graph_type3, filtre_widget3, graphe3, None)
 
     current_graph_type3 = type_graphiques_groupes[0]
     page3 = QWidget()

@@ -23,7 +23,7 @@ from .ParticipantDetailWindow import ParticipantDetailWindow
 
 
 class CourseDetailWindow(QDialog):
-    def __init__(self, id: Any, parent=None):
+    def __init__(self, id: Any, parent=None, get_data=None):
         super().__init__(parent)
 
         self.course_id = id
@@ -95,7 +95,7 @@ class CourseDetailWindow(QDialog):
             donnees_a_afficher=donnees_a_afficher_participant,
             get_data=get_participants_data,
             main_layout=layout_participant,
-            CourseDetailWindow=ParticipantDetailWindow,
+            detailWindow=ParticipantDetailWindow
         )
         layout_participant.addStretch()
         main_layout.addWidget(participants_widget)

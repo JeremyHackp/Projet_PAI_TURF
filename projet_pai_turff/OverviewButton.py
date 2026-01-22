@@ -1,5 +1,6 @@
 from collections.abc import Callable
 from typing import Any
+from shiboken6 import isValid
 
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QTextDocument
@@ -212,6 +213,9 @@ class OverviewButton(QPushButton):
         if not hasattr(self, "_content_label") or self._content_label is None:
             return
 
+        if not isValid(self):
+            return
+
         # If not auto-scaling, set explicit font size
         if not self.auto_scale:
             f = self._content_label.font()
@@ -360,7 +364,7 @@ class OverviewButton(QPushButton):
 
         # éviter ouvrir 10 fenêtres
         if self._detail_window is None:
-            self._detail_window = self.detail_window_class(id=self.id, parent=self)
+            self._detail_window = self.detail_window_class(id=self.id, parent=self, get_data=self.get_data)
 
         self._detail_window.show()
         self._detail_window.raise_()

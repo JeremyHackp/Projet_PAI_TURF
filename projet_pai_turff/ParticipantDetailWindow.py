@@ -25,14 +25,20 @@ from .Graphe import Graphe
 
 
 class ParticipantDetailWindow(QDialog):
-    def __init__(self, id: Any, parent=None):
+    def __init__(self, id: Any, parent=None, get_data=None):
         super().__init__(parent)
 
         self.participant_id = id
 
         self.donnees_a_afficher = donnees_a_afficher_detail_participant
-        self.get_participants_data = get_participants_data
-        self.particpant_data = self.get_participants_data(self.participant_id)
+        
+        if get_data is not None:
+            self.get_data = get_data
+        else:
+            self.get_data = get_participants_data
+
+
+        self.particpant_data = self.get_data(self.participant_id)
 
         self.setWindowTitle(f"Détails - {self.particpant_data.get('name', 'Cheval')}")
         self.setMinimumSize(600, 500)
@@ -126,4 +132,4 @@ class ParticipantDetailWindow(QDialog):
         self.update_graphe()
 
     def update_graphe(self):
-        update_graphe_data(self.current_graph_type, self.filtre_widget, self.graphe)
+        update_graphe_data(self.current_graph_type, self.filtre_widget, self.graphe, self.participant_id, self.get_data)

@@ -8,7 +8,8 @@ readme = "README.md"
 dependencies = [
     "pandas[parquet]>=2,<3",
     "pyside6",
-    "matplotlib"
+    "matplotlib",
+    "shiboken6>=6.10.0",
 ]
 
 
