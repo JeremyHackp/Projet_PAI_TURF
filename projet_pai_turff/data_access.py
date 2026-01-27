@@ -1,7 +1,7 @@
-from .Filtre import Filtre
-from .Graphe import Graphe
 import random
 
+from .Filtre import Filtre
+from .Graphe import Graphe
 
 """donnees_a_afficher_boutons_course: dictionnaire définissant quelles données afficher sur les boutons de course.
    donnees_a_afficher_bouton_particpant: dictionnaire définissant quelles données afficher sur les boutons de participants.
@@ -67,8 +67,12 @@ colonnes_tri_participants = {
    Les fonctions ci-dessous simulent l'accès à une base de données.
 """
 
-
 # Fonctions de recupération de données
+
+def get_course_prediction_data(course_id):  
+    return get_course_data(course_id)
+
+
 def get_course_data(course_id):
     """Simule la récupération des données d'une course depuis la base de données."""
     courses = {
@@ -115,14 +119,31 @@ def get_course_data(course_id):
     return courses.get(course_id, {"error": f"Course {course_id} not found"})
 
 
-def get_course_participants_id(course_id):
+def prediction_ordre_participants(course_id):
+    """Simule la prédiction de l'ordre des ids des participants d'une course."""
+    participants = [3, 6, 2, 1, 4, 5]
+    return participants
+def prediction_ordre_participants_verification(course_id):
     """Simule la récupération des ids des participants d'une course depuis la base de données."""
     participants = [3, 4, 2, 1, 6, 5]
     return participants
 
 
+def get_course_participants_id(course_id):
+    """Simule la récupération des ids des participants d'une course depuis la base de données."""
+    participants = [3, 4, 2, 1, 6, 5]
+    return participants
+
+def get_cheveaux_data(cheval_id):
+    """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
+    return get_participants_data(cheval_id)
+
+def get_participant_predits_data(participant_id):
+    """Simule la récupération des données d'un participant prédit depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course dans la fenetre de prédiction."""
+    return get_participants_data(participant_id)
+
 def get_participants_data(participant_id):
-    """Simule la récupération des données d'un participant depuis la base de données a partir de son id."""
+    """Simule la récupération des données d'un participant depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course."""
     participants_info = {
         1: {
             "name": "Cheval A",
@@ -174,6 +195,10 @@ def get_participants_data(participant_id):
 
 # Fonction de récupération des IDs filtrés et triés
 
+def get_course_prediction_id(filtre_widget: Filtre) -> list[int]:
+    return get_course_recentes_id(filtre_widget)
+
+
 
 def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
     """Fonction simulée pour obtenir une liste d'IDs de course filtrée.
@@ -185,35 +210,37 @@ def get_course_recentes_id(filtre_widget: Filtre) -> list[int]:
         Liste des IDs de course correspondant aux critères, ordonnée selon le tri.
     """
 
-    filtre = filtre_widget.get_state()
+    filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée), 
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
-        Any(valeure a comparer)]], 
+        Tuple[str(valeure filtrée),
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
+        Any(valeure a comparer)]],
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri), 
+        Tuple[str(valeure sur laquelle on tri),
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 
     # Pour l'instant, retourne une liste aleatoire pour la démonstration
     i = random.randint(1, 3)
+
+    # course_info={id:{donnée}}
     return [1, 2, i]
 
 
 def get_meilleurs_cheveaux_ids(filtre_widget):
     """Simule la récupération des IDs des meilleurs chevaux selon certains filtres (quipeuvent designer type de course, type de cheveaux, ect) et tri (dans quel type de courses ils exèlent)."""
 
-    filtre = filtre_widget.get_state()
+    filtre = filtre_widget.get_state()  # noqa: F841
     """renvoie un dictionnaire de la forme {
     'filtres': List[
-        Tuple[str(valeure filtrée), 
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS), 
-        Any(valeure a comparer)]], 
+        Tuple[str(valeure filtrée),
+        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
+        Any(valeure a comparer)]],
 
     'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri), 
+        Tuple[str(valeure sur laquelle on tri),
         bool(True : ordre_croissant, False : décroissant)]}]}
     """
 
@@ -245,16 +272,19 @@ colonnes_filtrage_groupes = {
 }
 
 
-def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe):
+def update_graphe_data(graph_type: str, filtre_widget: Filtre, graphe: Graphe, id=None, get_data=None):
     """Met à jour les données du graphe en fonction du type de graphe sélectionné et des filtres appliqués.
 
     Args:
         graph_type: Type de graphe sélectionné.
         filtre_widget: Widget Filtre contenant les critères de filtrage.
         graphe: Instance du graphe à mettre à jour.
+        id : ID du participant ou du sujet du graphe.
+        get_data : Fonction de récupération des données du milieu dans lequel on a le graphe : get_cheveaux_data pour la fenetre podium des cheveaux, 
+                get_participant_data pour la fenetre des participants de courses et None pour les stats générales.
     """
     # Simuler la récupération des données filtrées
-    filtres = filtre_widget.get_filtres()
+    filtres = filtre_widget.get_filtres()  # noqa: F841
 
     # Pour l'instant, utilise des données aléatoires pour la démonstration
     if graph_type == "Performance au cours des courses":

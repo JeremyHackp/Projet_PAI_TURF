@@ -1,49 +1,46 @@
 import sys
-
-import numpy as np
 from pathlib import Path
+
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QApplication,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QStackedWidget,
-    QLabel,
-    QToolTip,
-    QScrollArea,
     QComboBox,
+    QHBoxLayout,
+    QLabel,
+    QStackedWidget,
+    QToolTip,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtGui import QIcon, QPixmap, QPainter, QColor, QPalette
-from PySide6.QtCore import QSize, Qt, QTimer
-from .OngletButton import OngletButton
 
-from .OverviewButton import OverviewButton
+from .CourseDetailWindows import CourseDetailWindow
+from .data_access import (
+    colonnes_filtrage_courses,
+    colonnes_filtrage_groupes,
+    colonnes_filtrage_participants,
+    colonnes_tri_courses,
+    colonnes_tri_participants,
+    donnees_a_afficher_bouton_particpant,
+    donnees_a_afficher_boutons_course,
+    get_course_data,
+    get_course_recentes_id,
+    get_meilleurs_cheveaux_ids,
+    get_participants_data,
+    type_graphiques_groupes,
+    update_graphe_data,
+    get_course_prediction_id,
+    get_course_prediction_data
+)
 from .Filtre import Filtre
 from .Graphe import Graphe
 
 # from projet_pai_turff.my_module import typed_function
-
 from .List_container import List_container
-from .CourseDetailWindows import CourseDetailWindow
-from .data_access import get_participants_data
-from .data_access import get_course_data
-from .data_access import get_meilleurs_cheveaux_ids
-from .data_access import get_course_recentes_id
+from .OngletButton import OngletButton
 from .ParticipantDetailWindow import ParticipantDetailWindow
-
-from .data_access import donnees_a_afficher_boutons_course
-from .data_access import donnees_a_afficher_bouton_particpant
-
-from .data_access import colonnes_filtrage_courses
-from .data_access import colonnes_tri_courses
-from .data_access import colonnes_filtrage_participants
-from .data_access import colonnes_tri_participants
-from .data_access import type_graphiques_groupes
-from .data_access import update_graphe_data
-from .data_access import colonnes_filtrage_groupes
-
-
+from . data_access import get_cheveaux_data
+from . PredictionDetailWindows import PredictionDetailWindow
 def run():
     app = QApplication(sys.argv)
     style = """
@@ -65,8 +62,8 @@ def run():
     # Ajuster le style global des tooltips pour qu'ils soient lisibles
     QToolTip.setFont(QToolTip.font())
     palette = QPalette()
-    palette.setColor(QPalette.ToolTipBase, QColor(255, 255, 255))
-    palette.setColor(QPalette.ToolTipText, QColor(0, 0, 0))
+    palette.setColor(QPalette.ColorRole.ToolTipBase, QColor(255, 255, 255))
+    palette.setColor(QPalette.ColorRole.ToolTipText, QColor(0, 0, 0))
     QToolTip.setPalette(palette)
 
     # Trouver le dossier assets par rapport à ce fichier (OngletButton peut aussi gérer les chemins)
@@ -123,7 +120,7 @@ def run():
         donnees_a_afficher=donnees_a_afficher,
         get_data=get_course_data,
         main_layout=layout1,
-        CourseDetailWindow=CourseDetailWindow,
+        detailWindow=CourseDetailWindow,
     )
     filtre_widget1.filtres_changes.connect(
         lambda: list_container1.update(get_course_recentes_id(filtre_widget1))
@@ -156,23 +153,24 @@ def run():
         None,
         id_a_afficher=meilleurs_cheveaux_ids,
         donnees_a_afficher=donnees_a_afficher_participant,
-        get_data=get_participants_data,
+        get_data=get_cheveaux_data,
         main_layout=layout2,
-        CourseDetailWindow=ParticipantDetailWindow,
-    )
+        detailWindow=ParticipantDetailWindow,
+            )
     filtre_widget2.filtres_changes.connect(
-        lambda: list_container2.update(meilleurs_cheveaux_ids(filtre_widget2))
+        lambda: list_container2.update(get_meilleurs_cheveaux_ids(filtre_widget2))
     )
 
     page2.setLayout(layout2)
 
     # --------Page 3 - Statistiques générales -------
     def _on_graph_type_changed3(graph_type: str):
+        nonlocal current_graph_type3
         current_graph_type3 = graph_type
         update_graphe3()
 
     def update_graphe3():
-        update_graphe_data(current_graph_type3, filtre_widget3, graphe3)
+        update_graphe_data(current_graph_type3, filtre_widget3, graphe3, None)
 
     current_graph_type3 = type_graphiques_groupes[0]
     page3 = QWidget()
@@ -215,8 +213,52 @@ def run():
     page4 = QWidget()
     layout4 = QVBoxLayout()
     layout4.addWidget(QLabel("Prédictions"))
-    layout4.addStretch()
+
+    
+    # Ajouter le widget Filtre
+    colonnes_filtrage = colonnes_filtrage_courses
+    colonnes_tri = colonnes_tri_courses
+    filtre_widget4 = Filtre(
+        colonnes_filtrage,
+        colonnes_tri,
+        tri_initial="date",
+        ordre_croissant_initial=False,
+    )
+    layout4.addWidget(filtre_widget4)
+
+    # Définir les données à afficher sur les boutons (même que pour les courses)
+    donnees_a_afficher = donnees_a_afficher_boutons_course
+    courses_prediction_ids = get_course_prediction_id(filtre_widget4)
+
+    # Put course cards inside a scrollable area
+
+
+    
+    list_container4 = List_container(
+        None,
+        id_a_afficher=courses_prediction_ids,
+        donnees_a_afficher=donnees_a_afficher,
+        get_data=get_course_prediction_data,
+        main_layout=layout4,
+        detailWindow=PredictionDetailWindow,
+    )
+    filtre_widget4.filtres_changes.connect(
+        lambda: list_container4.update(get_course_prediction_id(filtre_widget4))
+    )
+
+
+
     page4.setLayout(layout4)
+
+
+
+
+
+
+
+
+
+
 
     # --------Principal ---------
 
@@ -257,4 +299,5 @@ def run():
     """This is the main function that gets run"""
 
 
-run()
+if __name__ == "__main__":
+    run()

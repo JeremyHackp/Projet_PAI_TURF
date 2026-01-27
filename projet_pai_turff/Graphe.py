@@ -1,7 +1,6 @@
-import numpy as np
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QComboBox, QSizePolicy
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from PySide6.QtWidgets import QSizePolicy, QVBoxLayout, QWidget
 
 
 class Graphe(QWidget):
@@ -22,7 +21,9 @@ class Graphe(QWidget):
         self.figure = Figure()
         self.ax = self.figure.add_subplot(111)
         self.canvas = FigureCanvas(self.figure)
-        self.canvas.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.canvas.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
+        )
 
         if layout is not None:
             layout.addWidget(self.canvas, 4)

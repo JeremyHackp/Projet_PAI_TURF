@@ -1,29 +1,24 @@
+from collections.abc import Callable
+
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import (
-    QApplication,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QStackedWidget,
-    QLabel,
-    QToolTip,
     QScrollArea,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtGui import QIcon, QPixmap, QPainter, QColor, QPalette
-from PySide6.QtCore import QSize, Qt, QTimer
+
 from .OverviewButton import OverviewButton
 
 
 class List_container(QWidget):
-
     def __init__(
         self,
         parent=None,
         id_a_afficher=[],
         donnees_a_afficher=None,
-        get_data=None,
+        get_data: Callable | None = None,
         main_layout=None,
-        CourseDetailWindow=None,
+        detailWindow=None,
     ):
         """
 
@@ -44,17 +39,16 @@ class List_container(QWidget):
         self.list_layout.setContentsMargins(6, 6, 6, 6)
         self.get_data = get_data
         self.donnees_a_afficher = donnees_a_afficher
-        self.CourseDetailWindow = CourseDetailWindow
+        self.detailWindow = detailWindow
 
         for i in id_a_afficher:
-
             # Create course overview buttons (enable auto_scale for responsive text)
             self.list_layout.addWidget(
                 OverviewButton(
                     i,
                     self.get_data,
                     self.donnees_a_afficher,
-                    self.CourseDetailWindow,
+                    self.detailWindow,
                     auto_scale=True,
                 )
             )
@@ -64,8 +58,8 @@ class List_container(QWidget):
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(self)
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         if main_layout is not None:
             main_layout.addWidget(scroll_area)
@@ -89,14 +83,13 @@ class List_container(QWidget):
         self.clear_layout(self.list_layout)
         # 2. Recréer les boutons
         for i in id_a_afficher:
-
             # Create course overview buttons (enable auto_scale for responsive text)
             self.list_layout.addWidget(
                 OverviewButton(
                     i,
                     self.get_data,
                     self.donnees_a_afficher,
-                    self.CourseDetailWindow,
+                    self.detailWindow,
                     auto_scale=True,
                 )
             )

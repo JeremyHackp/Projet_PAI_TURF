@@ -1,12 +1,11 @@
 from pathlib import Path
-from typing import Tuple, Optional
 
-from PySide6.QtWidgets import QPushButton, QToolTip
-from PySide6.QtGui import QIcon, QPixmap, QPainter, QColor
 from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
+from PySide6.QtWidgets import QPushButton, QToolTip
 
 
-def load_icon_pair(icon_path: Path) -> Tuple[Optional[QIcon], Optional[QIcon]]:
+def load_icon_pair(icon_path: Path) -> tuple[QIcon | None, QIcon | None]:
     """Load an icon and return (normal_icon, dark_icon).
 
     If the file does not exist or cannot be loaded, returns (None, None).
@@ -26,7 +25,7 @@ def load_icon_pair(icon_path: Path) -> Tuple[Optional[QIcon], Optional[QIcon]]:
 
     # Create a darkened version (semi-transparent black overlay)
     dark_pix = QPixmap(pix.size())
-    dark_pix.fill(Qt.transparent)
+    dark_pix.fill(Qt.GlobalColor.transparent)
     painter = QPainter(dark_pix)
     painter.drawPixmap(0, 0, pix)
     painter.fillRect(dark_pix.rect(), QColor(0, 0, 0, 140))

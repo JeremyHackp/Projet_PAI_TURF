@@ -8,7 +8,8 @@ readme = "README.md"
 dependencies = [
     "pandas[parquet]>=2,<3",
     "pyside6",
-    "matplotlib"
+    "matplotlib",
+    "shiboken6>=6.10.0",
 ]
 
 
@@ -24,6 +25,7 @@ test = [
     "ipykernel>=6.29.0,<7",
     "ipywidgets>=8.0.3,<9",
     "pytest-xdist>=3.6.1,<4",
+    "coverage>=7.13.1",
 ]
 docs = [
     "Sphinx>=8.0.0,<9",

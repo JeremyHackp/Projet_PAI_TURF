@@ -1,18 +1,16 @@
-from typing import Any, Callable, Optional, Dict
+from collections.abc import Callable
+from typing import Any
+from shiboken6 import isValid
 
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QColor, QFont, QTextDocument
 from PySide6.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QLabel,
-    QDialog,
-    QScrollArea,
     QGraphicsDropShadowEffect,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
     QSizePolicy,
 )
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QTextDocument, QColor
 
 
 class OverviewButton(QPushButton):
@@ -121,7 +119,7 @@ class OverviewButton(QPushButton):
         else:
             self._content_label = QLabel(self)
             self._content_label.setObjectName("overview_label")
-            self._content_label.setTextFormat(Qt.RichText)
+            self._content_label.setTextFormat(Qt.TextFormat.RichText)
             self._content_label.setText(display_html)
             self._content_label.setWordWrap(True)
             # Rendre le label transparent pour éviter le carré blanc
@@ -135,7 +133,9 @@ class OverviewButton(QPushButton):
                 self._content_label.setFont(label_font)
             except Exception:
                 pass
-            self._content_label.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+            self._content_label.setAttribute(
+                Qt.WidgetAttribute.WA_TransparentForMouseEvents, True
+            )
             try:
                 # Certains styles remplissent le background; désactiver le auto-fill
                 self._content_label.setAutoFillBackground(False)
@@ -213,6 +213,9 @@ class OverviewButton(QPushButton):
         if not hasattr(self, "_content_label") or self._content_label is None:
             return
 
+        if not isValid(self):
+            return
+
         # If not auto-scaling, set explicit font size
         if not self.auto_scale:
             f = self._content_label.font()
@@ -222,11 +225,17 @@ class OverviewButton(QPushButton):
 
         # Auto-scale: try sizes from max down to min and pick first that fits
         # We'll use QTextDocument to measure rendered HTML height at a given width
-        available_width = max(10, self.width() - 24)  # consider margins
+        widget_width = self.width()
+        if widget_width <= 0:
+            # Widget not yet laid out, defer the calculation
+            QTimer.singleShot(100, self._update_font_size)
+            return
+
+        available_width = max(10, widget_width - 24)  # consider margins
         # account for layout margins if present
         try:
             lm = self.layout().contentsMargins()
-            available_width = max(10, self.width() - (lm.left() + lm.right() + 24))
+            available_width = max(10, widget_width - (lm.left() + lm.right() + 24))
         except Exception:
             pass
 
@@ -355,7 +364,7 @@ class OverviewButton(QPushButton):
 
         # éviter ouvrir 10 fenêtres
         if self._detail_window is None:
-            self._detail_window = self.detail_window_class(id=self.id, parent=self)
+            self._detail_window = self.detail_window_class(id=self.id, parent=self, get_data=self.get_data)
 
         self._detail_window.show()
         self._detail_window.raise_()

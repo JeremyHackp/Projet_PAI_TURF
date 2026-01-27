@@ -1,41 +1,44 @@
-from typing import Any, Dict, Optional
+from typing import Any
+
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
+    QComboBox,
     QDialog,
-    QVBoxLayout,
     QHBoxLayout,
     QLabel,
     QPushButton,
     QScrollArea,
+    QVBoxLayout,
     QWidget,
-    QComboBox,
 )
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureWidget
-from matplotlib.figure import Figure
-from PySide6.QtGui import QFont
-from PySide6.QtCore import Qt
-from .data_access import get_participants_data
 
-from .List_container import List_container
-
-from .data_access import donnees_a_afficher_detail_participant
-from .Graphe import Graphe
-from .data_access import type_graphiques_participants
-from .data_access import colonnes_filtrage_types_de_courses_pour_participants
+from .data_access import (
+    colonnes_filtrage_types_de_courses_pour_participants,
+    donnees_a_afficher_detail_participant,
+    get_participants_data,
+    type_graphiques_participants,
+    update_graphe_data,
+)
 from .Filtre import Filtre
-from .data_access import update_graphe_data
+from .Graphe import Graphe
 
 
 class ParticipantDetailWindow(QDialog):
-
-    def __init__(self, id: Any, parent=None):
+    def __init__(self, id: Any, parent=None, get_data=None):
         super().__init__(parent)
 
         self.participant_id = id
 
         self.donnees_a_afficher = donnees_a_afficher_detail_participant
-        self.get_participants_data = get_participants_data
-        self.particpant_data = self.get_participants_data(self.participant_id)
+        
+        if get_data is not None:
+            self.get_data = get_data
+        else:
+            self.get_data = get_participants_data
+
+
+        self.particpant_data = self.get_data(self.participant_id)
 
         self.setWindowTitle(f"Détails - {self.particpant_data.get('name', 'Cheval')}")
         self.setMinimumSize(600, 500)
@@ -122,11 +125,11 @@ class ParticipantDetailWindow(QDialog):
         # ===== Bouton fermer =====
         close_btn = QPushButton("Fermer")
         close_btn.clicked.connect(self.close)
-        main_layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        main_layout.addWidget(close_btn, alignment=Qt.AlignmentFlag.AlignRight)
 
     def _on_graph_type_changed(self, graph_type: str):
         self.current_graph_type = graph_type
         self.update_graphe()
 
     def update_graphe(self):
-        update_graphe_data(self.current_graph_type, self.filtre_widget, self.graphe)
+        update_graphe_data(self.current_graph_type, self.filtre_widget, self.graphe, self.participant_id, self.get_data)

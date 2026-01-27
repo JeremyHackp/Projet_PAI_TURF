@@ -7,24 +7,23 @@ Les dictionnaires colonnes_filtrage: Dict[str, type], colonnes_tri: Dict[str, st
 
 """
 
-from typing import Any, Dict, List, Optional
 from enum import Enum
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QGroupBox,
     QComboBox,
+    QDialog,
+    QGroupBox,
+    QHBoxLayout,
     QLabel,
+    QLineEdit,
+    QMessageBox,
     QPushButton,
     QScrollArea,
-    QDialog,
-    QMessageBox,
     QSpinBox,
-    QLineEdit,
+    QVBoxLayout,
+    QWidget,
 )
-from PySide6.QtCore import Qt, Signal
 
 
 class OperateurComparaison(Enum):
@@ -39,7 +38,7 @@ class OperateurComparaison(Enum):
 
 
 class DialogAjouterFiltre(QDialog):
-    def __init__(self, colonnes_filtrage: Dict[str, type], parent=None):
+    def __init__(self, colonnes_filtrage: dict[str, type], parent=None):
         super().__init__(parent)
         self.setWindowTitle("Ajouter un filtre")
         self.setMinimumWidth(400)
@@ -56,7 +55,7 @@ class DialogAjouterFiltre(QDialog):
         row_col = QHBoxLayout()
         row_col.addWidget(QLabel("Colonne:"))
         self.combo_colonne = QComboBox()
-        self.combo_colonne.addItems(self.colonnes_filtrage.keys())
+        self.combo_colonne.addItems(list(self.colonnes_filtrage.keys()))
         self.combo_colonne.currentTextChanged.connect(self._on_colonne_changed)
         row_col.addWidget(self.combo_colonne)
         layout.addLayout(row_col)
@@ -89,7 +88,7 @@ class DialogAjouterFiltre(QDialog):
     def _create_value_widget(self):
         type_colonne = self.colonnes_filtrage.get(self.combo_colonne.currentText(), str)
 
-        if type_colonne == int:
+        if type_colonne is int:
             self.widget_valeur = QSpinBox()
             self.widget_valeur.setRange(-999999, 999999)
         else:
@@ -132,10 +131,10 @@ class Filtre(QWidget):
 
     def __init__(
         self,
-        colonnes_filtrage: Dict[str, type],
-        colonnes_tri: Dict[str, str] = None,
+        colonnes_filtrage: dict[str, type],
+        colonnes_tri: dict[str, str] | None = None,
         parent=None,
-        tri_initial: Optional[str] = None,  # clé de colonne
+        tri_initial: str | None = None,  # clé de colonne
         ordre_croissant_initial: bool = True,
     ):
         super().__init__(parent)
@@ -190,6 +189,25 @@ class Filtre(QWidget):
         filtres_group.setLayout(filtres_layout)
         main_layout.addWidget(filtres_group)
 
+        # --- nb ---
+        nb_group = QGroupBox("Nombre de données")
+        nb_layout = QHBoxLayout()
+
+        nb_layout.addWidget(QLabel("Nombre de données:"))
+        
+        self.widget_nb = QSpinBox()
+        self.widget_nb = QSpinBox()
+        self.widget_nb.setRange(5, 999999)
+        self.widget_nb.setValue(10)
+        btn_valider_nb=QPushButton("Valider")
+        btn_valider_nb.clicked.connect(self._on_nb_valided)
+        nb_layout.addWidget(self.widget_nb)
+        nb_layout.addWidget(btn_valider_nb)
+
+
+        nb_group.setLayout(nb_layout)
+        main_layout.addWidget(nb_group)
+
         # --- Tri ---
         if self.tri:
             tri_group = QGroupBox("Tri")
@@ -198,7 +216,7 @@ class Filtre(QWidget):
             tri_layout.addWidget(QLabel("Trier par:"))
             self.combo_tri = QComboBox()
             self.combo_tri.addItem("Aucun")
-            self.combo_tri.addItems(self.colonnes_tri.values())
+            self.combo_tri.addItems(list(self.colonnes_tri.values()))
             self.combo_tri.currentTextChanged.connect(self._on_tri_changed)
             tri_layout.addWidget(self.combo_tri)
 
@@ -220,7 +238,7 @@ class Filtre(QWidget):
 
     def _ouvrir_dialog_filtre(self):
         dialog = DialogAjouterFiltre(self.colonnes_filtrage, self)
-        if dialog.exec() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             filtre = dialog.get_filtre()
             if filtre:
                 self._ajouter_filtre(filtre)
@@ -246,7 +264,7 @@ class Filtre(QWidget):
 
         while row.count():
             item = row.takeAt(0)
-            if item.widget():
+            if item and item.widget():
                 item.widget().deleteLater()
 
         self.filtres_layout.removeItem(row)
@@ -264,13 +282,18 @@ class Filtre(QWidget):
         self.ordre_croissant = text == "Croissant"
         self.filtres_changes.emit()
 
-    def get_filtres(self) -> List[tuple]:
+    def _on_nb_valided(self):
+        self.filtres_changes.emit()
+
+    def get_filtres(self) -> list[tuple]:
         return self.filtres_actifs.copy()
 
-    def get_tri(self) -> Optional[tuple]:
+    def get_tri(self) -> tuple | None:
         if self.colonne_tri and self.tri:
             return (self.colonne_tri, self.ordre_croissant)
         return None
+    def get_nb(self) -> int:
+        return self.widget_nb.value()
 
     def get_state(self) -> dict:
         """renvoie un dictionnaire de la forme {
@@ -286,7 +309,9 @@ class Filtre(QWidget):
         return {"filtres": self.get_filtres(), "tri": self.get_tri()}
 
     def reinitialiser(self):
+        self.widget_nb.setValue(10)
         self.filtres_actifs.clear()
+        
 
         while self.filtres_layout.count():
             item = self.filtres_layout.takeAt(0)
