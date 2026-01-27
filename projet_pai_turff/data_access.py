@@ -1,5 +1,3 @@
-import random
-
 from .Filtre import Filtre
 from .Graphe import Graphe
 import random
@@ -37,7 +35,6 @@ donnees_a_afficher_detail_participant = {
     "odds": "Cotes",
 }
 
-
 """
 clés sur lesquels l'on peut filtrer et trier les courses et participants.
 colonnes_filtrage est de la forme {clé_donnee: type_donnee}
@@ -63,7 +60,6 @@ colonnes_tri_participants = {
     "meilleurs toutes catégories": "Meilleurs toutes catégories",
     "meilleurs categorie1": "Meilleurs categorie1",
 }
-
 
 """Fonctions a remplir pour l'accès aux données réelles.
    Les fonctions ci-dessous simulent l'accès à une base de données.
@@ -177,63 +173,109 @@ def get_course_prediction_id(filtre_widget: Filtre) -> list[int]:
 
 
 def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
-    """Fonction simulée pour obtenir une liste d'IDs de course filtrée.
-
-    Args:
-        filtre_widget: Instance du widget Filtre contenant les critères de filtrage et de tri, si tri=aucun, trier du plus recent au moins recent.
-
-    Returns:
-        Liste des IDs de course correspondant aux critères, ordonnée selon le tri.
     """
-
-    filtre = filtre_widget.get_state()  # noqa: F841
-    """renvoie un dictionnaire de la forme {
-    'filtres': List[
-        Tuple[str(valeure filtrée),
-        OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),
-        Any(valeure a comparer)]],
-
-    'tri': Optional[
-        Tuple[str(valeure sur laquelle on tri),
-        bool(True : ordre_croissant, False : décroissant)]}]}
+    Retourne les IDs des courses récentes en appliquant filtres et tri.
     """
+    filtre_state = filtre_widget.get_state()
+    filtres = filtre_state.get("filtres", [])
+    tri = filtre_state.get("tri")
 
+    # --- mappings SQL ---
+    FILTRE_SQL_MAP = {
+        "date": "r.DateReunion",
+        "name": "c.LabelCourse",
+        "distance": "c.Distance",
+        "place": "r.NomHippodrome",
+    }
+
+    OP_SQL_MAP = {
+        "=": lambda col, v: (f"{col} = ?", v),
+        "!=": lambda col, v: (f"{col} != ?", v),
+        ">": lambda col, v: (f"{col} > ?", v),
+        "<": lambda col, v: (f"{col} < ?", v),
+        ">=": lambda col, v: (f"{col} >= ?", v),
+        "<=": lambda col, v: (f"{col} <= ?", v),
+        "contient": lambda col, v: (f"{col} LIKE ?", f"%{v}%"),
+        "ne contient pas": lambda col, v: (f"{col} NOT LIKE ?", f"%{v}%"),
+    }
+
+    TRI_SQL_MAP = {
+        "date": "r.DateReunion",
+        "name": "c.LabelCourse",
+        "distance": "c.Distance",
+        "place": "r.NomHippodrome",
+    }
+
+    # --- construction WHERE ---
+    where_clauses = []
+    params = []
+
+    for champ, operateur, valeur in filtres:
+        colonne = FILTRE_SQL_MAP.get(champ)
+        if not colonne:
+            continue
+
+        handler = OP_SQL_MAP.get(operateur)
+        if not handler:
+            continue
+
+        clause, param = handler(colonne, valeur)
+        where_clauses.append(clause)
+        params.append(param)
+
+    where_sql = ""
+    if where_clauses:
+        where_sql = "WHERE " + " AND ".join(where_clauses)
+
+    # --- construction ORDER BY ---
+    order_sql = "r.DateReunion DESC"
+    if tri is not None:
+        cle_tri, ordre_croissant = tri
+        colonne_tri = TRI_SQL_MAP.get(cle_tri, "r.DateReunion")
+        sens = "ASC" if ordre_croissant else "DESC"
+        order_sql = f"{colonne_tri} {sens}"
+
+    # --- requête ---
     with get_connection() as conn:
         cur = conn.cursor()
-
-        cur.execute("""
-                SELECT
-                    c.NumCourse,
-                    c.NumReunion,
-                    c.DateReunion,
-                    c.LabelCourse,
-                    r.NomHippodrome,
-                    c.Distance,
-                    c.Unite,
-                    c.NbrParticipants,
-                    (
-                        c.MontantOffert1er +
-                        IFNULL(c.MontantOffert2eme, 0) +
-                        IFNULL(c.MontantOffert3eme, 0) +
-                        IFNULL(c.MontantOffert4eme, 0) +
-                        IFNULL(c.MontantOffert5eme, 0)
-                    ) AS prize_pool,
-                    c.TypePiste,
-                    c.PenetrometreIntitule,
-                    c.CategorieParticularite
-                FROM Courses c
-                JOIN Reunions r
-                  ON r.NumReunion = c.NumReunion
-                 AND r.DateReunion = c.DateReunion
-                ORDER BY r.DateReunion DESC, c.NumCourse
-                LIMIT 10
-            """)
+        cur.execute(
+            f"""
+            SELECT
+                c.NumCourse,
+                c.NumReunion,
+                c.DateReunion,
+                c.LabelCourse,
+                r.NomHippodrome,
+                c.Distance,
+                c.Unite,
+                c.NbrParticipants,
+                (
+                    c.MontantOffert1er +
+                    IFNULL(c.MontantOffert2eme, 0) +
+                    IFNULL(c.MontantOffert3eme, 0) +
+                    IFNULL(c.MontantOffert4eme, 0) +
+                    IFNULL(c.MontantOffert5eme, 0)
+                ) AS prize_pool,
+                c.TypePiste,
+                c.PenetrometreIntitule,
+                c.CategorieParticularite
+            FROM Courses c
+            JOIN Reunions r
+              ON r.NumReunion = c.NumReunion
+             AND r.DateReunion = c.DateReunion
+            {where_sql}
+            ORDER BY {order_sql}, c.NumCourse
+            LIMIT 10
+            """,
+            params,
+        )
 
         rows = cur.fetchall()
 
+    # --- remplissage cache ---
     course_cache.clear()
-
     ui_id = 1
+
     for row in rows:
         d = row["DateReunion"]
 
@@ -262,37 +304,42 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
 
 def get_meilleurs_cheveaux_ids(filtre_widget):
     """
-    Charge les meilleurs chevaux (1 par nom),
-    avec toutes les infos participant disponibles.
+    Charge les meilleurs chevaux (1 par nom), avec toutes les infos participant disponibles,
+    triés selon le filtre sélectionné.
     """
     participants_cache.clear()
 
+    filtre = filtre_widget.get_state()
+    tri = filtre.get("tri", ("meilleurs toutes catégories", False))
+    tri_nom, ordre_croissant = tri
+
+    # Map du tri vers les colonnes SQL
+    TRI_SQL_MAP = {
+        "meilleurs toutes catégories": "p.GainsCarriere",
+        "meilleurs categorie1": "p.NbrVictoires",
+    }
+    order_column = TRI_SQL_MAP.get(tri_nom, "p.GainsCarriere")
+    order_sql = "ASC" if ordre_croissant else "DESC"
+
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute("""
-            SELECT
-                p.Nom,
-                p.Age,
-                p.Driver,
-                p.Entraineur,
-                p.Cote,
-                p.GainsCarriere,
-                p.Sexe
-                FROM Participants p
-                WHERE p.ROWID IN (
-                SELECT ROWID
+        cur.execute(f"""
+            SELECT p.Nom, p.Age, p.Driver, p.Entraineur, p.Cote, p.GainsCarriere, p.Sexe, p.NbrVictoires
+            FROM Participants p
+            JOIN (
+                SELECT Nom, MAX(DateReunion || printf('%03d', NumCourse)) AS last_participation
                 FROM Participants
-                WHERE GainsCarriere IS NOT NULL
                 GROUP BY Nom
-                HAVING GainsCarriere = MAX(GainsCarriere)
-                )
-                ORDER BY p.GainsCarriere DESC
-            LIMIT 20;
+            ) last
+              ON last.Nom = p.Nom
+             AND (p.DateReunion || printf('%03d', p.NumCourse)) = last.last_participation
+            ORDER BY {order_column} {order_sql}
+            LIMIT 20
         """)
-
         rows = cur.fetchall()
 
     for i, row in enumerate(rows, start=1):
+        print(row["NbrVictoires"])
         participants_cache.participants[i] = {
             "name": row["Nom"],
             "age": row["Age"],
@@ -301,11 +348,11 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             "odds": row["Cote"],
             "sex": row["Sexe"],
             "total_gains": f"{row['GainsCarriere']}€",
+            "nbr_victoires": row["NbrVictoires"] if row["NbrVictoires"] is not None else 0,
+
         }
 
     return list(participants_cache.participants.keys())
-
-
 
 
 
