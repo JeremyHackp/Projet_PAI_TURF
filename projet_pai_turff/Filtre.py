@@ -306,7 +306,7 @@ class Filtre(QWidget):
             Tuple[str(valeure sur laquelle on tri),
             bool(True : ordre_croissant, False : décroissant)]}]}
         """
-        return {"filtres": self.get_filtres(), "tri": self.get_tri()}
+        return {"filtres": self.get_filtres(), "tri": self.get_tri(), "nbr" : self.get_nb()}
 
     def reinitialiser(self):
         self.widget_nb.setValue(10)

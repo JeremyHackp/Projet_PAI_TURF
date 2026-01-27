@@ -89,11 +89,22 @@ class ParticipantsCache:
 
 participants_cache = ParticipantsCache()
 
+meilleurs_chevaux = ParticipantsCache()
+
 
 
 
 def get_course_prediction_data(course_id):
     return get_course_data(course_id)
+
+def prediction_ordre_participants(course_id):
+    """Simule la prédiction de l'ordre des ids des participants d'une course."""
+    participants = [3, 6, 2, 1, 4, 5]
+    return participants
+def prediction_ordre_participants_verification(course_id):
+    """Simule la récupération des ids des participants d'une course depuis la base de données."""
+    participants = [3, 4, 2, 1, 6, 5]
+    return participants
 
 
 def get_course_data(course_id):
@@ -101,7 +112,7 @@ def get_course_data(course_id):
 
 def get_cheveaux_data(cheval_id):
     """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
-    return get_participants_data(cheval_id)
+    return meilleurs_chevaux.participants.get(cheval_id, {})
 
 def get_participant_predits_data(participant_id):
     """Simule la récupération des données d'un participant prédit depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course dans la fenetre de prédiction."""
@@ -179,6 +190,7 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
     filtre_state = filtre_widget.get_state()
     filtres = filtre_state.get("filtres", [])
     tri = filtre_state.get("tri")
+    nbr = filtre_state.get("nbr")
 
     # --- mappings SQL ---
     FILTRE_SQL_MAP = {
@@ -265,7 +277,7 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
              AND r.DateReunion = c.DateReunion
             {where_sql}
             ORDER BY {order_sql}, c.NumCourse
-            LIMIT 10
+            LIMIT {nbr}
             """,
             params,
         )
@@ -307,11 +319,11 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
     Charge les meilleurs chevaux (1 par nom), avec toutes les infos participant disponibles,
     triés selon le filtre sélectionné.
     """
-    participants_cache.clear()
 
     filtre = filtre_widget.get_state()
     tri = filtre.get("tri", ("meilleurs toutes catégories", False))
     tri_nom, ordre_croissant = tri
+    nbr = filtre.get("nbr")
 
     # Map du tri vers les colonnes SQL
     TRI_SQL_MAP = {
@@ -334,13 +346,12 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
               ON last.Nom = p.Nom
              AND (p.DateReunion || printf('%03d', p.NumCourse)) = last.last_participation
             ORDER BY {order_column} {order_sql}
-            LIMIT 20
+            LIMIT {nbr}
         """)
         rows = cur.fetchall()
 
     for i, row in enumerate(rows, start=1):
-        print(row["NbrVictoires"])
-        participants_cache.participants[i] = {
+        meilleurs_chevaux.participants[i] = {
             "name": row["Nom"],
             "age": row["Age"],
             "jockey": row["Driver"],
@@ -352,7 +363,7 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
 
         }
 
-    return list(participants_cache.participants.keys())
+    return list(meilleurs_chevaux.participants.keys())
 
 
 
@@ -388,11 +399,21 @@ def update_graphe_data(
     participant_id: int | None = None,
     get_data=None
 ):
+
     if participant_id is None:
         return
+    if get_data is get_participants_data:
+        participant = participants_cache.participants.get(participant_id)
 
-    participant = participants_cache.participants.get(participant_id)
+    elif get_data is get_cheveaux_data:
+        participant = meilleurs_chevaux.participants.get(participant_id)
+
+    else:
+        print("Source de données inconnue pour le graphe")
+        return
+
     if not participant:
+        print("Participant/Cheval introuvable dans le cache")
         return
     """
     Args:
@@ -404,7 +425,8 @@ def update_graphe_data(
                 get_participant_data pour la fenetre des participants de courses et None pour les stats générales.
     """
     # Simuler la récupération des données filtrées
-    filtres = filtre_widget.get_filtres()  # noqa: F841
+    filtres = filtre_widget.get_state()  # noqa: F841
+    nbr = filtres.get("nbr")
     participant_name = participant.get("name")
     if not participant_name:
         return
@@ -416,7 +438,7 @@ def update_graphe_data(
 
             if graph_type == "Performance au cours des courses":
                 cur.execute(
-                    """
+                    f"""
                     SELECT
                         DateReunion,
                         CAST(PositionArrivee AS INTEGER) AS position
@@ -427,7 +449,7 @@ def update_graphe_data(
                     SUBSTR(DateReunion, 5, 4) || '-' ||
                     SUBSTR(DateReunion, 3, 2) || '-' ||
                     SUBSTR(DateReunion, 1, 2) ASC
-                    LIMIT 10
+                    LIMIT {nbr}
                     """,
                     (participant_name,),
                 )
@@ -460,7 +482,7 @@ def update_graphe_data(
 
             elif graph_type == "Cotes au cours des courses":
                 cur.execute(
-                    """
+                    f"""
                     SELECT
                     DateReunion,
                     Cote
@@ -471,7 +493,7 @@ def update_graphe_data(
                     SUBSTR(DateReunion, 5, 4) || '-' ||
                     SUBSTR(DateReunion, 3, 2) || '-' ||
                     SUBSTR(DateReunion, 1, 2) ASC
-                    LIMIT 10
+                    LIMIT {nbr}
                     """,
                     (participant_name,),
                 )
