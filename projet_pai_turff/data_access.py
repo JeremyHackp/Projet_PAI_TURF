@@ -12,6 +12,17 @@ from .db.connection import get_connection
    chaque dictionnaire est de la forme {clé_dans_les_données: "Label à afficher"}.
 """
 
+OP_SQL_MAP = {
+    "=": lambda col, v: (f"{col} = ?", v),
+    "!=": lambda col, v: (f"{col} != ?", v),
+    ">": lambda col, v: (f"{col} > ?", v),
+    "<": lambda col, v: (f"{col} < ?", v),
+    ">=": lambda col, v: (f"{col} >= ?", v),
+    "<=": lambda col, v: (f"{col} <= ?", v),
+    "contient": lambda col, v: (f"{col} LIKE ?", f"%{v}%"),
+    "ne contient pas": lambda col, v: (f"{col} NOT LIKE ?", f"%{v}%"),
+}
+
 donnees_a_afficher_boutons_course = {
     "name": "Nom",
     "date": "Date",
@@ -28,11 +39,21 @@ donnees_a_afficher_detail_course = {
     "date": "Date",
     "place": "Lieu",
     "distance": "Distance",
+    "horse_count": "NbrParticipants",
+    "prize_pool": "Récompenses",
+    "surface": "Type Piste",
+    "conditions": "Penetrometre Intitule",
+    "handicap": "Non",
+    "category": "Categorie Particularite"
 }
 donnees_a_afficher_detail_participant = {
     "name": "Nom",
     "jockey": "Jockey",
     "odds": "Cotes",
+    "age": "Age",
+    "trainer": "Entraineur",
+    "victories": "NbrVictoires",
+    "total_gains": "GainsCarriere"
 }
 
 """
@@ -57,12 +78,12 @@ colonnes_filtrage_participants = {
     "odds": str,
 }
 colonnes_tri_participants = {
-    "meilleurs toutes catégories": "Meilleurs toutes catégories",
-    "meilleurs categorie1": "Meilleurs categorie1",
+    "meilleurs toutes catégories": "Meilleurs Gains Totaux",
+    "meilleurs categorie1": "Meilleur nombre de Victoires",
 }
 
 """Fonctions a remplir pour l'accès aux données réelles.
-   Les fonctions ci-dessous simulent l'accès à une base de données.
+   Les fonctions ci-dessous effectuent l'accès à une base de données.
 """
 
 
@@ -145,7 +166,9 @@ def get_course_participants_id(course_ui_id):
                 p.Driver,
                 p.Entraineur,
                 p.Cote,
-                p.PositionArrivee
+                p.PositionArrivee,
+                p.NbrVictoires,
+                p.GainsCarriere
             FROM Participants p
             WHERE p.NumCourse = ?
               AND p.NumReunion = ?
@@ -170,6 +193,8 @@ def get_course_participants_id(course_ui_id):
             "jockey": row["Driver"],
             "trainer": row["Entraineur"],
             "odds": row["Cote"] if row["Cote"] else "N/A",
+            "victories": row["NbrVictoires"],
+            "total_gains": f"{row['GainsCarriere']}€",
         }
         ui_id += 1
 
@@ -200,16 +225,6 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
         "place": "r.NomHippodrome",
     }
 
-    OP_SQL_MAP = {
-        "=": lambda col, v: (f"{col} = ?", v),
-        "!=": lambda col, v: (f"{col} != ?", v),
-        ">": lambda col, v: (f"{col} > ?", v),
-        "<": lambda col, v: (f"{col} < ?", v),
-        ">=": lambda col, v: (f"{col} >= ?", v),
-        "<=": lambda col, v: (f"{col} <= ?", v),
-        "contient": lambda col, v: (f"{col} LIKE ?", f"%{v}%"),
-        "ne contient pas": lambda col, v: (f"{col} NOT LIKE ?", f"%{v}%"),
-    }
 
     TRI_SQL_MAP = {
         "date": "r.DateReunion",
@@ -318,12 +333,30 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
     """
     Charge les meilleurs chevaux (1 par nom), avec toutes les infos participant disponibles,
     triés selon le filtre sélectionné.
+
+
     """
 
-    filtre = filtre_widget.get_state()
-    tri = filtre.get("tri", ("meilleurs toutes catégories", False))
+    FILTRE_SQL_MAP = {
+        "name": "p.Nom",
+        "race": "p.Sexe",
+        "jokey": "p.Driver",
+        "entraineur": "p.Entraineur",
+        "age": "p.Age",
+        "odds": "p.Cote"
+    }
+
+
+    filtres = filtre_widget.get_state()
+    tri = filtres.get("tri") or ("meilleurs toutes catégories", False)
+
+    # sécurité si format inattendu
+    if not isinstance(tri, (list, tuple)) or len(tri) != 2:
+        tri = ("meilleurs toutes catégories", False)
+
     tri_nom, ordre_croissant = tri
-    nbr = filtre.get("nbr")
+    nbr = filtres.get("nbr")
+    filtre = filtres.get("filtres") or []
 
     # Map du tri vers les colonnes SQL
     TRI_SQL_MAP = {
@@ -333,22 +366,53 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
     order_column = TRI_SQL_MAP.get(tri_nom, "p.GainsCarriere")
     order_sql = "ASC" if ordre_croissant else "DESC"
 
+    where_clauses = []
+    params = []
+
+    for champ, operateur, valeur in filtre:
+        col_sql = FILTRE_SQL_MAP.get(champ)
+        op_func = OP_SQL_MAP.get(operateur)
+
+        if not col_sql or not op_func or valeur in (None, ""):
+            continue
+
+        # typage auto
+        if champ == "age":
+            valeur = int(valeur)
+
+        sql_snippet, param = op_func(col_sql, valeur)
+        where_clauses.append(sql_snippet)
+        params.append(param)
+
+    where_sql = ""
+    if where_clauses:
+        where_sql = "AND " + " AND ".join(where_clauses)
+
+    query = f"""
+         SELECT p.Nom, p.Age, p.Driver, p.Entraineur, p.Cote,
+                p.GainsCarriere, p.Sexe, p.NbrVictoires
+         FROM Participants p
+         JOIN (
+             SELECT Nom, MAX(DateReunion || printf('%03d', NumCourse)) AS last_participation
+             FROM Participants
+             GROUP BY Nom
+         ) last
+           ON last.Nom = p.Nom
+          AND (p.DateReunion || printf('%03d', p.NumCourse)) = last.last_participation
+         WHERE 1=1
+         {where_sql}
+         ORDER BY {order_column} {order_sql}
+         LIMIT ?
+     """
+
+    params.append(nbr)
+
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute(f"""
-            SELECT p.Nom, p.Age, p.Driver, p.Entraineur, p.Cote, p.GainsCarriere, p.Sexe, p.NbrVictoires
-            FROM Participants p
-            JOIN (
-                SELECT Nom, MAX(DateReunion || printf('%03d', NumCourse)) AS last_participation
-                FROM Participants
-                GROUP BY Nom
-            ) last
-              ON last.Nom = p.Nom
-             AND (p.DateReunion || printf('%03d', p.NumCourse)) = last.last_participation
-            ORDER BY {order_column} {order_sql}
-            LIMIT {nbr}
-        """)
+        cur.execute(query, params)
         rows = cur.fetchall()
+
+    meilleurs_chevaux.participants.clear()
 
     for i, row in enumerate(rows, start=1):
         meilleurs_chevaux.participants[i] = {
@@ -359,12 +423,10 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             "odds": row["Cote"],
             "sex": row["Sexe"],
             "total_gains": f"{row['GainsCarriere']}€",
-            "nbr_victoires": row["NbrVictoires"] if row["NbrVictoires"] is not None else 0,
-
+            "victories": row["NbrVictoires"] or 0,
         }
 
     return list(meilleurs_chevaux.participants.keys())
-
 
 
 # Définition des types de graphiques et des colonnes de filtrage pour les participants
