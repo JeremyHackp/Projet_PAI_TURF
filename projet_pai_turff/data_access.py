@@ -139,9 +139,28 @@ def get_cheveaux_data(cheval_id):
     """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
     return meilleurs_chevaux.participants.get(cheval_id, {})
 
-def get_participant_predits_data(participant_id):
-    """Simule la récupération des données d'un participant prédit depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course dans la fenetre de prédiction."""
-    return get_participants_data(participant_id)
+def get_participant_predits_data(participant_id, course_id=None):
+    """
+    Récupère les données d'un participant pour une course.
+    Si le cache participants n'est pas rempli, on le remplit via la course.
+    """
+    print(f"[DEBUG] get_participant_predits_data appelé pour participant_id={participant_id}, course_id={course_id}")
+
+    # Si le participant n'est pas dans le cache et qu'on a l'id de course, on charge le cache
+    if participant_id not in participants_cache.participants and course_id is not None:
+        print(f"[DEBUG] Participant {participant_id} absent du cache, chargement depuis course {course_id}")
+        get_course_participants_id(course_id)
+
+    # Récupération depuis le cache
+    data = participants_cache.participants.get(participant_id)
+    if not data:
+        print(f"[WARNING] Pas de données trouvées pour le participant {participant_id}")
+        # Renvoie un dict par défaut pour éviter les erreurs
+        data = {"id": participant_id, "name": f"Participant {participant_id}", "odds": 0.0}
+
+    print(f"[DEBUG] Participant {participant_id} : {data}")
+    return data
+
 
 def get_participants_data(participant_id):
     return participants_cache.participants.get(participant_id, {})
