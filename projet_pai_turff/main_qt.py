@@ -269,15 +269,6 @@ def run():
     page4.setLayout(layout4)
 
 
-
-
-
-
-
-
-
-
-
     # --------Principal ---------
 
     # Ajouter les pages au QStackedWidget
