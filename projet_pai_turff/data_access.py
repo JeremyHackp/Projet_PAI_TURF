@@ -8,6 +8,7 @@ pour maintenir la compatibilité avec le code existant.
 # Import des widgets et classes externes
 from .Filtre import Filtre
 from .Graphe import Graphe
+from .db.connection import get_connection
 
 # Import des constantes
 from .constants import (

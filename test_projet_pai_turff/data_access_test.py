@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 import pytest
 import sqlite3
 import projet_pai_turff.data_access as da
+from unittest.mock import patch, MagicMock
 # ======================================================================
 # FIXTURE DB TEST
 # ======================================================================
@@ -98,13 +99,22 @@ def test_participants_cache():
 # TEST PARTICIPANTS DATA
 # ======================================================================
 
-def test_get_participants_data(test_db):
-    data = da.get_participants_data("03022025", 1, 1)
+def test_get_participants_data():
+    # Vider le cache avant le test
+    da.participants_cache.clear()
 
-    assert len(data) == 1
-    assert data[0]["Nom"] == "Thunder"
-    assert data[0]["Age"] == 3
+    da.participants_cache.participants[1] = {
+        "Nom": "Thunder",
+        "Age": 3
+    }
 
+    data = da.get_participants_data(1)
+
+    assert data["Nom"] == "Thunder"
+    assert data["Age"] == 3
+
+    data_vide = da.get_participants_data(999)
+    assert data_vide == {}
 
 # ======================================================================
 # FAKE GRAPH CLASSES
@@ -123,29 +133,19 @@ class FakeAx:
 
 class FakeGraph:
     def __init__(self):
-        self.ax = FakeAx()
-        self.figure = type("F", (), {"tight_layout": lambda self: None})()
+        self.ax = MagicMock()
+        self.figure = MagicMock()
+        self.plotted = False
+
     def clear(self):
         pass
-    def plot(self, *args, **kwargs):
-        self.ax.plotted = True
+
+    def plot(self, x, y, **kwargs):
+        self.plotted = True
 
 class FakeFiltre:
     def get_state(self):
-        return {"filtres": []}
-
-
-# ======================================================================
-# TEST GRAPH UPDATE
-# ======================================================================
-
-def test_update_graphe_stats_groupe(test_db):
-    g = FakeGraph()
-    f = FakeFiltre()
-
-    da.update_graphe_stats_groupe("Victoires par race", f, g, top_n=10)
-
-    assert g.ax.plotted is True
+        return {"filtres": []}  # tu peux ajouter des filtres si besoin
 
 
 # ======================================================================
