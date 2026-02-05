@@ -177,17 +177,18 @@ class PredictionDetailWindow(QDialog):
         """
         participants = []
         participant_ids = get_course_participants_id(course_id)
-
+    
         if not participant_ids:
             return participants
-
+    
         for pid in participant_ids:
-            data = self.get_participant_predits_data(pid, course_id) or {}
+            # <-- MODIFICATION ICI -->
+            data = self.get_participant_predits_data(pid) or {}  # ne passe plus course_id
             data["id"] = pid
             data.setdefault("name", f"Participant {pid}")
             data.setdefault("odds", 0.0)
             participants.append(data)
-
+    
         return participants
 
     # ======================================================================
