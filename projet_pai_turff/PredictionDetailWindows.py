@@ -37,9 +37,9 @@ class ParticipantVerificationWindow(QDialog):
 
     def __init__(
         self,
-        course_id: any,
-        ordre_predit: any,
-        ordre_reel: any,
+        course_id: Any,
+        ordre_predit: Any,
+        ordre_reel: Any,
         parent=None,
     ):
         """Initialise la fenêtre de vérification des prédictions.
@@ -132,7 +132,7 @@ class PredictionDetailWindow(QDialog):
     - Vérification de l'ordre prédit par rapport à l'ordre réel
     """
 
-    def __init__(self, id: any, parent=None, get_data=None):
+    def __init__(self, id: Any, parent=None, get_data=None):
         """Initialise la fenêtre de détail d'une course.
         Args:
             id: ID de la course à afficher.

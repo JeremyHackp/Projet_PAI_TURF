@@ -23,7 +23,7 @@ from .Graphe import Graphe
 
 
 class ParticipantDetailWindow(QDialog):
-    def __init__(self, id: any, parent=None, get_data=None):
+    def __init__(self, id: Any, parent=None, get_data=None):
         """Fenetre de détail permettant d'afficher les données d'un participant/cheval spécifique et contenant des graphiques de performance.
         Args:
             id (int): ID du participant à afficher.
