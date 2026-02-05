@@ -1,5 +1,6 @@
 from .connection import get_connection
 
+
 def get_all_courses():
     """
     Récupère toutes les courses depuis la base de données

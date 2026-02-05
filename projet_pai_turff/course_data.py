@@ -1,18 +1,19 @@
 """
 course_data.py - Accès aux données des courses
 """
-from .db.connection import get_connection
+
 from .cache import course_cache
 from .constants import OP_SQL_MAP
+from .db.connection import get_connection
 
 
 def get_course_data(course_id):
     """
     Récupère les données d'une course depuis le cache.
-    
+
     Args:
         course_id: ID de la course dans le cache
-    
+
     Returns:
         dict: Données de la course ou dict vide si non trouvée
     """
@@ -30,10 +31,10 @@ def get_course_prediction_data(course_id):
 def get_course_recentes_from_db(filtre_widget) -> list[int]:
     """
     Retourne les IDs des courses récentes en appliquant filtres et tri.
-    
+
     Args:
         filtre_widget: Widget de filtre contenant l'état des filtres
-    
+
     Returns:
         list[int]: Liste des IDs UI des courses
     """
@@ -142,7 +143,6 @@ def get_course_recentes_from_db(filtre_widget) -> list[int]:
             "handicap": "Non",
             "category": row["CategorieParticularite"],
             "time": None,
-
             # Clés techniques
             "_num_course": row["NumCourse"],
             "_num_reunion": row["NumReunion"],

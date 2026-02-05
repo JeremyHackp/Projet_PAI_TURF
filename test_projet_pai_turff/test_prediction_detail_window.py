@@ -1,17 +1,16 @@
 import pytest
-from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QMessageBox, QPushButton
 
 from projet_pai_turff.PredictionDetailWindows import (
-    PredictionDetailWindow,
     ParticipantVerificationWindow,
+    PredictionDetailWindow,
 )
-from PySide6.QtWidgets import QPushButton
-
-from PySide6.QtCore import Qt
 
 # ============================================================================
 # FIXTURES
 # ============================================================================
+
 
 @pytest.fixture(scope="session")
 def app():
@@ -33,16 +32,13 @@ def disable_qt_dialogs(monkeypatch):
     monkeypatch.setattr(QMessageBox, "critical", lambda *a, **k: None)
 
     # Empêche les exec_() bloquants
-    monkeypatch.setattr(
-        ParticipantVerificationWindow,
-        "exec_",
-        lambda self: None
-    )
+    monkeypatch.setattr(ParticipantVerificationWindow, "exec_", lambda self: None)
 
 
 # ============================================================================
 # TESTS
 # ============================================================================
+
 
 def test_prediction_window_initialization(app):
     """
@@ -108,9 +104,11 @@ def test_model_combobox_filled(app):
     Vérifie que le QComboBox des modèles contient au moins un modèle.
     """
     window = PredictionDetailWindow(id=1)
-    
+
     # Vérifie que le combobox contient au moins DummyModel
-    combo_texts = [window.model_selector.itemText(i) for i in range(window.model_selector.count())]
+    combo_texts = [
+        window.model_selector.itemText(i) for i in range(window.model_selector.count())
+    ]
     assert "DummyModel" in combo_texts
     assert window.model_selector.count() > 0
 
@@ -139,8 +137,7 @@ def test_predict_button_triggers_prediction(app, qtbot, monkeypatch):
 
     # Cherche le bouton "Prédire" parmi les QPushButton
     predict_button = next(
-        (w for w in window.findChildren(QPushButton) if w.text() == "Prédire"),
-        None
+        (w for w in window.findChildren(QPushButton) if w.text() == "Prédire"), None
     )
     assert predict_button is not None, "Bouton 'Prédire' introuvable"
 

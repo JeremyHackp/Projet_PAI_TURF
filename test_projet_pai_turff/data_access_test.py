@@ -1,13 +1,18 @@
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import pytest
 import sqlite3
+
+import pytest
+
 import projet_pai_turff.data_access as da
+
 # ======================================================================
 # FIXTURE DB TEST
 # ======================================================================
+
 
 @pytest.fixture
 def test_db(monkeypatch):
@@ -53,9 +58,13 @@ def test_db(monkeypatch):
         )
     """)
 
-    cur.execute("INSERT INTO Cheval VALUES ('Thunder','Pur-Sang','Bai','Lightning','Storm','M')")
+    cur.execute(
+        "INSERT INTO Cheval VALUES ('Thunder','Pur-Sang','Bai','Lightning','Storm','M')"
+    )
     cur.execute("INSERT INTO Courses VALUES ('03022025',1,1,2000,'Plat','Gazon')")
-    cur.execute("INSERT INTO Participants VALUES ('03022025',1,1,'Thunder',3,'1',3.5,'Dupont','Martin')")
+    cur.execute(
+        "INSERT INTO Participants VALUES ('03022025',1,1,'Thunder',3,'1',3.5,'Dupont','Martin')"
+    )
 
     conn.commit()
 
@@ -69,11 +78,11 @@ def test_db(monkeypatch):
 # TEST QUERY BUILDER
 # ======================================================================
 
+
 def test_build_where_clause_stats():
-    where, params = da.build_where_clause_stats([
-        ("race", "=", "Pur-Sang"),
-        ("age", ">", 2)
-    ])
+    where, params = da.build_where_clause_stats(
+        [("race", "=", "Pur-Sang"), ("age", ">", 2)]
+    )
 
     assert "c.Race" in where
     assert "p.Age" in where
@@ -83,6 +92,7 @@ def test_build_where_clause_stats():
 # ======================================================================
 # TEST CACHE
 # ======================================================================
+
 
 def test_participants_cache():
     da.participants_cache.clear()
@@ -98,6 +108,7 @@ def test_participants_cache():
 # TEST PARTICIPANTS DATA
 # ======================================================================
 
+
 def test_get_participants_data(test_db):
     data = da.get_participants_data("03022025", 1, 1)
 
@@ -110,25 +121,33 @@ def test_get_participants_data(test_db):
 # FAKE GRAPH CLASSES
 # ======================================================================
 
+
 class FakeAx:
     def __init__(self):
         self.plotted = False
+
     def tick_params(self, **kwargs):
         pass
+
     def text(self, *args, **kwargs):
         pass
+
     @property
     def transAxes(self):
         return None
+
 
 class FakeGraph:
     def __init__(self):
         self.ax = FakeAx()
         self.figure = type("F", (), {"tight_layout": lambda self: None})()
+
     def clear(self):
         pass
+
     def plot(self, *args, **kwargs):
         self.ax.plotted = True
+
 
 class FakeFiltre:
     def get_state(self):
@@ -138,6 +157,7 @@ class FakeFiltre:
 # ======================================================================
 # TEST GRAPH UPDATE
 # ======================================================================
+
 
 def test_update_graphe_stats_groupe(test_db):
     g = FakeGraph()
@@ -151,6 +171,7 @@ def test_update_graphe_stats_groupe(test_db):
 # ======================================================================
 # TEST EXPORTS
 # ======================================================================
+
 
 def test_exports():
     assert hasattr(da, "build_where_clause_stats")

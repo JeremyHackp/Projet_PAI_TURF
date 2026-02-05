@@ -39,6 +39,12 @@ class OperateurComparaison(Enum):
 
 class DialogAjouterFiltre(QDialog):
     def __init__(self, colonnes_filtrage: dict[str, type], parent=None):
+        """
+        Args:
+            colonnes_filtrage (dict[str, type]): Dictionnaire des colonnes élligibles au filtrage avec leur type (ex: {"age": int, "name": str})
+            parent (QWidget, optional): Widget parent de la dialog. Par défaut None.
+
+        """
         super().__init__(parent)
         self.setWindowTitle("Ajouter un filtre")
         self.setMinimumWidth(400)
@@ -49,6 +55,7 @@ class DialogAjouterFiltre(QDialog):
         self._setup_ui()
 
     def _setup_ui(self):
+        """Met en place l'interface graphique de la dialog d'ajout de filtre."""
         layout = QVBoxLayout(self)
 
         # Colonne
@@ -86,6 +93,9 @@ class DialogAjouterFiltre(QDialog):
         layout.addLayout(row_btn)
 
     def _create_value_widget(self):
+        """
+        Crée le widget de saisie de la valeur en fonction du type de la colonne sélectionnée.
+        """
         type_colonne = self.colonnes_filtrage.get(self.combo_colonne.currentText(), str)
 
         if type_colonne is int:
@@ -96,12 +106,14 @@ class DialogAjouterFiltre(QDialog):
             self.widget_valeur.setPlaceholderText("Entrer une valeur")
 
     def _on_colonne_changed(self):
+        """Met à jour le widget de saisie de la valeur lorsque la colonne sélectionnée change."""
         old = self.widget_valeur
         self._create_value_widget()
         self.row_valeur.replaceWidget(old, self.widget_valeur)
         old.deleteLater()
 
     def _valider(self):
+        """Connecté au boutton validé. Permet de verifier que la valeur saisie est valide et de stocker le résultat du filtre avant de fermer la dialog."""
         colonne = self.combo_colonne.currentText()
         operateur = self.combo_operateur.currentText()
 
@@ -117,6 +129,7 @@ class DialogAjouterFiltre(QDialog):
         self.accept()
 
     def get_filtre(self):
+        """Renvoie le filtre saisi par l'utilisateur sous la forme d'un tuple (colonne, operateur, valeur) ou None si la dialog a été annulée."""
         return self.resultat
 
 
@@ -137,6 +150,14 @@ class Filtre(QWidget):
         tri_initial: str | None = None,  # clé de colonne
         ordre_croissant_initial: bool = True,
     ):
+        """
+        Args:
+            colonnes_filtrage (dict[str, type]): Dictionnaire des colonnes élligibles au filtrage avec leur type (ex: {"age": int, "name": str})
+            colonnes_tri (dict[str, str], optional): Dictionnaire des colonnes élligibles au tri avec leur label à afficher (ex: {"age": "Age", "name": "Nom"}). Si None, le tri est désactivé. Par défaut None.
+            parent (QWidget, optional): Widget parent du filtre. Par défaut None.
+            tri_initial (str, optional): Clé de la colonne à trier initialement. Doit être présente dans colonnes_tri. Par défaut None (pas de tri initial).
+            ordre_croissant_initial (bool, optional): Si True, le tri initial est en ordre croissant. Sinon, en ordre décroissant. Par défaut True.
+        """
         super().__init__(parent)
         self.tri = colonnes_tri is not None
         self.colonnes_filtrage = colonnes_filtrage
@@ -149,9 +170,9 @@ class Filtre(QWidget):
 
         self._setup_ui()
         if self.tri:
-            self._appliquer_tri_initial()
+            self._synchronise_tri()
 
-    def _appliquer_tri_initial(self):
+    def _synchronise_tri(self):
         """Synchronise l'état interne avec l'UI."""
         if self.colonne_tri and self.colonne_tri in self.colonnes_tri:
             label = self.colonnes_tri[self.colonne_tri]
@@ -162,6 +183,7 @@ class Filtre(QWidget):
         self.combo_ordre.setCurrentIndex(0 if self.ordre_croissant else 1)
 
     def _setup_ui(self):
+        """Met en place l'interface graphique du widget de filtrage et tri."""
         main_layout = QVBoxLayout(self)
 
         # --- Filtres ---
@@ -194,16 +216,15 @@ class Filtre(QWidget):
         nb_layout = QHBoxLayout()
 
         nb_layout.addWidget(QLabel("Nombre de données:"))
-        
+
         self.widget_nb = QSpinBox()
         self.widget_nb = QSpinBox()
         self.widget_nb.setRange(5, 999999)
         self.widget_nb.setValue(10)
-        btn_valider_nb=QPushButton("Valider")
+        btn_valider_nb = QPushButton("Valider")
         btn_valider_nb.clicked.connect(self._on_nb_valided)
         nb_layout.addWidget(self.widget_nb)
         nb_layout.addWidget(btn_valider_nb)
-
 
         nb_group.setLayout(nb_layout)
         main_layout.addWidget(nb_group)
@@ -237,6 +258,7 @@ class Filtre(QWidget):
         self.setMinimumWidth(400)
 
     def _ouvrir_dialog_filtre(self):
+        """Affiche le dialog d'ajout de filtre et ajoute le filtre si la dialog est validée."""
         dialog = DialogAjouterFiltre(self.colonnes_filtrage, self)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             filtre = dialog.get_filtre()
@@ -244,6 +266,9 @@ class Filtre(QWidget):
                 self._ajouter_filtre(filtre)
 
     def _ajouter_filtre(self, filtre: tuple):
+        """
+        Ajoute un filtre à la liste des filtres actifs et met à jour l'UI en conséquence.
+        """
         self.filtres_actifs.append(filtre)
 
         row = QHBoxLayout()
@@ -259,6 +284,11 @@ class Filtre(QWidget):
         self.filtres_changes.emit()
 
     def _supprimer_filtre(self, filtre: tuple, row: QHBoxLayout):
+        """
+        Supprime un filtre de la liste des filtres actifs et met à jour l'UI en conséquence.
+        Args :  filtre : tuple - le filtre à supprimer
+                row : QHBoxLayout - la ligne de l'UI correspondant au filtre à supprimer
+        """
         if filtre in self.filtres_actifs:
             self.filtres_actifs.remove(filtre)
 
@@ -271,6 +301,10 @@ class Filtre(QWidget):
         self.filtres_changes.emit()
 
     def _on_tri_changed(self, text: str):
+        """
+        Met à jour la colonne de tri et émet le signal de changement de filtre.
+        Args:            text (str): Le texte du tri sélectionné dans le combo box.
+        """
         self.colonne_tri = None
         for cle, label in self.colonnes_tri.items():
             if label == text:
@@ -279,20 +313,28 @@ class Filtre(QWidget):
         self.filtres_changes.emit()
 
     def _on_ordre_changed(self, text: str):
+        """Met à jour l'ordre de tri (croissant/décroissant) et émet le signal de changement de filtre.
+        Args:            text (str): Le texte de l'ordre sélectionné dans le combo box ("Croissant" ou "Décroissant").
+        """
         self.ordre_croissant = text == "Croissant"
         self.filtres_changes.emit()
 
     def _on_nb_valided(self):
+        """émet le signal de changement de filtre lorsque l'on appuie sur le bouton valider."""
         self.filtres_changes.emit()
 
     def get_filtres(self) -> list[tuple]:
+        """Renvoie la liste des filtres actifs sous la forme de tuples (colonne, opérateur, valeur)."""
         return self.filtres_actifs.copy()
 
     def get_tri(self) -> tuple | None:
+        """Renvoie la configuration de tri actuelle sous la forme d'un tuple (colonne, ordre_croissant) ou None si aucun tri n'est sélectionné."""
         if self.colonne_tri and self.tri:
             return (self.colonne_tri, self.ordre_croissant)
         return None
+
     def get_nb(self) -> int:
+        """Renvoie le nombre de données à afficher sélectionné par l'utilisateur."""
         return self.widget_nb.value()
 
     def get_state(self) -> dict:
@@ -306,12 +348,16 @@ class Filtre(QWidget):
             Tuple[str(valeure sur laquelle on tri),
             bool(True : ordre_croissant, False : décroissant)]}]}
         """
-        return {"filtres": self.get_filtres(), "tri": self.get_tri(), "nbr" : self.get_nb()}
+        return {
+            "filtres": self.get_filtres(),
+            "tri": self.get_tri(),
+            "nbr": self.get_nb(),
+        }
 
     def reinitialiser(self):
+        """Réinitialise tous les filtres, le tri et le nombre de données à afficher, puis émet le signal de changement de filtre."""
         self.widget_nb.setValue(10)
         self.filtres_actifs.clear()
-        
 
         while self.filtres_layout.count():
             item = self.filtres_layout.takeAt(0)

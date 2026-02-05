@@ -1,8 +1,8 @@
+import sqlite3
+
+from .db.connection import get_connection
 from .Filtre import Filtre
 from .Graphe import Graphe
-import random
-import sqlite3
-from .db.connection import get_connection
 
 """donnees_a_afficher_boutons_course: dictionnaire définissant quelles données afficher sur les boutons de course.
    donnees_a_afficher_bouton_particpant: dictionnaire définissant quelles données afficher sur les boutons de participants.
@@ -44,7 +44,7 @@ donnees_a_afficher_detail_course = {
     "surface": "Type Piste",
     "conditions": "Penetrometre Intitule",
     "handicap": "Non",
-    "category": "Categorie Particularite"
+    "category": "Categorie Particularite",
 }
 donnees_a_afficher_detail_participant = {
     "name": "Nom",
@@ -54,10 +54,10 @@ donnees_a_afficher_detail_participant = {
     "trainer": "Entraineur",
     "victories": "NbrVictoires",
     "total_gains": "GainsCarriere",
-    "robe": "RobeLibelle" ,
+    "robe": "RobeLibelle",
     "race": "Race",
     "father": "NomDuPere",
-    "mother": "NomDeLaMere" ,
+    "mother": "NomDeLaMere",
 }
 
 """
@@ -93,6 +93,7 @@ colonnes_tri_participants = {
 
 # Fonctions de recupération de données
 
+
 class CourseCache:
     def __init__(self):
         self.courses = {}  # {ui_id: course_dict}
@@ -117,15 +118,16 @@ participants_cache = ParticipantsCache()
 meilleurs_chevaux = ParticipantsCache()
 
 
-
-
 def get_course_prediction_data(course_id):
     return get_course_data(course_id)
+
 
 def prediction_ordre_participants(course_id):
     """Simule la prédiction de l'ordre des ids des participants d'une course."""
     participants = [3, 6, 2, 1, 4, 5]
     return participants
+
+
 def prediction_ordre_participants_verification(course_id):
     """Simule la récupération des ids des participants d'une course depuis la base de données."""
     participants = [3, 4, 2, 1, 6, 5]
@@ -135,13 +137,16 @@ def prediction_ordre_participants_verification(course_id):
 def get_course_data(course_id):
     return course_cache.courses.get(course_id, {})
 
+
 def get_cheveaux_data(cheval_id):
     """Simule la récupération des données d'un cheval depuis la base de données a partir de son id. Utilisé pour trouver les données d'un cheval dans le podium des meilleurs chevaux."""
     return meilleurs_chevaux.participants.get(cheval_id, {})
 
+
 def get_participant_predits_data(participant_id):
     """Simule la récupération des données d'un participant prédit depuis la base de données a partir de son id. utilisé pour trouver les données d'un particpant d'une course dans la fenetre de prédiction."""
     return get_participants_data(participant_id)
+
 
 def get_participants_data(participant_id):
     return participants_cache.participants.get(participant_id, {})
@@ -163,7 +168,8 @@ def get_course_participants_id(course_ui_id):
 
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute("""
+        cur.execute(
+            """
             SELECT
                 p.Nom,
                 p.Age,
@@ -193,7 +199,9 @@ def get_course_participants_id(course_ui_id):
                     THEN CAST(p.PositionArrivee AS INTEGER)
                     ELSE 999
                 END
-        """, (num_course, num_reunion, date_reunion))
+        """,
+            (num_course, num_reunion, date_reunion),
+        )
 
         rows = cur.fetchall()
 
@@ -209,7 +217,6 @@ def get_course_participants_id(course_ui_id):
             "odds": row["Cote"] if row["Cote"] else "N/A",
             "victories": row["NbrVictoires"],
             "total_gains": f"{row['GainsCarriere']}€",
-
             "robe": row["RobeLibelle"] or "Inconnue",
             "race": row["Race"] or "Inconnue",
             "father": row["NomDuPere"] or "—",
@@ -222,9 +229,9 @@ def get_course_participants_id(course_ui_id):
 
 # Fonction de récupération des IDs filtrés et triés
 
+
 def get_course_prediction_id(filtre_widget: Filtre) -> list[int]:
     return get_course_recentes_from_db(filtre_widget)
-
 
 
 def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
@@ -243,7 +250,6 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
         "distance": "c.Distance",
         "place": "r.NomHippodrome",
     }
-
 
     TRI_SQL_MAP = {
         "date": "r.DateReunion",
@@ -337,7 +343,6 @@ def get_course_recentes_from_db(filtre_widget: Filtre) -> list[int]:
             "handicap": "Non",
             "category": row["CategorieParticularite"],
             "time": None,
-
             # clés techniques
             "_num_course": row["NumCourse"],
             "_num_reunion": row["NumReunion"],
@@ -362,9 +367,8 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
         "jokey": "p.Driver",
         "entraineur": "p.Entraineur",
         "age": "p.Age",
-        "odds": "p.Cote"
+        "odds": "p.Cote",
     }
-
 
     filtres = filtre_widget.get_state()
     tri = filtres.get("tri") or ("meilleurs toutes catégories", False)
@@ -408,7 +412,7 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
         where_sql = "AND " + " AND ".join(where_clauses)
 
     query = f"""
-        SELECT 
+        SELECT
             p.Nom,
             p.Age,
             p.Driver,
@@ -455,7 +459,6 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             "sex": row["Sexe"],
             "total_gains": f"{row['GainsCarriere']}€",
             "victories": row["NbrVictoires"] or 0,
-
             "robe": row["RobeLibelle"] or "Inconnue",
             "race": row["Race"] or "Inconnue",
             "father": row["NomDuPere"] or "—",
@@ -474,21 +477,21 @@ type_graphiques_participants = [
 colonnes_filtrage_types_de_courses_pour_participants = {
     "type_de_course": str,
     "surface": str,
-    "distance": str
+    "distance": str,
 }
 type_graphiques_groupes = [
     "Victoires par race",
     "Taux de victoire par race",
     "Taux de victoire par âge",
     "Courses par surface",
-    "Courses par type de course"
+    "Courses par type de course",
 ]
 colonnes_filtrage_groupes = {
-    "race": str,          # c.Race
-    "age": int,           # p.Age
-    "type_course": str,   # co.Discipline
-    "surface": str,       # co.TypePiste
-    "distance": int,      # co.Distance
+    "race": str,  # c.Race
+    "age": int,  # p.Age
+    "type_course": str,  # co.Discipline
+    "surface": str,  # co.TypePiste
+    "distance": int,  # co.Distance
 }
 
 
@@ -537,8 +540,9 @@ def build_where_clause_stats(filtres):
     return "WHERE " + " AND ".join(clauses), params
 
 
-def update_graphe_individuel(graph_type, filtre_widget, graphe,
-                             participant_id, cache_dict):
+def update_graphe_individuel(
+    graph_type, filtre_widget, graphe, participant_id, cache_dict
+):
     participant = cache_dict.get(participant_id)
     if not participant:
         return
@@ -587,14 +591,20 @@ def update_graphe_individuel(graph_type, filtre_widget, graphe,
             if not rows:
                 return
 
-            x_data = [f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)]
+            x_data = [
+                f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)
+            ]
             y_data = [r["position"] for r in rows]
 
             graphe.clear()
-            graphe.plot(x_data, y_data,
-                        title="Performance sur les courses",
-                        xlabel="Date", ylabel="Position",
-                        marker="o")
+            graphe.plot(
+                x_data,
+                y_data,
+                title="Performance sur les courses",
+                xlabel="Date",
+                ylabel="Position",
+                marker="o",
+            )
 
         # ================= COTES =================
         elif graph_type == "Cotes au cours des courses":
@@ -619,21 +629,26 @@ def update_graphe_individuel(graph_type, filtre_widget, graphe,
             if not rows:
                 return
 
-            x_data = [f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)]
+            x_data = [
+                f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)
+            ]
             y_data = [float(r["Cote"]) for r in rows]
 
             graphe.clear()
-            graphe.plot(x_data, y_data,
-                        title="Évolution des cotes",
-                        xlabel="Date", ylabel="Cote",
-                        marker="o")
+            graphe.plot(
+                x_data,
+                y_data,
+                title="Évolution des cotes",
+                xlabel="Date",
+                ylabel="Cote",
+                marker="o",
+            )
 
     graphe.ax.tick_params(axis="x", labelrotation=90)
     graphe.figure.tight_layout()
 
 
 def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
-
     state = filtre_widget.get_state()
     filtres = state.get("filtres", [])
     nbr = state.get("nbr")
@@ -698,7 +713,7 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
             title = "Taux de victoire par race"
             marker, linestyle = "s", ""
             x_data = [r["categorie"] for r in rows]
-            y_data = [(r["victoires"]*100.0/r["courses"]) for r in rows]
+            y_data = [(r["victoires"] * 100.0 / r["courses"]) for r in rows]
 
         # -------------------------------------------------------------
         # TAUX DE VICTOIRE PAR ÂGE
@@ -724,7 +739,7 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
             title = "Taux de victoire par âge"
             marker, linestyle = "o", "-"
             x_data = [r["categorie"] for r in rows]
-            y_data = [(r["victoires"]*100.0/r["courses"]) for r in rows]
+            y_data = [(r["victoires"] * 100.0 / r["courses"]) for r in rows]
 
         # -------------------------------------------------------------
         # COURSES PAR TYPE
@@ -780,16 +795,27 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
     # -------------------------------------------------------------
     if not x_data:
         graphe.clear()
-        graphe.ax.text(0.5, 0.5, "Aucune donnée",
-                       ha='center', va='center',
-                       transform=graphe.ax.transAxes)
+        graphe.ax.text(
+            0.5,
+            0.5,
+            "Aucune donnée",
+            ha="center",
+            va="center",
+            transform=graphe.ax.transAxes,
+        )
         graphe.figure.tight_layout()
         return
 
     graphe.clear()
-    graphe.plot(x_data, y_data, title=title,
-                xlabel="Catégorie", ylabel=ylabel,
-                marker=marker, linestyle=linestyle)
+    graphe.plot(
+        x_data,
+        y_data,
+        title=title,
+        xlabel="Catégorie",
+        ylabel=ylabel,
+        marker=marker,
+        linestyle=linestyle,
+    )
     graphe.ax.tick_params(axis="x", rotation=90)
     graphe.figure.tight_layout()
 
@@ -799,7 +825,7 @@ def update_graphe_data(
     filtre_widget: Filtre,
     graphe: Graphe,
     participant_id: int | None = None,
-    get_data=None
+    get_data=None,
 ):
     # MODE STATS GROUPE
     if get_data is None:
@@ -811,13 +837,22 @@ def update_graphe_data(
         return
 
     if get_data is get_participants_data:
-        update_graphe_individuel(graph_type, filtre_widget, graphe,
-                                 participant_id, participants_cache.participants)
+        update_graphe_individuel(
+            graph_type,
+            filtre_widget,
+            graphe,
+            participant_id,
+            participants_cache.participants,
+        )
 
     elif get_data is get_cheveaux_data:
-        update_graphe_individuel(graph_type, filtre_widget, graphe,
-                                 participant_id, meilleurs_chevaux.participants)
+        update_graphe_individuel(
+            graph_type,
+            filtre_widget,
+            graphe,
+            participant_id,
+            meilleurs_chevaux.participants,
+        )
 
     else:
         print("Source de données inconnue")
-

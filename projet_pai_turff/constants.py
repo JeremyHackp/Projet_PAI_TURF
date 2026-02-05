@@ -40,7 +40,7 @@ donnees_a_afficher_detail_course = {
     "surface": "Type Piste",
     "conditions": "Penetrometre Intitule",
     "handicap": "Non",
-    "category": "Categorie Particularite"
+    "category": "Categorie Particularite",
 }
 
 # Données à afficher dans la fenêtre de détail d'un participant
@@ -59,12 +59,7 @@ donnees_a_afficher_detail_participant = {
 }
 
 # Colonnes de filtrage pour les courses
-colonnes_filtrage_courses = {
-    "name": str,
-    "date": str,
-    "distance": str,
-    "place": str
-}
+colonnes_filtrage_courses = {"name": str, "date": str, "distance": str, "place": str}
 
 # Colonnes de tri pour les courses
 colonnes_tri_courses = {
@@ -100,7 +95,7 @@ type_graphiques_participants = [
 colonnes_filtrage_types_de_courses_pour_participants = {
     "type_de_course": str,
     "surface": str,
-    "distance": str
+    "distance": str,
 }
 
 # Types de graphiques pour les groupes/statistiques
@@ -109,7 +104,7 @@ type_graphiques_groupes = [
     "Taux de victoire par race",
     "Taux de victoire par âge",
     "Courses par surface",
-    "Courses par type de course"
+    "Courses par type de course",
 ]
 
 # Colonnes de filtrage pour les statistiques groupées

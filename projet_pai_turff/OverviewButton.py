@@ -1,6 +1,4 @@
 from collections.abc import Callable
-from typing import Any
-from shiboken6 import isValid
 
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QTextDocument
@@ -11,6 +9,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QSizePolicy,
 )
+from shiboken6 import isValid
 
 
 class OverviewButton(QPushButton):
@@ -21,8 +20,8 @@ class OverviewButton(QPushButton):
 
     def __init__(
         self,
-        id: Any,
-        get_data: Callable[[Any], dict],
+        id: any,
+        get_data: Callable,
         donnees_a_afficher=None,
         detail_window_class=None,
         parent=None,
@@ -51,7 +50,7 @@ class OverviewButton(QPushButton):
                               Si None, affiche tous les champs du dictionnaire retourné par get_data.
             parent: Parent Qt (optionnel).
 
-            detail_window_class=None: Classe pour la fenêtre de détails.
+            detail_window_class=None: Classe pour la fenêtre de détails a ouvirir lorsque l'on clique sur le boutton.
         """
         super().__init__(parent)
         self.id = id
@@ -356,6 +355,7 @@ class OverviewButton(QPushButton):
         self._setup_ui()
 
     def _open_detail_window(self):
+        """Ouvre la fenêtre de détails associée au bouton."""
         if not self.data or "error" in self.data:
             return
 
@@ -364,7 +364,9 @@ class OverviewButton(QPushButton):
 
         # éviter ouvrir 10 fenêtres
         if self._detail_window is None:
-            self._detail_window = self.detail_window_class(id=self.id, parent=self, get_data=self.get_data)
+            self._detail_window = self.detail_window_class(
+                id=self.id, parent=self, get_data=self.get_data
+            )
 
         self._detail_window.show()
         self._detail_window.raise_()

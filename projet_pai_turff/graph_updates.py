@@ -1,18 +1,21 @@
 """
 graph_updates.py - Fonctions de mise à jour des graphiques
 """
+
 import sqlite3
+
+from .cache import meilleurs_chevaux, participants_cache
 from .db.connection import get_connection
+from .participant_data import get_cheveaux_data, get_participants_data
 from .query_builder import build_where_clause_stats
-from .participant_data import get_participants_data, get_cheveaux_data
-from .cache import participants_cache, meilleurs_chevaux
 
 
-def update_graphe_individuel(graph_type, filtre_widget, graphe,
-                             participant_id, cache_dict):
+def update_graphe_individuel(
+    graph_type, filtre_widget, graphe, participant_id, cache_dict
+):
     """
     Met à jour un graphique individuel (performance ou cotes d'un participant).
-    
+
     Args:
         graph_type: Type de graphique ("Performance au cours des courses" ou "Cotes au cours des courses")
         filtre_widget: Widget contenant les filtres
@@ -68,14 +71,20 @@ def update_graphe_individuel(graph_type, filtre_widget, graphe,
             if not rows:
                 return
 
-            x_data = [f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)]
+            x_data = [
+                f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)
+            ]
             y_data = [r["position"] for r in rows]
 
             graphe.clear()
-            graphe.plot(x_data, y_data,
-                        title="Performance sur les courses",
-                        xlabel="Date", ylabel="Position",
-                        marker="o")
+            graphe.plot(
+                x_data,
+                y_data,
+                title="Performance sur les courses",
+                xlabel="Date",
+                ylabel="Position",
+                marker="o",
+            )
 
         # ================= COTES =================
         elif graph_type == "Cotes au cours des courses":
@@ -100,14 +109,20 @@ def update_graphe_individuel(graph_type, filtre_widget, graphe,
             if not rows:
                 return
 
-            x_data = [f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)]
+            x_data = [
+                f"{d[:2]}/{d[2:4]}/{d[4:]}" for d in (r["DateReunion"] for r in rows)
+            ]
             y_data = [float(r["Cote"]) for r in rows]
 
             graphe.clear()
-            graphe.plot(x_data, y_data,
-                        title="Évolution des cotes",
-                        xlabel="Date", ylabel="Cote",
-                        marker="o")
+            graphe.plot(
+                x_data,
+                y_data,
+                title="Évolution des cotes",
+                xlabel="Date",
+                ylabel="Cote",
+                marker="o",
+            )
 
     graphe.ax.tick_params(axis="x", labelrotation=90)
     graphe.figure.tight_layout()
@@ -116,7 +131,7 @@ def update_graphe_individuel(graph_type, filtre_widget, graphe,
 def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
     """
     Met à jour un graphique de statistiques groupées.
-    
+
     Args:
         tri_nom: Nom du type de statistique à afficher
         filtre_widget: Widget contenant les filtres
@@ -186,7 +201,7 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
             title = "Taux de victoire par race"
             marker, linestyle = "s", ""
             x_data = [r["categorie"] for r in rows]
-            y_data = [(r["victoires"]*100.0/r["courses"]) for r in rows]
+            y_data = [(r["victoires"] * 100.0 / r["courses"]) for r in rows]
 
         # -------------------------------------------------------------
         # TAUX DE VICTOIRE PAR ÂGE
@@ -212,7 +227,7 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
             title = "Taux de victoire par âge"
             marker, linestyle = "o", "-"
             x_data = [r["categorie"] for r in rows]
-            y_data = [(r["victoires"]*100.0/r["courses"]) for r in rows]
+            y_data = [(r["victoires"] * 100.0 / r["courses"]) for r in rows]
 
         # -------------------------------------------------------------
         # COURSES PAR TYPE
@@ -268,16 +283,27 @@ def update_graphe_stats_groupe(tri_nom, filtre_widget, graphe):
     # -------------------------------------------------------------
     if not x_data:
         graphe.clear()
-        graphe.ax.text(0.5, 0.5, "Aucune donnée",
-                       ha='center', va='center',
-                       transform=graphe.ax.transAxes)
+        graphe.ax.text(
+            0.5,
+            0.5,
+            "Aucune donnée",
+            ha="center",
+            va="center",
+            transform=graphe.ax.transAxes,
+        )
         graphe.figure.tight_layout()
         return
 
     graphe.clear()
-    graphe.plot(x_data, y_data, title=title,
-                xlabel="Catégorie", ylabel=ylabel,
-                marker=marker, linestyle=linestyle)
+    graphe.plot(
+        x_data,
+        y_data,
+        title=title,
+        xlabel="Catégorie",
+        ylabel=ylabel,
+        marker=marker,
+        linestyle=linestyle,
+    )
     graphe.ax.tick_params(axis="x", rotation=90)
     graphe.figure.tight_layout()
 
@@ -287,11 +313,11 @@ def update_graphe_data(
     filtre_widget,
     graphe,
     participant_id: int | None = None,
-    get_data=None
+    get_data=None,
 ):
     """
     Fonction principale de mise à jour des graphiques (dispatcher).
-    
+
     Args:
         graph_type: Type de graphique à afficher
         filtre_widget: Widget contenant les filtres
@@ -309,12 +335,22 @@ def update_graphe_data(
         return
 
     if get_data is get_participants_data:
-        update_graphe_individuel(graph_type, filtre_widget, graphe,
-                                 participant_id, participants_cache.participants)
+        update_graphe_individuel(
+            graph_type,
+            filtre_widget,
+            graphe,
+            participant_id,
+            participants_cache.participants,
+        )
 
     elif get_data is get_cheveaux_data:
-        update_graphe_individuel(graph_type, filtre_widget, graphe,
-                                 participant_id, meilleurs_chevaux.participants)
+        update_graphe_individuel(
+            graph_type,
+            filtre_widget,
+            graphe,
+            participant_id,
+            meilleurs_chevaux.participants,
+        )
 
     else:
         print("Source de données inconnue")

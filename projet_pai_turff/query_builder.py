@@ -1,16 +1,17 @@
 """
 query_builder.py - Construction des requêtes SQL et clauses WHERE
 """
+
 from .constants import OP_SQL_MAP
 
 
 def build_where_clause_stats(filtres):
     """
     Construit une clause WHERE SQL à partir d'une liste de filtres.
-    
+
     Args:
         filtres: Liste de tuples (champ, operateur, valeur)
-    
+
     Returns:
         tuple: (clause_where_sql, liste_parametres)
     """
