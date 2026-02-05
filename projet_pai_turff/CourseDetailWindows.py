@@ -23,7 +23,7 @@ from .ParticipantDetailWindow import ParticipantDetailWindow
 class CourseDetailWindow(QDialog):
     """Fenetre de détail permettant d'afficher les données d'une course spécifique et contenant la liste des participants, clicables vers une fenêtre ParticipantDetailWindow."""
 
-    def __init__(self, id: Any, parent=None, get_data: callable = None):
+    def __init__(self, id: any, parent=None, get_data: callable = None):
         """
         Args:
             id (Any): ID de la course à afficher, type flexible pour s'adapter à différents formats d'ID (int, str, etc.)

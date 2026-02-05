@@ -20,8 +20,8 @@ class OverviewButton(QPushButton):
 
     def __init__(
         self,
-        id: Any,
-        get_data: Callable[Any, dict],
+        id: any,
+        get_data: Callable,
         donnees_a_afficher=None,
         detail_window_class=None,
         parent=None,
