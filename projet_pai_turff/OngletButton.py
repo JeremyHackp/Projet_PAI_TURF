@@ -50,6 +50,14 @@ class OngletButton(QPushButton):
         icon_size: QSize = QSize(64, 64),
         tooltip: str | None = None,
     ):
+        """Initialize the OngletButton with an icon, label, and tooltip.
+        Args:
+            icon_path (str | Path): Path to the icon image file.
+            label (str): Text label for the button (used if icon fails to load).
+            parent: Parent QWidget (optional).
+            icon_size (QSize): Desired size of the icon (default QSize(64, 64)).
+            tooltip (str | None): Tooltip text to show on hover (default None).
+        """
         super().__init__(parent)
         self._icon_size = icon_size
         self._label = label

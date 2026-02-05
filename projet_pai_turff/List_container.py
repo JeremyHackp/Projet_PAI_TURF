@@ -31,6 +31,7 @@ class List_container(QWidget):
                               Si None, affiche tous les champs du dictionnaire retourné par get_data.
             get_data: Fonction de récupération des données de la course
             main_layout: Layout principal pour intégrer ce widget (optionnel)
+            detailWindow: Classe de la fenêtre de détail à ouvrir lors du clic sur une course (optionnel)
         """
 
         super().__init__(parent)
@@ -67,6 +68,10 @@ class List_container(QWidget):
         QTimer.singleShot(50, self._refresh_card_sizes)
 
     def clear_layout(self, layout):
+        """Supprime tous les widgets d'un layout donné pour permettre une mise à jour de l'affichage.
+        Args:
+            layout: QLayout à vider de ses widgets
+        """
         while layout.count():
             item = layout.takeAt(0)
             widget = item.widget()
@@ -98,6 +103,7 @@ class List_container(QWidget):
 
     # After the UI is built, ensure each OverviewButton recalculates size
     def _refresh_card_sizes(self):
+        """Parcours tous les OverviewButton enfants et appelle leur méthode de mise à jour de la taille de police pour s'assurer qu'ils s'adaptent correctement à la taille du widget."""
         for w in self.findChildren(OverviewButton):
             try:
                 w._update_font_size()

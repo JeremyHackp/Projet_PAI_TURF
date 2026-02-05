@@ -5,6 +5,7 @@ cache.py - Gestion des caches pour courses et participants
 
 class CourseCache:
     """Cache pour stocker les courses chargées"""
+
     def __init__(self):
         self.courses = {}  # {ui_id: course_dict}
 
@@ -14,6 +15,7 @@ class CourseCache:
 
 class ParticipantsCache:
     """Cache pour stocker les participants chargés"""
+
     def __init__(self):
         self.participants = {}  # {ui_id: participant_dict}
 

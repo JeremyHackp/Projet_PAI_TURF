@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import tensorflow as tf
 from typing import List, Optional, Sequence
@@ -6,6 +8,7 @@ from projet_pai_turff.data_access import get_participants_data
 
 # Nombre maximal de chevaux attendu par le modèle
 MAX_CHEVAUX = 15
+
 
 # =================================================
 # Fonction utilitaire : transforme les cotes en probabilités implicites
@@ -81,6 +84,7 @@ def implicit_probabilities(
 
     return probs
 
+
 # =================================================
 # Fonction principale de prédiction
 # =================================================
@@ -139,7 +143,9 @@ def predict_ranking(
         data = get_participants_data(pid)
         if not data:
             if verbose:
-                print(f"[WARNING] Pas de données pour le participant {pid}, valeurs par défaut utilisées")
+                print(
+                    f"[WARNING] Pas de données pour le participant {pid}, valeurs par défaut utilisées"
+                )
             data = {"odds": 0.0, "id": pid, "name": f"Participant {pid}"}
         participants_data.append(data)
 
@@ -192,7 +198,9 @@ def predict_ranking(
         print("[DEBUG] Indices triés :", ranking_indices)
 
     # Retourner uniquement les vrais IDs (ignorer padding)
-    ranking = [participant_ids[i] for i in ranking_indices if participant_ids[i] is not None]
+    ranking = [
+        participant_ids[i] for i in ranking_indices if participant_ids[i] is not None
+    ]
 
     if verbose:
         print("[INFO] Ordre final prédit :", ranking)

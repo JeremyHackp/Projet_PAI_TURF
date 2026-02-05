@@ -1,5 +1,3 @@
-from typing import Any
-
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
@@ -25,18 +23,24 @@ from .Graphe import Graphe
 
 
 class ParticipantDetailWindow(QDialog):
-    def __init__(self, id: Any, parent=None, get_data=None):
+    def __init__(self, id: any, parent=None, get_data=None):
+        """Fenetre de détail permettant d'afficher les données d'un participant/cheval spécifique et contenant des graphiques de performance.
+        Args:
+            id (int): ID du participant à afficher.
+            parent (QWidget, optional): Parent widget de la fenêtre de détail. Par défaut None.
+            get_data (callable, optional): Fonction pour récupérer les données du participant. Si None, utilise get_participants_data par défaut. Par défaut None.
+
+        """
         super().__init__(parent)
 
         self.participant_id = id
 
         self.donnees_a_afficher = donnees_a_afficher_detail_participant
-        
+
         if get_data is not None:
             self.get_data = get_data
         else:
             self.get_data = get_participants_data
-
 
         self.particpant_data = self.get_data(self.participant_id)
 
@@ -47,6 +51,7 @@ class ParticipantDetailWindow(QDialog):
         self._setup_ui()
 
     def _setup_ui(self):
+        """met en place l'interface graphique, fonction appelée lors de l'initialisation de la classe"""
         main_layout = QVBoxLayout(self)
 
         # ===== Titre =====
@@ -128,8 +133,16 @@ class ParticipantDetailWindow(QDialog):
         main_layout.addWidget(close_btn, alignment=Qt.AlignmentFlag.AlignRight)
 
     def _on_graph_type_changed(self, graph_type: str):
+        """Callback appelé lorsque le type de graphique sélectionné dans le combo box change. Met à jour le graphique affiché en fonction du nouveau type sélectionné."""
         self.current_graph_type = graph_type
         self.update_graphe()
 
     def update_graphe(self):
-        update_graphe_data(self.current_graph_type, self.filtre_widget, self.graphe, self.participant_id, self.get_data)
+        """Met à jour les données affichées dans le graphique en fonction du type de graphique sélectionné et des filtres appliqués."""
+        update_graphe_data(
+            self.current_graph_type,
+            self.filtre_widget,
+            self.graphe,
+            self.participant_id,
+            self.get_data,
+        )

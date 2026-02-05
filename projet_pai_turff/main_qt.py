@@ -23,14 +23,14 @@ from .data_access import (
     colonnes_tri_participants,
     donnees_a_afficher_bouton_particpant,
     donnees_a_afficher_boutons_course,
+    get_cheveaux_data,
     get_course_data,
+    get_course_prediction_data,
+    get_course_prediction_id,
     get_course_recentes_from_db,
     get_meilleurs_cheveaux_ids,
-    get_participants_data,
     type_graphiques_groupes,
     update_graphe_data,
-    get_course_prediction_id,
-    get_course_prediction_data
 )
 from .Filtre import Filtre
 from .Graphe import Graphe
@@ -38,25 +38,8 @@ from .Graphe import Graphe
 # from projet_pai_turff.my_module import typed_function
 from .List_container import List_container
 from .OngletButton import OngletButton
-from .CourseDetailWindows import CourseDetailWindow
-from .data_access import get_participants_data
-from .data_access import get_course_data
-from .data_access import get_meilleurs_cheveaux_ids
-from .data_access import get_course_recentes_from_db
 from .ParticipantDetailWindow import ParticipantDetailWindow
-
-from .data_access import donnees_a_afficher_boutons_course
-from .data_access import donnees_a_afficher_bouton_particpant
-
-from .data_access import colonnes_filtrage_courses
-from .data_access import colonnes_tri_courses
-from .data_access import colonnes_filtrage_participants
-from .data_access import colonnes_tri_participants
-from .data_access import type_graphiques_groupes
-from .data_access import update_graphe_data
-from .data_access import colonnes_filtrage_groupes
-from . data_access import get_cheveaux_data
-from . PredictionDetailWindows import PredictionDetailWindow
+from .PredictionDetailWindows import PredictionDetailWindow
 
 
 def run():
@@ -174,7 +157,7 @@ def run():
         get_data=get_cheveaux_data,
         main_layout=layout2,
         detailWindow=ParticipantDetailWindow,
-            )
+    )
     filtre_widget2.filtres_changes.connect(
         lambda: list_container2.update(get_meilleurs_cheveaux_ids(filtre_widget2))
     )
@@ -232,7 +215,6 @@ def run():
     layout4 = QVBoxLayout()
     layout4.addWidget(QLabel("Prédictions"))
 
-
     # Ajouter le widget Filtre
     colonnes_filtrage = colonnes_filtrage_courses
     colonnes_tri = colonnes_tri_courses
@@ -250,8 +232,6 @@ def run():
 
     # Put course cards inside a scrollable area
 
-
-
     list_container4 = List_container(
         None,
         id_a_afficher=courses_prediction_ids,
@@ -264,10 +244,7 @@ def run():
         lambda: list_container4.update(get_course_prediction_id(filtre_widget4))
     )
 
-
-
     page4.setLayout(layout4)
-
 
     # --------Principal ---------
 
@@ -279,6 +256,7 @@ def run():
 
     # Lorsqu'on active une page, on demande au bouton de passer en mode actif
     def highlight_active(active_index: int):
+        """Met à jour l'état actif des boutons de navigation en fonction de l'index de la page active."""
         for i, b in enumerate(nav_buttons):
             # OngletButton expose set_active(active: bool)
             try:
@@ -288,7 +266,7 @@ def run():
                 pass
 
     def set_active(index: int):
-        # change la page et met à jour l'icône du bouton actif
+        """change la page et met à jour l'icône du bouton actif"""
         stacked.setCurrentIndex(index)
         highlight_active(index)
 

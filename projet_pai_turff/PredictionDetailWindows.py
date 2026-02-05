@@ -1,48 +1,55 @@
+import importlib.util
+import os
+from typing import Any
 from typing import Any, Callable, Dict, List, Optional
 
+from PySide6.QtCore import QTimer
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
+    QComboBox,
     QDialog,
     QHBoxLayout,
     QLabel,
+    QMessageBox,
     QPushButton,
     QScrollArea,
     QVBoxLayout,
     QWidget,
 )
-from .OverviewButton import OverviewButton
 
 from .data_access import (
     donnees_a_afficher_bouton_particpant,
     donnees_a_afficher_detail_course,
-    get_course_data,
     get_course_participants_id,
-    get_participants_data,
-    get_course_prediction_data, 
+    get_course_prediction_data,
     get_participant_predits_data,
-    prediction_ordre_participants,
-    prediction_ordre_participants_verification
+    get_participants_data,
 )
 from .List_container import List_container
+from .OverviewButton import OverviewButton
 from .ParticipantDetailWindow import ParticipantDetailWindow
 
 
-from PySide6.QtCore import Qt, QTimer
-
-
-from PySide6.QtWidgets import (
-    QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-    QScrollArea, QWidget, QFileDialog, QMessageBox, QComboBox
-)
-
-import os
-import sys
-
-# Import dynamique de ton module Model.py
-import importlib.util
-
-
 class ParticipantVerificationWindow(QDialog):
+    """
+    Fenêtre de détail permettant de comparer l'ordre prédit et l'ordre réel des participants d'une course.
+    Affiche en rouge les participants mal prédits et compte le nombre d'erreurs.
+    """
+
+    def __init__(
+        self,
+        course_id: any,
+        ordre_predit: any,
+        ordre_reel: any,
+        parent=None,
+    ):
+        """Initialise la fenêtre de vérification des prédictions.
+        Args:
+            course_id: ID de la course pour laquelle on vérifie les prédictions.
+            ordre_predit: Liste des IDs des participants dans l'ordre prédit par le modèle ML.
+            ordre_reel: Liste des IDs des participants dans l'ordre réel d'arrivée.
+            parent: Parent QWidget (optionnel).
+        """
     """
     Fenêtre de comparaison entre l'ordre réel d'arrivée des participants
     et l'ordre prédit par un modèle de Machine Learning.
@@ -80,6 +87,8 @@ class ParticipantVerificationWindow(QDialog):
 
         self._setup_ui()
 
+    def _setup_ui(self):
+        """Construit l'interface graphique de la fenêtre."""
     def _setup_ui(self) -> None:
         """
         Construit l'interface graphique de la fenêtre.
@@ -106,7 +115,7 @@ class ParticipantVerificationWindow(QDialog):
                         get_participant_predits_data,
                         donnees_a_afficher_bouton_particpant,
                         None,
-                        auto_scale=True
+                        auto_scale=True,
                     )
                 )
             else:
@@ -119,7 +128,7 @@ class ParticipantVerificationWindow(QDialog):
                         None,
                         auto_scale=True,
                         bg_color="#FF8A8A",
-                        shadow_color="#FF0000"
+                        shadow_color="#FF0000",
                     )
                 )
 
@@ -130,9 +139,9 @@ class ParticipantVerificationWindow(QDialog):
         scroll_area.setWidget(container)
 
         main_layout.addWidget(scroll_area)
-        main_layout.addWidget(QLabel(
-            f"Nombre d'erreurs dans l'ordre prédit : {error_counter}"
-        ))
+        main_layout.addWidget(
+            QLabel(f"Nombre d'erreurs dans l'ordre prédit : {error_counter}")
+        )
 
         btn_close = QPushButton("Fermer")
         btn_close.clicked.connect(self.reject)
@@ -140,6 +149,8 @@ class ParticipantVerificationWindow(QDialog):
 
         QTimer.singleShot(50, self._refresh_card_sizes)
 
+    def _refresh_card_sizes(self):
+        """Rafraîchit la taille des boutons OverviewButton pour s'adapter à la largeur de la fenêtre."""
     def _refresh_card_sizes(self) -> None:
         """
         Ajuste dynamiquement la taille des cartes de participants
@@ -154,8 +165,7 @@ class ParticipantVerificationWindow(QDialog):
                 w._update_font_size()
             except Exception:
                 pass
-            
-            
+
 
 class PredictionDetailWindow(QDialog):
     """
@@ -171,6 +181,13 @@ class PredictionDetailWindow(QDialog):
     et applique une prédiction de ranking sur les participants.
     """
 
+    def __init__(self, id: any, parent=None, get_data=None):
+        """Initialise la fenêtre de détail d'une course.
+        Args:
+            id: ID de la course à afficher.
+            parent: Parent QWidget (optionnel). Par défaut None.
+            get_data: Fonction pour récupérer les données de la course.
+        """
     def __init__(
         self,
         id: Any,
@@ -199,7 +216,9 @@ class PredictionDetailWindow(QDialog):
         self.course_data = self.get_course_data(self.course_id)
 
         # Chargement des participants
-        self.participants_data_list = self.get_participant_predits_data_for_course(self.course_id)
+        self.participants_data_list = self.get_participant_predits_data_for_course(
+            self.course_id
+        )
 
         # =============================
         # Modèle ML
@@ -244,18 +263,20 @@ class PredictionDetailWindow(QDialog):
         """
         participants = []
         participant_ids = get_course_participants_id(course_id)
-    
+
         if not participant_ids:
             return participants
-    
+
         for pid in participant_ids:
             # <-- MODIFICATION ICI -->
-            data = self.get_participant_predits_data(pid) or {}  # ne passe plus course_id
+            data = (
+                self.get_participant_predits_data(pid) or {}
+            )  # ne passe plus course_id
             data["id"] = pid
             data.setdefault("name", f"Participant {pid}")
             data.setdefault("odds", 0.0)
             participants.append(data)
-    
+
         return participants
 
     # ======================================================================
@@ -291,7 +312,9 @@ class PredictionDetailWindow(QDialog):
         layout_detail = QVBoxLayout(detail_widget)
 
         fields = self.donnees_a_afficher or {
-            k: k.replace("_", " ").title() for k in self.course_data.keys() if k != "error"
+            k: k.replace("_", " ").title()
+            for k in self.course_data.keys()
+            if k != "error"
         }
 
         for key, label in fields.items():
@@ -355,7 +378,7 @@ class PredictionDetailWindow(QDialog):
             course_id=self.course_id,
             ordre_predit=self.prediction_ids,
             ordre_reel=ordre_reel,
-            parent=self
+            parent=self,
         )
         dialog.exec_()
 
@@ -416,7 +439,11 @@ class PredictionDetailWindow(QDialog):
             QMessageBox.warning(self, "Erreur", "Dossier Models introuvable")
             return
 
-        subfolders = [f for f in os.listdir(models_root) if os.path.isdir(os.path.join(models_root, f))]
+        subfolders = [
+            f
+            for f in os.listdir(models_root)
+            if os.path.isdir(os.path.join(models_root, f))
+        ]
         if not subfolders:
             QMessageBox.warning(self, "Erreur", "Aucun modèle trouvé")
             return
@@ -476,13 +503,16 @@ class PredictionDetailWindow(QDialog):
 
         try:
             self.prediction_ids = self.model_module.predict_ranking(participant_ids)
-            self.prediction_ids = [pid for pid in self.prediction_ids if pid is not None]
+            self.prediction_ids = [
+                pid for pid in self.prediction_ids if pid is not None
+            ]
 
             # Réordonner les participants selon la prédiction
             predicted_participants = [
-                p for pid in self.prediction_ids
+                p
+                for pid in self.prediction_ids
                 for p in self.participants_data_list
-                if p['id'] == pid
+                if p["id"] == pid
             ]
 
             self._refresh_participant_list(predicted_participants)
