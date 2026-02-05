@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable, Dict, List, Optional
 
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
@@ -43,7 +43,32 @@ import importlib.util
 
 
 class ParticipantVerificationWindow(QDialog):
-    def __init__(self, course_id, ordre_predit, ordre_reel, parent=None):
+    """
+    Fenêtre de comparaison entre l'ordre réel d'arrivée des participants
+    et l'ordre prédit par un modèle de Machine Learning.
+
+    Les participants correctement prédits sont affichés normalement,
+    tandis que les erreurs de prédiction sont mises en évidence
+    visuellement (fond rouge).
+    """
+    def __init__(
+        self,
+        course_id: Any,
+        ordre_predit: List[Any],
+        ordre_reel: List[Any],
+        parent: Optional[QWidget] = None
+    ) -> None:
+        """
+        Initialise la fenêtre de vérification des prédictions.
+    
+        :param course_id: Identifiant de la course
+        :param ordre_predit: Liste des identifiants des participants
+            dans l'ordre prédit par le modèle
+        :param ordre_reel: Liste des identifiants des participants
+            dans l'ordre réel d'arrivée
+        :param parent: Widget parent Qt
+        """
+
         super().__init__(parent)
 
         self.course_id = course_id
@@ -55,7 +80,15 @@ class ParticipantVerificationWindow(QDialog):
 
         self._setup_ui()
 
-    def _setup_ui(self):
+    def _setup_ui(self) -> None:
+        """
+        Construit l'interface graphique de la fenêtre.
+    
+        Affiche la liste des participants dans l'ordre réel,
+        met en évidence les erreurs de prédiction et indique
+        le nombre total d'erreurs.
+        """
+
         main_layout = QVBoxLayout(self)
 
         container = QWidget()
@@ -107,7 +140,15 @@ class ParticipantVerificationWindow(QDialog):
 
         QTimer.singleShot(50, self._refresh_card_sizes)
 
-    def _refresh_card_sizes(self):
+    def _refresh_card_sizes(self) -> None:
+        """
+        Ajuste dynamiquement la taille des cartes de participants
+        après le rendu de l'interface.
+    
+        Cette méthode est déclenchée de manière différée afin de
+        s'assurer que les widgets sont correctement dimensionnés.
+        """
+
         for w in self.findChildren(OverviewButton):
             try:
                 w._update_font_size()
@@ -118,15 +159,31 @@ class ParticipantVerificationWindow(QDialog):
 
 class PredictionDetailWindow(QDialog):
     """
-    Fenêtre de détail d'une course avec :
-    - Affichage des informations de la course
-    - Liste des participants (chevaux)
-    - Sélection d'un modèle ML
-    - Prédiction de l'ordre d'arrivée
-    - Vérification de l'ordre prédit par rapport à l'ordre réel
+    Fenêtre de détail d'une course permettant :
+
+    - l'affichage des informations de la course
+    - la liste des participants (chevaux)
+    - la sélection dynamique d'un modèle de Machine Learning
+    - la prédiction de l'ordre d'arrivée
+    - la comparaison entre l'ordre prédit et l'ordre réel
+
+    Cette fenêtre charge dynamiquement un modèle ML depuis un dossier
+    et applique une prédiction de ranking sur les participants.
     """
 
-    def __init__(self, id: Any, parent=None, get_data=None):
+    def __init__(
+        self,
+        id: Any,
+        parent: Optional[QWidget] = None,
+        get_data: Optional[Callable[..., Dict[str, Any]]] = None
+    ) -> None:
+        """
+        Initialise la fenêtre de détail d'une course.
+    
+        :param id: Identifiant unique de la course
+        :param parent: Widget parent Qt
+        :param get_data: Fonction optionnelle pour récupérer des données
+        """
         super().__init__(parent)
 
         # =============================
@@ -166,14 +223,24 @@ class PredictionDetailWindow(QDialog):
     # ======================================================================
     # DONNÉES PARTICIPANTS
     # ======================================================================
-
-    def get_participant_predits_data_for_course(self, course_id):
+    
+    def get_participant_predits_data_for_course(
+        self,
+        course_id: Any
+    ) -> List[Dict[str, Any]]:
         """
-        Récupère les participants d'une course avec leurs données nécessaires à la prédiction.
-        Retourne une liste de dictionnaires contenant au minimum :
-        - id : ID du participant
-        - name : nom du participant
-        - odds : cote
+        Récupère les participants d'une course avec leurs données
+        nécessaires à la prédiction.
+    
+        Chaque participant est représenté par un dictionnaire contenant
+        au minimum :
+    
+        - ``id`` : identifiant du participant
+        - ``name`` : nom du cheval
+        - ``odds`` : cote associée
+    
+        :param course_id: Identifiant de la course
+        :return: Liste de dictionnaires décrivant les participants
         """
         participants = []
         participant_ids = get_course_participants_id(course_id)
@@ -194,9 +261,18 @@ class PredictionDetailWindow(QDialog):
     # ======================================================================
     # CONSTRUCTION UI
     # ======================================================================
-
-    def _setup_ui(self):
-        """Construit toute l'interface graphique de la fenêtre."""
+    
+    def _setup_ui(self) -> None:
+        """
+        Construit l'interface graphique complète de la fenêtre.
+    
+        Inclut :
+        - le titre
+        - les détails de la course
+        - la liste des participants
+        - le sélecteur de modèle ML
+        - les boutons d'action
+        """
 
         self.main_layout = QVBoxLayout(self)
 
@@ -260,11 +336,15 @@ class PredictionDetailWindow(QDialog):
     # VÉRIFICATION DE L'ORDRE PRÉDIT
     # ======================================================================
 
-    def _verify_prediction_order(self):
+    def _verify_prediction_order(self) -> None:
         """
-        Ouvre une fenêtre pour comparer l'ordre prédit et l'ordre réel des participants.
-        Affiche en rouge les erreurs de prédiction.
+        Compare l'ordre prédit par le modèle ML avec l'ordre réel
+        des participants.
+    
+        Ouvre une fenêtre secondaire mettant en évidence
+        les différences entre les deux classements.
         """
+
         if not self.prediction_ids:
             QMessageBox.warning(self, "Erreur", "Aucune prédiction à vérifier")
             return
@@ -283,10 +363,17 @@ class PredictionDetailWindow(QDialog):
     # LISTE DES PARTICIPANTS
     # ======================================================================
 
-    def _refresh_participant_list(self, participants_list):
+    def _refresh_participant_list(
+        self,
+        participants_list: List[Dict[str, Any]]
+    ) -> None:
         """
-        Rafraîchit l'affichage de la liste des participants.
-        Crée les boutons cliquables vers les détails de chaque participant.
+        Met à jour l'affichage de la liste des participants.
+    
+        La liste est entièrement reconstruite afin de refléter
+        un nouvel ordre (prédit ou réel).
+    
+        :param participants_list: Liste des participants à afficher
         """
         # Nettoyage complet du layout
         while self.participants_layout.count():
@@ -312,10 +399,12 @@ class PredictionDetailWindow(QDialog):
     # SÉLECTEUR DE MODÈLE
     # ======================================================================
 
-    def _setup_model_selector(self):
+    def _setup_model_selector(self) -> None:
         """
-        Initialise le combobox pour sélectionner le modèle ML à utiliser.
-        Charge automatiquement le premier modèle disponible.
+        Initialise le sélecteur de modèles de Machine Learning.
+    
+        Recherche les sous-dossiers disponibles dans le dossier ``Models``
+        et charge automatiquement le premier modèle valide.
         """
         self.main_layout.addWidget(QLabel("Choisir un modèle :"))
         self.model_selector = QComboBox()
@@ -336,10 +425,15 @@ class PredictionDetailWindow(QDialog):
         self.model_selector.currentTextChanged.connect(self._load_selected_model)
         self._load_selected_model(subfolders[0])
 
-    def _load_selected_model(self, folder_name):
+    def _load_selected_model(self, folder_name: str) -> None:
         """
-        Charge dynamiquement le modèle ML depuis un dossier donné.
-        Le dossier doit contenir Model.h5 et Model.py
+        Charge dynamiquement un modèle ML depuis un dossier donné.
+    
+        Le dossier doit contenir :
+        - ``Model.py`` : logique de prédiction
+        - ``Model.h5`` : poids du modèle
+    
+        :param folder_name: Nom du dossier du modèle
         """
         base_dir = os.path.dirname(os.path.abspath(__file__))
         folder = os.path.join(base_dir, "Models", folder_name)
@@ -365,12 +459,15 @@ class PredictionDetailWindow(QDialog):
     # PRÉDICTION
     # ======================================================================
 
-    def _predict(self):
+    def _predict(self) -> None:
         """
         Effectue la prédiction de l'ordre d'arrivée des participants
         en utilisant le modèle ML sélectionné.
-        Rafraîchit l'affichage avec l'ordre prédit.
+    
+        Le classement prédit est appliqué immédiatement
+        à l'affichage de la liste des participants.
         """
+
         if not self.model_module or not self.model_path:
             QMessageBox.warning(self, "Erreur", "Aucun modèle valide")
             return
