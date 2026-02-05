@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from typing import List, Optional, Sequence
 import os
 from projet_pai_turff.data_access import get_participants_data
 
@@ -9,28 +10,53 @@ MAX_CHEVAUX = 15
 # =================================================
 # Fonction utilitaire : transforme les cotes en probabilités implicites
 # =================================================
-def implicit_probabilities(odds, mask=None, eps=1e-12, verbose=False):
+def implicit_probabilities(
+    odds: Sequence[float],
+    mask: Optional[Sequence[int | bool]] = None,
+    eps: float = 1e-12,
+    verbose: bool = False
+) -> np.ndarray:
     """
-    Convertit les cotes en probabilités implicites normalisées.
+    Convertit des cotes décimales en probabilités implicites normalisées.
 
-    Paramètres
+    Cette fonction calcule l'inverse des cotes, applique un masque
+    optionnel pour ignorer les chevaux de padding, puis normalise
+    les probabilités afin que leur somme soit égale à 1.
+
+    Parameters
     ----------
-    odds : list ou np.ndarray, shape (N_chevaux,)
-        Liste des cotes décimales pour une course.
-    mask : list ou np.ndarray de 0/1, shape (N_chevaux,), optionnel
-        Indique quels chevaux sont valides (1) ou padding (0).
+    odds : Sequence[float]
+        Liste ou tableau des cotes décimales pour les chevaux
+        (longueur N).
+    mask : Optional[Sequence[int | bool]]
+        Masque indiquant quels chevaux sont valides (1 / True)
+        ou issus du padding (0 / False).
         Si None, tous les chevaux sont considérés valides.
-    eps : float
-        Petite valeur pour éviter la division par zéro.
-    verbose : bool
-        Affiche les étapes de debug.
+    eps : float, default=1e-12
+        Valeur minimale utilisée pour éviter une division par zéro.
+    verbose : bool, default=False
+        Active l'affichage des informations de debug.
 
-    Retour
+    Returns
+    -------
+    np.ndarray
+        Tableau des probabilités implicites normalisées,
+        de shape (N,). Les chevaux masqués ont une probabilité nulle.
+
+    Notes
+    -----
+    Les probabilités sont calculées comme :
+
+    .. math::
+
+        p_i = \\frac{1 / \\text{odds}_i}{\\sum_j (1 / \\text{odds}_j)}
+
+    Raises
     ------
-    probs : np.ndarray, shape (N_chevaux,)
-        Probabilités implicites normalisées.
-        Chevaux masqués auront une probabilité 0.
+    ValueError
+        Si la somme des probabilités est nulle.
     """
+
     odds = np.array(odds, dtype=np.float32)
     N = len(odds)
 
@@ -58,22 +84,50 @@ def implicit_probabilities(odds, mask=None, eps=1e-12, verbose=False):
 # =================================================
 # Fonction principale de prédiction
 # =================================================
-def predict_ranking(participant_ids, verbose=False):
+def predict_ranking(
+    participant_ids: List[int],
+    verbose: bool = False
+) -> List[int]:
     """
-    Prédit l'ordre d'arrivée des chevaux pour une course.
+    Prédit l'ordre d'arrivée des participants d'une course hippique.
+
+    Cette fonction :
+    - charge les données des participants
+    - transforme les cotes en probabilités implicites
+    - applique un padding jusqu'à ``MAX_CHEVAUX``
+    - utilise un modèle TensorFlow pour prédire un score par cheval
+    - retourne les identifiants triés du meilleur au pire
 
     Parameters
     ----------
-    participant_ids : list[int]
-        Liste des IDs des chevaux participants.
-    verbose : bool
-        Si True, affiche des informations de debug.
+    participant_ids : List[int]
+        Liste des identifiants des chevaux participants.
+    verbose : bool, default=False
+        Active l'affichage des informations de debug.
 
     Returns
     -------
-    list[int]
-        Liste des IDs triés par ordre prédit (meilleur → pire).
+    List[int]
+        Liste des identifiants des chevaux triés selon
+        l'ordre d'arrivée prédit (meilleur → pire).
+
+    Raises
+    ------
+    FileNotFoundError
+        Si le fichier ``Model.h5`` est introuvable.
+    RuntimeError
+        Si la prédiction du modèle échoue.
+
+    Notes
+    -----
+    Le modèle doit :
+    - accepter une entrée de shape ``(1, MAX_CHEVAUX)``
+    - produire un vecteur de scores de shape ``(MAX_CHEVAUX,)``
+
+    Les chevaux ajoutés par padding sont automatiquement ignorés
+    dans le classement final.
     """
+
     if verbose:
         print("[INFO] participant_ids reçus :", participant_ids)
 

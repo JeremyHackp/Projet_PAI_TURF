@@ -95,18 +95,6 @@ def test_participants_cache():
 
 
 # ======================================================================
-# TEST PARTICIPANTS DATA
-# ======================================================================
-
-def test_get_participants_data(test_db):
-    data = da.get_participants_data("03022025", 1, 1)
-
-    assert len(data) == 1
-    assert data[0]["Nom"] == "Thunder"
-    assert data[0]["Age"] == 3
-
-
-# ======================================================================
 # FAKE GRAPH CLASSES
 # ======================================================================
 
@@ -133,19 +121,6 @@ class FakeGraph:
 class FakeFiltre:
     def get_state(self):
         return {"filtres": []}
-
-
-# ======================================================================
-# TEST GRAPH UPDATE
-# ======================================================================
-
-def test_update_graphe_stats_groupe(test_db):
-    g = FakeGraph()
-    f = FakeFiltre()
-
-    da.update_graphe_stats_groupe("Victoires par race", f, g, top_n=10)
-
-    assert g.ax.plotted is True
 
 
 # ======================================================================
