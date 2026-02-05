@@ -10,6 +10,7 @@ dependencies = [
     "pyside6",
     "matplotlib",
     "shiboken6>=6.10.0",
+    "tensorflow>=2.20.0",
 ]
 
 
