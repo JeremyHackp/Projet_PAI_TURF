@@ -197,13 +197,26 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             c.RobeLibelle,
             c.Race
         FROM Participants p
-        JOIN (
-            SELECT Nom, MIN(DateReunion || printf('%03d', NumCourse)) AS last_participation
-            FROM Participants
-            GROUP BY Nom
-        ) last
-          ON last.Nom = p.Nom
-         AND (p.DateReunion || printf('%03d', p.NumCourse)) = last.last_participation
+            JOIN (
+        SELECT
+            Nom,
+            MAX(
+                substr(DateReunion,5,4) ||
+                substr(DateReunion,3,2) ||
+                substr(DateReunion,1,2) ||
+                printf('%03d', NumCourse)
+            ) AS last_participation
+        FROM Participants
+        GROUP BY Nom
+    ) last
+    ON last.Nom = p.Nom
+    AND (
+        substr(p.DateReunion,5,4) ||
+        substr(p.DateReunion,3,2) ||
+        substr(p.DateReunion,1,2) ||
+        printf('%03d', p.NumCourse)
+    ) = last.last_participation
+
         JOIN Cheval c ON c.Nom = p.Nom
         WHERE 1=1
         {where_sql}
