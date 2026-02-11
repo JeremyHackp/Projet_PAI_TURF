@@ -1,18 +1,19 @@
 """
 participant_data.py - Accès aux données des participants
 """
-from .db.connection import get_connection
-from .cache import participants_cache, meilleurs_chevaux, course_cache
+
+from .cache import course_cache, meilleurs_chevaux, participants_cache
 from .constants import OP_SQL_MAP
+from .db.connection import get_connection
 
 
 def get_participants_data(participant_id):
     """
     Récupère les données d'un participant depuis le cache.
-    
+
     Args:
         participant_id: ID du participant dans le cache
-    
+
     Returns:
         dict: Données du participant ou dict vide si non trouvé
     """
@@ -22,10 +23,10 @@ def get_participants_data(participant_id):
 def get_cheveaux_data(cheval_id):
     """
     Récupère les données d'un cheval depuis le cache des meilleurs chevaux.
-    
+
     Args:
         cheval_id: ID du cheval dans le cache
-    
+
     Returns:
         dict: Données du cheval ou dict vide si non trouvé
     """
@@ -44,10 +45,10 @@ def get_course_participants_id(course_ui_id):
     """
     Charge tous les participants de la course depuis la BDD
     et remplit le cache participants.
-    
+
     Args:
         course_ui_id: ID UI de la course
-    
+
     Returns:
         list[int]: Liste des IDs UI des participants (1..N)
     """
@@ -61,7 +62,8 @@ def get_course_participants_id(course_ui_id):
 
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute("""
+        cur.execute(
+            """
             SELECT
                 p.Nom,
                 p.Age,
@@ -91,7 +93,9 @@ def get_course_participants_id(course_ui_id):
                     THEN CAST(p.PositionArrivee AS INTEGER)
                     ELSE 999
                 END
-        """, (num_course, num_reunion, date_reunion))
+        """,
+            (num_course, num_reunion, date_reunion),
+        )
 
         rows = cur.fetchall()
 
@@ -107,7 +111,6 @@ def get_course_participants_id(course_ui_id):
             "odds": row["Cote"] if row["Cote"] else "N/A",
             "victories": row["NbrVictoires"],
             "total_gains": f"{row['GainsCarriere']}€",
-
             "robe": row["RobeLibelle"] or "Inconnue",
             "race": row["Race"] or "Inconnue",
             "father": row["NomDuPere"] or "—",
@@ -122,10 +125,10 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
     """
     Charge les meilleurs chevaux (1 par nom) avec toutes les infos participant,
     triés selon le filtre sélectionné.
-    
+
     Args:
         filtre_widget: Widget de filtre contenant l'état des filtres
-    
+
     Returns:
         list[int]: Liste des IDs UI des meilleurs chevaux
     """
@@ -135,7 +138,7 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
         "jokey": "p.Driver",
         "entraineur": "p.Entraineur",
         "age": "p.Age",
-        "odds": "p.Cote"
+        "odds": "p.Cote",
     }
 
     filtres = filtre_widget.get_state()
@@ -180,7 +183,7 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
         where_sql = "AND " + " AND ".join(where_clauses)
 
     query = f"""
-        SELECT 
+        SELECT
             p.Nom,
             p.Age,
             p.Driver,
@@ -227,7 +230,6 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             "sex": row["Sexe"],
             "total_gains": f"{row['GainsCarriere']}€",
             "victories": row["NbrVictoires"] or 0,
-
             "robe": row["RobeLibelle"] or "Inconnue",
             "race": row["Race"] or "Inconnue",
             "father": row["NomDuPere"] or "—",
