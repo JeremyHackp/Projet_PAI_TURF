@@ -195,7 +195,7 @@ def get_meilleurs_cheveaux_ids(filtre_widget):
             c.Race
         FROM Participants p
         JOIN (
-            SELECT Nom, MAX(DateReunion || printf('%03d', NumCourse)) AS last_participation
+            SELECT Nom, MIN(DateReunion || printf('%03d', NumCourse)) AS last_participation
             FROM Participants
             GROUP BY Nom
         ) last
