@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>projet_pai_turff.OverviewButton &#8212; projet_PAI_TURFF  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/projet_pai_turff/OverviewButton';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_supop.jpg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo_supop.jpg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">projet_PAI_TURFF documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../projet_pai_turff.html">
+    Functional API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../readme.html">
+    README
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://www.institutoptique.fr/">
+    SupOptique
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JeremyHackp/Projet_PAI_TURF" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../projet_pai_turff.html">
+    Functional API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../readme.html">
+    README
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://www.institutoptique.fr/">
+    SupOptique
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JeremyHackp/Projet_PAI_TURF" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">projet_pai_turff.OverviewButton</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for projet_pai_turff.OverviewButton</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QTimer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QColor</span><span class="p">,</span> <span class="n">QFont</span><span class="p">,</span> <span class="n">QTextDocument</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QGraphicsDropShadowEffect</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shiboken6</span><span class="w"> </span><span class="kn">import</span> <span class="n">isValid</span>
+
+
+<div class="viewcode-block" id="OverviewButton">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.OverviewButton.html#projet_pai_turff.OverviewButton.OverviewButton">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OverviewButton</span><span class="p">(</span><span class="n">QPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Un bouton affichant un aperçu d&#39;une course ou d un participant avec ses caractéristiques principales.</span>
+
+<span class="sd">    Clique sur ce bouton ouvre une fenêtre détaillée avec plus d&#39;informations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
+        <span class="n">get_data</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">donnees_a_afficher</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">detail_window_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">bg_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;#D0DEEA&quot;</span><span class="p">,</span>
+        <span class="n">shadow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">shadow_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;#888888&quot;</span><span class="p">,</span>
+        <span class="n">shadow_blur</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span>
+        <span class="n">shadow_offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="c1"># Font control</span>
+        <span class="n">font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="n">auto_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">min_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">max_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialise le bouton.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: Identifiant unique de la course ou du participant (clé primaire).</span>
+<span class="sd">            get_data: Fonction qui accepte id et retourne un dictionnaire</span>
+<span class="sd">                           avec les caractéristiques de la course ou du participant.</span>
+
+
+<span class="sd">            donnees_a_afficher: Dictionnaire optionnel spécifiant les champs à afficher</span>
+<span class="sd">                              au format {cle_donnee: &quot;Label à afficher&quot;}</span>
+<span class="sd">                              Ex: {&#39;name&#39;: &#39;Nom&#39;, &#39;date&#39;: &#39;Date&#39;, &#39;place&#39;: &#39;Lieu&#39;}</span>
+<span class="sd">                              Si None, affiche tous les champs du dictionnaire retourné par get_data.</span>
+<span class="sd">            parent: Parent Qt (optionnel).</span>
+
+<span class="sd">            detail_window_class=None: Classe pour la fenêtre de détails a ouvirir lorsque l&#39;on clique sur le boutton.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span> <span class="o">=</span> <span class="n">get_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">donnees_a_afficher</span> <span class="o">=</span> <span class="n">donnees_a_afficher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detail_window_class</span> <span class="o">=</span> <span class="n">detail_window_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Styling options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span> <span class="o">=</span> <span class="n">bg_color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shadow</span> <span class="o">=</span> <span class="n">shadow</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shadow_color</span> <span class="o">=</span> <span class="n">shadow_color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shadow_blur</span> <span class="o">=</span> <span class="n">shadow_blur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shadow_offset</span> <span class="o">=</span> <span class="n">shadow_offset</span>
+        <span class="c1"># Font sizing options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span> <span class="o">=</span> <span class="n">font_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_scale</span> <span class="o">=</span> <span class="n">auto_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_font_size</span> <span class="o">=</span> <span class="n">min_font_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_font_size</span> <span class="o">=</span> <span class="n">max_font_size</span>
+
+        <span class="c1"># Charger les données de la course/ du participant</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+
+        <span class="c1"># Configurer l&#39;apparence du bouton</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span class="p">()</span>
+
+        <span class="c1"># Connecter le clic pour ouvrir la fenêtre détaillée</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_open_detail_window</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure l&#39;interface du bouton avec les info de la course/ du participant.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Course/participant #</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> - Erreur&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Créer un widget personnalisé pour afficher un aperçu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># Pas de texte simple</span>
+
+        <span class="c1"># Déterminer les données à afficher</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">donnees_a_afficher</span><span class="p">:</span>
+            <span class="c1"># Utiliser seulement les clés spécifiées</span>
+            <span class="n">fields_to_display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">donnees_a_afficher</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Afficher tous les champs avec des labels générés automatiquement</span>
+            <span class="n">fields_to_display</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;error&quot;</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Créer les lignes d&#39;info à afficher (HTML avec label en gras)</span>
+        <span class="n">html_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">fields_to_display</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+            <span class="n">html_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;b&gt;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">:&lt;/b&gt; </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">display_html</span> <span class="o">=</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">html_lines</span><span class="p">)</span>
+
+        <span class="c1"># Utiliser un QLabel enfant pour permettre le rendu RichText</span>
+        <span class="c1"># et rendre le label transparent aux événements souris pour</span>
+        <span class="c1"># laisser le QPushButton gérer le clic.</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_content_label&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">display_html</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;overview_label&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setTextFormat</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextFormat</span><span class="o">.</span><span class="n">RichText</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">display_html</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Rendre le label transparent pour éviter le carré blanc</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                <span class="s2">&quot;background: transparent; color: #0b2540;&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># Forcer une taille de police sur le QLabel (le stylesheet du QPushButton</span>
+            <span class="c1"># n&#39;affecte pas le QLabel enfant quand il contient du rich text)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">label_font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">label_font</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">WidgetAttribute</span><span class="o">.</span><span class="n">WA_TransparentForMouseEvents</span><span class="p">,</span> <span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Certains styles remplissent le background; désactiver le auto-fill</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_TranslucentBackground</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="c1"># Layout pour contenir le label à l&#39;intérieur du bouton</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="p">)</span>
+            <span class="c1"># Si un layout existait, on le remplace</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># enlever tous les widgets de l&#39;ancien layout</span>
+                    <span class="k">while</span> <span class="n">old</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+                        <span class="n">item</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">w</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">w</span><span class="p">:</span>
+                            <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+            <span class="c1"># Defer a recalculation once the widget is laid out in its parent</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_font_size</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="c1"># Update font sizing now that label exists</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_font_size</span><span class="p">()</span>
+
+        <span class="c1"># Style du bouton pour qu&#39;il soit visible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="s2">&quot;QPushButton {&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    background-color: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span><span class="si">}</span><span class="s2">;&quot;</span>
+            <span class="s2">&quot;    border: 1px solid #c8d6e0;&quot;</span>
+            <span class="s2">&quot;    border-radius: 10px;&quot;</span>
+            <span class="s2">&quot;    padding: 20px;&quot;</span>
+            <span class="s2">&quot;    text-align: left;&quot;</span>
+            <span class="s2">&quot;    font-family: Arial;&quot;</span>
+            <span class="s2">&quot;    font-size: 12px;&quot;</span>
+            <span class="s2">&quot;    color: #0b2540;&quot;</span>
+            <span class="s2">&quot;}&quot;</span>
+            <span class="s2">&quot;QPushButton:hover {&quot;</span>
+            <span class="s2">&quot;    background-color: #C4D6E8;&quot;</span>
+            <span class="s2">&quot;}&quot;</span>
+            <span class="s2">&quot;QPushButton:pressed {&quot;</span>
+            <span class="s2">&quot;    background-color: #B0C7DF;&quot;</span>
+            <span class="s2">&quot;}&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Let buttons expand horizontally to fill the container width</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># Ombre portée optionnelle pour l&#39;effet de carte</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shadow</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">effect</span> <span class="o">=</span> <span class="n">QGraphicsDropShadowEffect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">effect</span><span class="o">.</span><span class="n">setBlurRadius</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shadow_blur</span><span class="p">)</span>
+                <span class="n">effect</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shadow_color</span><span class="p">))</span>
+                <span class="n">effect</span><span class="o">.</span><span class="n">setOffset</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">shadow_offset</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setGraphicsEffect</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="c1"># En cas d&#39;environnement ne supportant pas l&#39;effet, ignorer</span>
+                <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_font_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the QLabel font size. If auto_scale is True, attempt to choose</span>
+<span class="sd">        the largest font that fits the content within the button width.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_content_label&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isValid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="c1"># If not auto-scaling, set explicit font size</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_scale</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">font</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Auto-scale: try sizes from max down to min and pick first that fits</span>
+        <span class="c1"># We&#39;ll use QTextDocument to measure rendered HTML height at a given width</span>
+        <span class="n">widget_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">widget_width</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Widget not yet laid out, defer the calculation</span>
+            <span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_font_size</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">available_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">widget_width</span> <span class="o">-</span> <span class="mi">24</span><span class="p">)</span>  <span class="c1"># consider margins</span>
+        <span class="c1"># account for layout margins if present</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">contentsMargins</span><span class="p">()</span>
+            <span class="n">available_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">widget_width</span> <span class="o">-</span> <span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">lm</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">+</span> <span class="mi">24</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_font_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_font_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">test_font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">font</span><span class="p">()</span>
+            <span class="n">test_font</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">QTextDocument</span><span class="p">()</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="n">test_font</span><span class="p">)</span>
+            <span class="c1"># set HTML content and width to compute layout height</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setTextWidth</span><span class="p">(</span><span class="n">available_width</span><span class="p">)</span>
+            <span class="n">doc_height</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+            <span class="c1"># if the document height fits within available widget height (or reasonable limit), accept</span>
+            <span class="c1"># we allow up to some maximum (e.g., 6 lines worth) to avoid overly tall cards</span>
+            <span class="k">if</span> <span class="n">doc_height</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumHeight</span><span class="p">()</span> <span class="ow">and</span> <span class="n">doc_height</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># apply this font size and adjust heights</span>
+                <span class="n">test_font</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">test_font</span><span class="p">)</span>
+                <span class="c1"># set label fixed height and button min height accordingly</span>
+                <span class="n">needed_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">doc_height</span><span class="p">)</span> <span class="o">+</span> <span class="mi">12</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="n">needed_height</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="c1"># Compute required width to display without wrapping (ideal width)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">unbounded</span> <span class="o">=</span> <span class="n">QTextDocument</span><span class="p">()</span>
+                    <span class="n">unbounded</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="n">test_font</span><span class="p">)</span>
+                    <span class="n">unbounded</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                    <span class="c1"># idealWidth gives intrinsic width for content</span>
+                    <span class="n">required_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">unbounded</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">())</span> <span class="o">+</span> <span class="mi">24</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">required_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimumWidth</span><span class="p">()</span>
+
+                <span class="c1"># Cap required width to 80% of parent or screen width to avoid runaway sizes</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">parent_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+                    <span class="k">if</span> <span class="n">parent_w</span> <span class="ow">and</span> <span class="n">parent_w</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">cap</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parent_w</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QApplication</span>
+
+                        <span class="n">cap</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">primaryScreen</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">cap</span> <span class="o">=</span> <span class="n">required_w</span>
+
+                <span class="n">required_w</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">required_w</span><span class="p">,</span> <span class="n">cap</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="n">required_w</span><span class="p">)</span>
+                    <span class="c1"># set label width slightly smaller to respect margins</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">required_w</span> <span class="o">-</span> <span class="mi">24</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+                <span class="c1"># button min height: label height + vertical paddings</span>
+                <span class="n">padding_v</span> <span class="o">=</span> <span class="mi">28</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">contentsMargins</span><span class="p">()</span>
+                    <span class="n">padding_v</span> <span class="o">+=</span> <span class="n">lm</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="n">lm</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumHeight</span><span class="p">(</span><span class="n">needed_height</span> <span class="o">+</span> <span class="n">padding_v</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="c1"># fallback to min size if nothing fit</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">font</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_font_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># adjust heights for min size</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">QTextDocument</span><span class="p">()</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setTextWidth</span><span class="p">(</span><span class="n">available_width</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span> <span class="o">+</span> <span class="mi">12</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content_label</span><span class="o">.</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">padding_v</span> <span class="o">=</span> <span class="mi">28</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">contentsMargins</span><span class="p">()</span>
+                <span class="n">padding_v</span> <span class="o">+=</span> <span class="n">lm</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="n">lm</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumHeight</span><span class="p">(</span><span class="n">h</span> <span class="o">+</span> <span class="n">padding_v</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="OverviewButton.resizeEvent">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.OverviewButton.html#projet_pai_turff.OverviewButton.OverviewButton.resizeEvent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># Recompute font size on resize when auto_scale is enabled</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_font_size</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">resizeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OverviewButton.showEvent">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.OverviewButton.html#projet_pai_turff.OverviewButton.OverviewButton.showEvent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># When showing the widget, ensure sizing is correct (defer to allow layout)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_font_size</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+        <span class="c1"># Fixer une hauteur minimale pour que le texte multiligne soit visible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumHeight</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OverviewButton.set_bg_color">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.OverviewButton.html#projet_pai_turff.OverviewButton.OverviewButton.set_bg_color">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_bg_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change la couleur de fond du &#39;card&#39; et rafraîchit le style.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OverviewButton.enable_shadow">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.OverviewButton.html#projet_pai_turff.OverviewButton.OverviewButton.enable_shadow">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enable_shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Active ou désactive l&#39;ombre portée.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shadow</span> <span class="o">=</span> <span class="n">enabled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_open_detail_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ouvre la fenêtre de détails associée au bouton.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detail_window_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># éviter ouvrir 10 fenêtres</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detail_window_class</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detail_window</span><span class="o">.</span><span class="n">activateWindow</span><span class="p">()</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Oriane Koellsch , Jeremy Hackpil , Mael Lecoeuche.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

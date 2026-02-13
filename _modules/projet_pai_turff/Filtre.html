@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>projet_pai_turff.Filtre &#8212; projet_PAI_TURFF  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/projet_pai_turff/Filtre';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_supop.jpg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo_supop.jpg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">projet_PAI_TURFF documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../projet_pai_turff.html">
+    Functional API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../readme.html">
+    README
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://www.institutoptique.fr/">
+    SupOptique
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JeremyHackp/Projet_PAI_TURF" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../projet_pai_turff.html">
+    Functional API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../readme.html">
+    README
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://www.institutoptique.fr/">
+    SupOptique
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JeremyHackp/Projet_PAI_TURF" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">projet_pai_turff.Filtre</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for projet_pai_turff.Filtre</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module pour le widget de filtrage et tri de la base de données.</span>
+
+<span class="sd">Le signal filtres_changes de la class Filtre est émis à chaque modification des filtres ou du tri.</span>
+
+<span class="sd">Les dictionnaires colonnes_filtrage: Dict[str, type], colonnes_tri: Dict[str, str] doivent être fournis lors de l&#39;instanciation du widget Filtre et permettent de definir les catégories élligibles au tri ou au filtre.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QComboBox</span><span class="p">,</span>
+    <span class="n">QDialog</span><span class="p">,</span>
+    <span class="n">QGroupBox</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QLineEdit</span><span class="p">,</span>
+    <span class="n">QMessageBox</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QScrollArea</span><span class="p">,</span>
+    <span class="n">QSpinBox</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="OperateurComparaison">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.OperateurComparaison">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OperateurComparaison</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">EGAL</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span>
+    <span class="n">DIFFERENT</span> <span class="o">=</span> <span class="s2">&quot;!=&quot;</span>
+    <span class="n">SUPERIEUR</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
+    <span class="n">INFERIEUR</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
+    <span class="n">SUPERIEUR_EGAL</span> <span class="o">=</span> <span class="s2">&quot;&gt;=&quot;</span>
+    <span class="n">INFERIEUR_EGAL</span> <span class="o">=</span> <span class="s2">&quot;&lt;=&quot;</span>
+    <span class="n">CONTIENT</span> <span class="o">=</span> <span class="s2">&quot;contient&quot;</span>
+    <span class="n">NE_CONTIENT_PAS</span> <span class="o">=</span> <span class="s2">&quot;ne contient pas&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DialogAjouterFiltre">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.DialogAjouterFiltre">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DialogAjouterFiltre</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colonnes_filtrage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">],</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            colonnes_filtrage (dict[str, type]): Dictionnaire des colonnes élligibles au filtrage avec leur type (ex: {&quot;age&quot;: int, &quot;name&quot;: str})</span>
+<span class="sd">            parent (QWidget, optional): Widget parent de la dialog. Par défaut None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Ajouter un filtre&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_filtrage</span> <span class="o">=</span> <span class="n">colonnes_filtrage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultat</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Met en place l&#39;interface graphique de la dialog d&#39;ajout de filtre.&quot;&quot;&quot;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Colonne</span>
+        <span class="n">row_col</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">row_col</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Colonne:&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colonnes_filtrage</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_colonne_changed</span><span class="p">)</span>
+        <span class="n">row_col</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">row_col</span><span class="p">)</span>
+
+        <span class="c1"># Opérateur</span>
+        <span class="n">row_op</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">row_op</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Opérateur:&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_operateur</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_operateur</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="n">op</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">OperateurComparaison</span><span class="p">])</span>
+        <span class="n">row_op</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo_operateur</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">row_op</span><span class="p">)</span>
+
+        <span class="c1"># Valeur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_valeur</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_valeur</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Valeur:&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_value_widget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_valeur</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_valeur</span><span class="p">)</span>
+
+        <span class="c1"># Boutons</span>
+        <span class="n">row_btn</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">btn_ok</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Valider&quot;</span><span class="p">)</span>
+        <span class="n">btn_cancel</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Annuler&quot;</span><span class="p">)</span>
+        <span class="n">btn_ok</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valider</span><span class="p">)</span>
+        <span class="n">btn_cancel</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+        <span class="n">row_btn</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_ok</span><span class="p">)</span>
+        <span class="n">row_btn</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_cancel</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">row_btn</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_value_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crée le widget de saisie de la valeur en fonction du type de la colonne sélectionnée.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">type_colonne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_filtrage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span><span class="o">.</span><span class="n">currentText</span><span class="p">(),</span> <span class="nb">str</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">type_colonne</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span> <span class="o">=</span> <span class="n">QSpinBox</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="o">-</span><span class="mi">999999</span><span class="p">,</span> <span class="mi">999999</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;Entrer une valeur&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_colonne_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Met à jour le widget de saisie de la valeur lorsque la colonne sélectionnée change.&quot;&quot;&quot;</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_value_widget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_valeur</span><span class="o">.</span><span class="n">replaceWidget</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="p">)</span>
+        <span class="n">old</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_valider</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Connecté au boutton validé. Permet de verifier que la valeur saisie est valide et de stocker le résultat du filtre avant de fermer la dialog.&quot;&quot;&quot;</span>
+        <span class="n">colonne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combo_colonne</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="n">operateur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combo_operateur</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="p">,</span> <span class="n">QLineEdit</span><span class="p">):</span>
+            <span class="n">valeur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">valeur</span><span class="p">:</span>
+                <span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Erreur&quot;</span><span class="p">,</span> <span class="s2">&quot;Valeur requise&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valeur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_valeur</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultat</span> <span class="o">=</span> <span class="p">(</span><span class="n">colonne</span><span class="p">,</span> <span class="n">operateur</span><span class="p">,</span> <span class="n">valeur</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DialogAjouterFiltre.get_filtre">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.DialogAjouterFiltre.get_filtre">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_filtre</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Renvoie le filtre saisi par l&#39;utilisateur sous la forme d&#39;un tuple (colonne, operateur, valeur) ou None si la dialog a été annulée.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resultat</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Filtre">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Filtre</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Widget UI de filtrage et tri.</span>
+<span class="sd">    Ne fait AUCUN filtrage réel.</span>
+<span class="sd">    Stocke et expose uniquement l’état sélectionné par l’utilisateur.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">filtres_changes</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">colonnes_filtrage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">],</span>
+        <span class="n">colonnes_tri</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">tri_initial</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># clé de colonne</span>
+        <span class="n">ordre_croissant_initial</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            colonnes_filtrage (dict[str, type]): Dictionnaire des colonnes élligibles au filtrage avec leur type (ex: {&quot;age&quot;: int, &quot;name&quot;: str})</span>
+<span class="sd">            colonnes_tri (dict[str, str], optional): Dictionnaire des colonnes élligibles au tri avec leur label à afficher (ex: {&quot;age&quot;: &quot;Age&quot;, &quot;name&quot;: &quot;Nom&quot;}). Si None, le tri est désactivé. Par défaut None.</span>
+<span class="sd">            parent (QWidget, optional): Widget parent du filtre. Par défaut None.</span>
+<span class="sd">            tri_initial (str, optional): Clé de la colonne à trier initialement. Doit être présente dans colonnes_tri. Par défaut None (pas de tri initial).</span>
+<span class="sd">            ordre_croissant_initial (bool, optional): Si True, le tri initial est en ordre croissant. Sinon, en ordre décroissant. Par défaut True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tri</span> <span class="o">=</span> <span class="n">colonnes_tri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_filtrage</span> <span class="o">=</span> <span class="n">colonnes_filtrage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_tri</span> <span class="o">=</span> <span class="n">colonnes_tri</span>
+
+        <span class="c1"># État interne</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="o">=</span> <span class="n">tri_initial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordre_croissant</span> <span class="o">=</span> <span class="n">ordre_croissant_initial</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tri</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_synchronise_tri</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_synchronise_tri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Synchronise l&#39;état interne avec l&#39;UI.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_tri</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_tri</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span><span class="p">]</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordre_croissant</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Met en place l&#39;interface graphique du widget de filtrage et tri.&quot;&quot;&quot;</span>
+        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># --- Filtres ---</span>
+        <span class="n">filtres_group</span> <span class="o">=</span> <span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Filtres&quot;</span><span class="p">)</span>
+        <span class="n">filtres_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+
+        <span class="n">scroll</span> <span class="o">=</span> <span class="n">QScrollArea</span><span class="p">()</span>
+        <span class="n">scroll</span><span class="o">.</span><span class="n">setWidgetResizable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_widget</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scroll_widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">scroll</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scroll_widget</span><span class="p">)</span>
+
+        <span class="n">filtres_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">scroll</span><span class="p">)</span>
+
+        <span class="n">btn_row</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">btn_row</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
+        <span class="n">btn_add</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+        <span class="n">btn_add</span><span class="o">.</span><span class="n">setMaximumWidth</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+        <span class="n">btn_add</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ouvrir_dialog_filtre</span><span class="p">)</span>
+        <span class="n">btn_row</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_add</span><span class="p">)</span>
+
+        <span class="n">filtres_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">btn_row</span><span class="p">)</span>
+        <span class="n">filtres_group</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">filtres_layout</span><span class="p">)</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">filtres_group</span><span class="p">)</span>
+
+        <span class="c1"># --- nb ---</span>
+        <span class="n">nb_group</span> <span class="o">=</span> <span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Nombre de données&quot;</span><span class="p">)</span>
+        <span class="n">nb_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+
+        <span class="n">nb_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Nombre de données:&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span> <span class="o">=</span> <span class="n">QSpinBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span> <span class="o">=</span> <span class="n">QSpinBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">999999</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">btn_valider_nb</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Valider&quot;</span><span class="p">)</span>
+        <span class="n">btn_valider_nb</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_nb_valided</span><span class="p">)</span>
+        <span class="n">nb_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span><span class="p">)</span>
+        <span class="n">nb_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_valider_nb</span><span class="p">)</span>
+
+        <span class="n">nb_group</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">nb_layout</span><span class="p">)</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">nb_group</span><span class="p">)</span>
+
+        <span class="c1"># --- Tri ---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tri</span><span class="p">:</span>
+            <span class="n">tri_group</span> <span class="o">=</span> <span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Tri&quot;</span><span class="p">)</span>
+            <span class="n">tri_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+
+            <span class="n">tri_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Trier par:&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;Aucun&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colonnes_tri</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_tri_changed</span><span class="p">)</span>
+            <span class="n">tri_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="p">)</span>
+
+            <span class="n">tri_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Ordre:&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s2">&quot;Croissant&quot;</span><span class="p">,</span> <span class="s2">&quot;Décroissant&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_ordre_changed</span><span class="p">)</span>
+            <span class="n">tri_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span><span class="p">)</span>
+
+            <span class="n">tri_group</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">tri_layout</span><span class="p">)</span>
+            <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">tri_group</span><span class="p">)</span>
+
+        <span class="c1"># Reset</span>
+        <span class="n">btn_reset</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Réinitialiser&quot;</span><span class="p">)</span>
+        <span class="n">btn_reset</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reinitialiser</span><span class="p">)</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_reset</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ouvrir_dialog_filtre</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Affiche le dialog d&#39;ajout de filtre et ajoute le filtre si la dialog est validée.&quot;&quot;&quot;</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">DialogAjouterFiltre</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colonnes_filtrage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
+            <span class="n">filtre</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">get_filtre</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">filtre</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_ajouter_filtre</span><span class="p">(</span><span class="n">filtre</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ajouter_filtre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filtre</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ajoute un filtre à la liste des filtres actifs et met à jour l&#39;UI en conséquence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filtre</span><span class="p">)</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filtre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">filtre</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">filtre</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+        <span class="n">btn_del</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;✕&quot;</span><span class="p">)</span>
+        <span class="n">btn_del</span><span class="o">.</span><span class="n">setMaximumWidth</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="n">btn_del</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supprimer_filtre</span><span class="p">(</span><span class="n">filtre</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn_del</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_supprimer_filtre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filtre</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">QHBoxLayout</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Supprime un filtre de la liste des filtres actifs et met à jour l&#39;UI en conséquence.</span>
+<span class="sd">        Args :  filtre : tuple - le filtre à supprimer</span>
+<span class="sd">                row : QHBoxLayout - la ligne de l&#39;UI correspondant au filtre à supprimer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filtre</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filtre</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">():</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span><span class="o">.</span><span class="n">removeItem</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_tri_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Met à jour la colonne de tri et émet le signal de changement de filtre.</span>
+<span class="sd">        Args:            text (str): Le texte du tri sélectionné dans le combo box.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">cle</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonnes_tri</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="n">text</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="o">=</span> <span class="n">cle</span>
+                <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_ordre_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Met à jour l&#39;ordre de tri (croissant/décroissant) et émet le signal de changement de filtre.</span>
+<span class="sd">        Args:            text (str): Le texte de l&#39;ordre sélectionné dans le combo box (&quot;Croissant&quot; ou &quot;Décroissant&quot;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordre_croissant</span> <span class="o">=</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;Croissant&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_nb_valided</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;émet le signal de changement de filtre lorsque l&#39;on appuie sur le bouton valider.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Filtre.get_filtres">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre.get_filtres">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_filtres</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Renvoie la liste des filtres actifs sous la forme de tuples (colonne, opérateur, valeur).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Filtre.get_tri">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre.get_tri">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Renvoie la configuration de tri actuelle sous la forme d&#39;un tuple (colonne, ordre_croissant) ou None si aucun tri n&#39;est sélectionné.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tri</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordre_croissant</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Filtre.get_nb">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre.get_nb">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_nb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Renvoie le nombre de données à afficher sélectionné par l&#39;utilisateur.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span><span class="o">.</span><span class="n">value</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Filtre.get_state">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre.get_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;renvoie un dictionnaire de la forme {</span>
+<span class="sd">        &#39;filtres&#39;: List[</span>
+<span class="sd">            Tuple[str(valeure filtrée),</span>
+<span class="sd">            OperateurComparaison(parmis EGAL,DIFFERENT, SUPERIEUR, INFERIEUR, SUPERIEUR_EGAL, INFERIEUR_EGAL, CONTIENT, NE_CONTIENT_PAS),</span>
+<span class="sd">            Any(valeure a comparer)]],</span>
+
+<span class="sd">        &#39;tri&#39;: Optional[</span>
+<span class="sd">            Tuple[str(valeure sur laquelle on tri),</span>
+<span class="sd">            bool(True : ordre_croissant, False : décroissant)]}]}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;filtres&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filtres</span><span class="p">(),</span>
+            <span class="s2">&quot;tri&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tri</span><span class="p">(),</span>
+            <span class="s2">&quot;nbr&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nb</span><span class="p">(),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Filtre.reinitialiser">
+<a class="viewcode-back" href="../../generated/projet_pai_turff.Filtre.html#projet_pai_turff.Filtre.Filtre.reinitialiser">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reinitialiser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Réinitialise tous les filtres, le tri et le nombre de données à afficher, puis émet le signal de changement de filtre.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_nb</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_actifs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtres_layout</span><span class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">layout</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">item</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+                    <span class="n">sub</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">widget</span><span class="p">():</span>
+                        <span class="n">sub</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_tri</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_ordre</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colonne_tri</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordre_croissant</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">filtres_changes</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Oriane Koellsch , Jeremy Hackpil , Mael Lecoeuche.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
