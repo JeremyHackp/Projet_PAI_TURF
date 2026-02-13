@@ -1,8 +1,8 @@
 import sqlite3
 
-from .db.connection import get_connection
-from .Filtre import Filtre
-from .Graphe import Graphe
+from .connection import get_connection
+from ..Filtre import Filtre
+from ..Graphe import Graphe
 
 """donnees_a_afficher_boutons_course: dictionnaire définissant quelles données afficher sur les boutons de course.
    donnees_a_afficher_bouton_particpant: dictionnaire définissant quelles données afficher sur les boutons de participants.
